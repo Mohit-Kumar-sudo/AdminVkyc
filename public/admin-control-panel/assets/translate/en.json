@@ -1,0 +1,116 @@
+
+{
+  "navbar":{
+    "menu": [
+      {
+        "path":"/Dashboard",
+        "title":"Dashboard"
+      },
+      {
+        "path":"/Question",
+        "title":"Question"
+      },
+      {
+        "path":"Content/prerequisits",
+        "title":"Prerequisits"
+      },
+      {
+        "path":"Content/dos&donts",
+        "title":"Do's & Dont's"
+      },
+      {
+        "path":"Content/terms&condition",
+        "title":"Terms & Conditions"
+      },
+      {
+        "path":"/Time-management",
+        "title":"Time Management"
+      }
+    ]
+  },
+
+  "dashboard":{
+    "heading":"Dashboard",
+    "text1":"Questions",
+    "text2":"Prerequisits",
+    "text3":"Do's & Don'ts",
+    "text4":"Terms & Condition",
+    "text5":"Time Management"
+  },
+
+  "question":{
+    "filter":"Filter",
+    "back":"Back",
+    "label1":"Deed Category",
+    "option1":"Select Deed Category",
+    "label2":"Deed Type",
+    "option2":"Select Deed Type",
+    "label3":"Instrument",
+    "option3":"Select Instrument",
+    "label4":"Party Role",
+    "option4":"Select Party Role",
+    "questionEnglish":"Question in English",
+    "questionHindi":"Question in Hindi",
+    "Submit":"Submit",
+    "Reset":"Reset",
+
+    "sno":"S.No.",
+    "InstrumentName":"Instrument Name",
+    "Role":"Role",
+    "VKYCType":"VKYC Type",
+    "Questions":"Questions",
+    "Action":"Action"
+  },
+
+  "content":{
+    "button1":"Prerequisites",
+    "button2":"Do's & Don'ts",
+    "button3":"Terms & Conditions",
+    "label1":"Select Video KYC Type",
+    "option1":"Assisted",
+    "option2":"Non Assisted",
+    "label2":"Prerequisites in English",
+    "label3":"Prerequisites in Hindi",
+    "label4":"Do's & Don'ts in English",
+    "label5":"Do's & Don'ts in Hindi",
+    "label6":"Terms & Conditions in English",
+    "label7":"Terms & Conditions in Hindi",
+    "Submit":"Submit",
+    "Reset":"Reset",
+
+    "sno":"S.No.",
+    "content":"Content",
+    "VKYCType":"VKYC Type",
+    "InstructionsEnglish" : "Instructions English",
+    "Actions":"Actions"
+  },
+
+  "time":{
+    "label1":"Select Video KYC Time Configuration",
+    "option1":"Select Video KYC Time Management",
+    "options":[
+      "Capture Images",
+      "Liveness Detection",
+      "Question Presentation",
+      "Capture Document Images"
+    ],
+    "Minutes":"Minutes",
+    "Seconds":"Seconds",
+    "Submit":"Submit",
+    "Reset":"Reset",
+    "Update":"Update",
+
+    "sno":"S.No.",
+    "content":"Content",
+    "time":"Time",
+    "action":"action",
+    "min":"Min",
+    "sec":"Sec"
+  },
+
+  "footer":{
+    "text1":"Content Provided and Maintained by Department of Registration and Stamps",
+    "text2":"Design and Developed by MDP Infra. Pvt. Ltd."
+  }
+
+}
