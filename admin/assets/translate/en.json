@@ -49,6 +49,7 @@
     "option3":"Select Instrument",
     "label4":"Party Role",
     "option4":"Select Party Role",
+    "label5":"Eligibility",
     "questionEnglish":"Question in English",
     "questionHindi":"Question in Hindi",
     "Submit":"Submit",
@@ -93,6 +94,12 @@
       "Liveness Detection",
       "Question Presentation",
       "Capture Document Images"
+    ],
+    "values":[
+      "capture_images",
+      "liveness_detection",
+      "question_presentation",
+      "capture_document_images"
     ],
     "Minutes":"Minutes",
     "Seconds":"Seconds",
