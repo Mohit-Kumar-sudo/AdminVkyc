@@ -103,9 +103,9 @@ module.exports = {
                     return res.status(501).json({ error: err })
                 }
                 const data = req.body
-                res.redirect('http://20.198.103.152/admin');
                 if (data) {
                     if (data.userType == "department") {
+                        res.redirect('http://20.198.103.152/admin');
                         res.send({ success: true, message: "Good to go" })
                     } else {
                         res.send({ success: false, message: "This user is not Authorised" })
@@ -128,3 +128,5 @@ module.exports = {
 // Deed Instruments by Deed type Id: http://20.204.184.35/sampadaService/common/duty/deedInstruments/{deedTypeId}
 
 // Party Type: http://20.204.184.35/sampadaService/common/duty/getAllPartyTypeByInstrumentId/{instrumentId}
+
+// Token Verify http://20.204.184.35/sampadaGateway/department/get_department_user_profile
