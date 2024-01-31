@@ -1,0 +1,75 @@
+/* eslint-disable no-prototype-builtins */
+import HTTPStatus from "http-status";
+const { Configuration, OpenAIApi } = require("openai");
+
+const configuration = new Configuration({
+  apiKey: "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"
+});
+
+const openai = new OpenAIApi(configuration);
+
+const customResponses = {
+  'hi': 'Hi, how can I assist you?',
+  'hello': 'Hi, how can I assist you?',
+  'how are you': "I'm just a chatbot, but I'm here to help!",
+  'thanks': 'You\'re welcome! If you have any more questions, feel free to ask.',
+  'thank you': 'You\'re welcome! If you have any more questions, feel free to ask.',
+  'by': 'Goodbye! Have a great day!',
+  'default': 'I am not sure how to respond this type of questions. Can you ask something else?'
+};
+
+export async function getChatBot(req, res) {
+  try {
+    const { text } = req.body;
+    console.log(text);
+
+    const lowerCaseInput = text.toLowerCase();
+    if (customResponses.hasOwnProperty(lowerCaseInput)) {
+      return res.status(200).json({
+        success: true,
+        data: customResponses[lowerCaseInput]
+      });
+    }
+
+    let completion;
+    try {
+
+      completion = await openai.createCompletion({
+        model: "gpt-3.5-turbo-instruct",
+        prompt: text + " " + "get data only from MarketResearchFuture",
+        max_tokens: 100,
+        temperature: 0
+      });
+    } catch (err) {
+      if (err.response && err.response.data) {
+        console.log(err.response.data);
+      } else {
+        console.error(err);
+      }
+    }
+    if (completion) {
+      let chatData;
+      chatData = completion.data.choices[0].text.replace(".com", "");
+      chatData = completion.data.choices[0].text.replace("MarketResearchFuture","wizzy")
+      chatData = completion.data.choices[0].text.replace("from MarketResearchFuture","from wizzy")
+
+      console.log("chatData",chatData)
+
+      // Split the text after each period (.)
+      const sentencesArray = chatData.split(".");
+      console.log("sentencesArray",sentencesArray)
+
+      let newCompletion = sentencesArray[0]+ '.' + sentencesArray[1]+ '.' + sentencesArray[2]+ '.'
+
+      return res
+        .status(200)
+        .json({
+          success: true,
+          data: newCompletion
+        });
+    }
+  } catch (err) {
+    console.log(err);
+    return res.status(HTTPStatus.BAD_REQUEST).json(err);
+  }
+}
