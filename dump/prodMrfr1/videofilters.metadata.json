@@ -1,0 +1,1 @@
+{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"}],"uuid":"0a83e493d8ac448b97704cdda577e8ac","collectionName":"videofilters","type":"collection"}
