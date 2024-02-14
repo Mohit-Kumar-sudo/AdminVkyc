@@ -1,1 +1,0 @@
-{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"},{"v":{"$numberInt":"2"},"key":{"region":{"$numberInt":"1"}},"name":"region_1","background":true,"unique":true}],"uuid":"23a2c8dd6c1547af8af30e9255c90605","collectionName":"geos","type":"collection"}
