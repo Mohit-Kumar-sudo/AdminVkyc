@@ -8,7 +8,7 @@
       },
       {
         "path":"/Question",
-        "title":"Question"
+        "title":"Questions"
       },
       {
         "path":"/Prerequisits",
@@ -39,7 +39,7 @@
     "text1":"Questions",
     "text2":"Prerequisits",
     "text3":"Do's & Don'ts",
-    "text4":"Terms & Condition",
+    "text4":"Terms & Conditions",
     "text5":"Time Management",
     "text6":"Matching Matrix"
   },
@@ -97,9 +97,14 @@
     "label5":"Do's & Don'ts in (Hindi)",
     "label6":"Terms & Conditions in (English)",
     "label7":"Terms & Conditions in (Hindi)",
+    "label8":"Edit Prerequisites",
+    "label9":"Edit Do's & Don'ts",
+    "label10":"Edit Terms & Conditions",
+
     "Submit":"Submit",
     "Update":"Update",
     "Reset":"Reset",
+    "Edit":"Edit",
     "placeholderEn":"Enter Data in (English)",
     "placeholderHi":"Enter Data in (Hindi)",
     "editPre":"Edit Prerequisites",
@@ -180,7 +185,7 @@
 
   "footer":{
     "text1":"Copyright",
-    "text2":"2023 IGRS. All rights reserved.",
+    "text2":"IGRS. All rights reserved.",
     "text3":"Design and Developed by Center of Excellence(CoE), MPSeDC"
   }
 
