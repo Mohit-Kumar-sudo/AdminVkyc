@@ -52,14 +52,14 @@ module.exports = {
         try {
           const config = {
             headers: {
-              "x-parse-application-id": "MPSEDC_UAT",
-              "x-parse-rest-api-key": "5eefa031319958005f14c3cba94",
+              "x-parse-application-id": "mdpinfraindiapvtltd_vcip_liv",
+              "x-parse-rest-api-key": "eb9d18a4478424e2cafccae3a61fb586",
               "content-type": "application/json",
             },
           };
           axios
             .post(
-              "http://20.219.158.85:6066/api/vkyc/controlpanel/matching",
+              "http://10.115.204.28:8066/api/vkyc/controlpanel/matching",
               result,
               config
             )
@@ -122,8 +122,8 @@ module.exports = {
       if (name) {
         query.name = new RegExp(name, "i");
       }
-      if(is_active){
-        query.is_active = true
+      if (is_active) {
+        query.is_active = true;
       }
       const result = await Model.aggregate([
         {
@@ -186,14 +186,14 @@ module.exports = {
         try {
           const config = {
             headers: {
-              "x-parse-application-id": "MPSEDC_UAT",
-              "x-parse-rest-api-key": "5eefa031319958005f14c3cba94",
+              "x-parse-application-id": "mdpinfraindiapvtltd_vcip_liv",
+              "x-parse-rest-api-key": "eb9d18a4478424e2cafccae3a61fb586",
               "content-type": "application/json",
             },
           };
           axios
             .post(
-              "http://20.219.158.85:6066/api/vkyc/controlpanel/matching",
+              "http://10.115.204.28:8066/api/vkyc/controlpanel/matching",
               newResult,
               config
             )

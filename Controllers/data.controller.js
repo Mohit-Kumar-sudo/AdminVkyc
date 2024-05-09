@@ -12,7 +12,7 @@ module.exports = {
     try {
       axios
         .get(
-          "https://ersuat2.mp.gov.in/sampadaService/common/duty/allDeedCategory",
+          "http://10.115.204.30:8082/sampadaService/common/duty/allDeedCategory",
           {
             params: {},
           }
@@ -47,7 +47,7 @@ module.exports = {
       }
       axios
         .get(
-          `https://ersuat2.mp.gov.in/sampadaService/common/duty/getAllDeedTypeByCategoryId/${id}`,
+          `http://10.115.204.30:8082/sampadaService/common/duty/getAllDeedTypeByCategoryId/${id}`,
           {}
         )
         .then(
@@ -80,7 +80,7 @@ module.exports = {
       }
       axios
         .get(
-          `https://ersuat2.mp.gov.in/sampadaService/common/duty/deedInstruments/${id}`,
+          `http://10.115.204.30:8082/sampadaService/common/duty/deedInstruments/${id}`,
           {}
         )
         .then(
@@ -113,7 +113,7 @@ module.exports = {
       }
       axios
         .get(
-          `https://ersuat2.mp.gov.in/sampadaService/common/duty/getAllPartyTypeByInstrumentId/${id}`,
+          `http://10.115.204.30:8082/sampadaService/common/duty/getAllPartyTypeByInstrumentId/${id}`,
           {}
         )
         .then(
@@ -142,7 +142,7 @@ module.exports = {
       }
       axios
         .post(
-          `https://ersuat2.mp.gov.in/sampadaGateway/common/authenticate_redirect_department_user`,
+          `http://10.115.204.30:8081/sampadaGateway/common/authenticate_redirect_department_user`,
           { uid: uid }
         )
         .then(
@@ -153,7 +153,6 @@ module.exports = {
             const errorResponse =
               response.data.responseData || response.data.data;
             if (token) {
-              // res.redirect('http://20.198.103.152/admin?id=uid&otp=otp');
               const otp = Math.floor(1000 + Math.random() * 9000);
               // generate otp for uid and save it to validate.json file
               const filePath = path.join(__dirname, "../validate.json");
@@ -164,7 +163,7 @@ module.exports = {
               fileJson.push(data);
               fs.writeFileSync(filePath, JSON.stringify(fileJson));
               return res.redirect(
-                `http://20.198.103.152/admin/#/Authenticate/${uid}/${otp}`
+                `https://sampada.mpigr.gov.in/vkyc/admin/#/Authenticate/${uid}/${otp}`
               );
             } else {
               return res.send({ success: false, msg: resp || errorResponse });

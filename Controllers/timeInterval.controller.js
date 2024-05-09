@@ -15,15 +15,15 @@ module.exports = {
         contentEn: data.contentEn,
         is_active: true,
       }).lean();
-        if (dataExists) {
-          const existingData = await Model.updateOne(
-            { _id: mongoose.Types.ObjectId(dataExists._id) },
-            { $set: { is_active: false } }
-          );
-          if (existingData) {
-            console.log(`Existing ${dataExists.contentType} has be Disabled`);
-          }
+      if (dataExists) {
+        const existingData = await Model.updateOne(
+          { _id: mongoose.Types.ObjectId(dataExists._id) },
+          { $set: { is_active: false } }
+        );
+        if (existingData) {
+          console.log(`Existing ${dataExists.contentType} has be Disabled`);
         }
+      }
       const newData = new Model(data);
       const result = await newData.save();
       if (result) {
@@ -54,20 +54,20 @@ module.exports = {
         try {
           const config = {
             headers: {
-              "x-parse-application-id": "MPSEDC_UAT",
-              "x-parse-rest-api-key": "5eefa031319958005f14c3cba94",
+              "x-parse-application-id": "mdpinfraindiapvtltd_vcip_liv",
+              "x-parse-rest-api-key": "eb9d18a4478424e2cafccae3a61fb586",
               "content-type": "application/json",
             },
           };
           axios
             .post(
-              "http://20.219.158.85:6066/api/vkyc/controlpanel/timing",
+              "http://10.115.204.28:8066/api/vkyc/controlpanel/timing",
               outputObject,
               config
             )
             .then(
               (response) => {
-                console.log('response', response.data)
+                console.log("response", response.data);
                 if (response.data.status == "success") {
                   res.send({
                     success: true,
@@ -125,8 +125,8 @@ module.exports = {
       if (name) {
         query.name = new RegExp(name, "i");
       }
-      if(is_active){
-        query.is_active = true
+      if (is_active) {
+        query.is_active = true;
       }
       const result = await Model.aggregate([
         {
@@ -134,7 +134,7 @@ module.exports = {
         },
         {
           $sort: {
-            is_active: -1, 
+            is_active: -1,
           },
         },
         {
@@ -200,14 +200,14 @@ module.exports = {
         try {
           const config = {
             headers: {
-              "x-parse-application-id": "MPSEDC_UAT",
-              "x-parse-rest-api-key": "5eefa031319958005f14c3cba94",
+              "x-parse-application-id": "mdpinfraindiapvtltd_vcip_liv",
+              "x-parse-rest-api-key": "eb9d18a4478424e2cafccae3a61fb586",
               "content-type": "application/json",
             },
           };
           axios
             .post(
-              "http://20.219.158.85:6066/api/vkyc/controlpanel/timing",
+              "http://10.115.204.28:8066/api/vkyc/controlpanel/timing",
               outputObject,
               config
             )
@@ -232,7 +232,7 @@ module.exports = {
         } catch (error) {
           next(error);
         }
-      } 
+      }
     } catch (error) {
       if (error.isJoi === true) error.status = 422;
       next(error);

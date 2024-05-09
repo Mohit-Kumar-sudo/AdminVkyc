@@ -9,18 +9,18 @@ module.exports = {
   create: async (req, res, next) => {
     try {
       const data = req.body;
-      data.created_by = req.user ? req.user : 'unauth';
-      data.updated_by = req.user ? req.user : 'unauth';
+      data.created_by = req.user ? req.user : "unauth";
+      data.updated_by = req.user ? req.user : "unauth";
       data.created_at = Date.now();
       data.content_english = data.content_english.split(".");
       data.content_hindi = data.content_hindi.split("।");
-  
+
       const dataExists = await Model.findOne({
         contentTypeEn: data.contentTypeEn,
         vkycTypeEn: data.vkycTypeEn,
         is_active: true,
       }).lean();
-  
+
       if (dataExists) {
         await Model.updateOne(
           { _id: mongoose.Types.ObjectId(dataExists._id) },
@@ -28,10 +28,10 @@ module.exports = {
         );
         console.log(`Existing ${dataExists.contentType} has been Disabled`);
       }
-  
+
       const newData = new Model(data);
       const result = await newData.save();
-  
+
       if (result) {
         const resData = await Model.find(
           { is_active: true },
@@ -44,7 +44,7 @@ module.exports = {
             content_hindi: 1,
           }
         );
-  
+
         let newData = {};
         let assisted_do_and_donts = {};
         let non_assisted_do_and_donts = {};
@@ -61,7 +61,7 @@ module.exports = {
               };
             }
             if (item.contentTypeEn === "Terms and Condition") {
-                assisted_terms_conditions = {
+              assisted_terms_conditions = {
                 English: item.content_english,
                 Hindi: item.content_hindi,
               };
@@ -76,8 +76,8 @@ module.exports = {
           newData = {
             Assisted: {
               do_and_donts: assisted_do_and_donts,
-              terms_conditions:assisted_terms_conditions,
-              prerequisites:assisted_prerequisites
+              terms_conditions: assisted_terms_conditions,
+              prerequisites: assisted_prerequisites,
             },
           };
           if (item.vkycTypeEn == "Non Assisted") {
@@ -103,41 +103,52 @@ module.exports = {
           newData = {
             ...newData,
             Non_Assisted: {
-              do_and_donts:non_assisted_do_and_donts,
-              terms_conditions:non_assisted_terms_conditions,
-              prerequisites:non_assisted_prerequisites
+              do_and_donts: non_assisted_do_and_donts,
+              terms_conditions: non_assisted_terms_conditions,
+              prerequisites: non_assisted_prerequisites,
             },
           };
         }
-  
+
         const config = {
           headers: {
             "x-parse-application-id": "MPSEDC_UAT",
             "x-parse-rest-api-key": "5eefa031319958005f14c3cba94",
-            "content-type": "application/json"
-          }
+            "content-type": "application/json",
+          },
         };
-  
-        axios.post('http://20.219.158.85:6066/api/vkyc/controlpanel/content', newData, config)
+
+        axios
+          .post(
+            "http://10.115.204.28:8066/api/vkyc/controlpanel/content",
+            newData,
+            config
+          )
           .then(function (response) {
-            if (response.data.status == 'success') {
-              res.send({ success: true, msg: 'Data submitted successfully', data: newData });
+            if (response.data.status == "success") {
+              res.send({
+                success: true,
+                msg: "Data submitted successfully",
+                data: newData,
+              });
             } else {
-              res.send({ success: false, msg: 'Failed to Submit Data' });
+              res.send({ success: false, msg: "Failed to Submit Data" });
             }
           })
           .catch(function (error) {
             console.log(error);
-            res.send({ success: false, msg: 'Failed to Submit Data' });
+            res.send({ success: false, msg: "Failed to Submit Data" });
           });
-  
       } else {
         res.send({ success: false, msg: "Failed to insert data." });
       }
     } catch (error) {
       if (error.isJoi === true) error.status = 422;
       console.log(error);
-      res.send({ success: false, msg: 'An error occurred while processing the request' });
+      res.send({
+        success: false,
+        msg: "An error occurred while processing the request",
+      });
     }
   },
   get: async (req, res, next) => {
@@ -271,7 +282,7 @@ module.exports = {
               };
             }
             if (item.contentTypeEn === "Terms and Condition") {
-                assisted_terms_conditions = {
+              assisted_terms_conditions = {
                 English: item.content_english,
                 Hindi: item.content_hindi,
               };
@@ -286,8 +297,8 @@ module.exports = {
           newData = {
             Assisted: {
               do_and_donts: assisted_do_and_donts,
-              terms_conditions:assisted_terms_conditions,
-              prerequisites:assisted_prerequisites
+              terms_conditions: assisted_terms_conditions,
+              prerequisites: assisted_prerequisites,
             },
           };
           if (item.vkycTypeEn == "Non Assisted") {
@@ -313,23 +324,23 @@ module.exports = {
           newData = {
             ...newData,
             Non_Assisted: {
-              do_and_donts:non_assisted_do_and_donts,
-              terms_conditions:non_assisted_terms_conditions,
-              prerequisites:non_assisted_prerequisites
+              do_and_donts: non_assisted_do_and_donts,
+              terms_conditions: non_assisted_terms_conditions,
+              prerequisites: non_assisted_prerequisites,
             },
           };
         }
         try {
           const config = {
             headers: {
-              "x-parse-application-id": "MPSEDC_UAT",
-              "x-parse-rest-api-key": "5eefa031319958005f14c3cba94",
+              "x-parse-application-id": "mdpinfraindiapvtltd_vcip_liv",
+              "x-parse-rest-api-key": "eb9d18a4478424e2cafccae3a61fb586",
               "content-type": "application/json",
             },
           };
           axios
             .post(
-              "http://20.219.158.85:6066/api/vkyc/controlpanel/content",
+              "http://10.115.204.28:8066/api/vkyc/controlpanel/content",
               newData,
               config
             )
