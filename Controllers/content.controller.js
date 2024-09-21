@@ -81,9 +81,9 @@ module.exports = {
         
         const config = {
           headers: {
-            "x-parse-application-id": "MPSEDC_UAT",
-            "x-parse-rest-api-key": "5eefa031319958005f14c3cba94",
-            "content-type": "application/json"
+             "x-parse-application-id": "mdpinfraindiapvtltd_vcip_liv",
+              "x-parse-rest-api-key": "eb9d18a4478424e2cafccae3a61fb586",
+              "content-type": "application/json",
           }
         };
   
@@ -264,9 +264,9 @@ module.exports = {
         try {
           const config = {
             headers: {
-              "x-parse-application-id": "MPSEDC_UAT",
-              "x-parse-rest-api-key": "5eefa031319958005f14c3cba94",
-              "content-type": "application/json"
+             "x-parse-application-id": "mdpinfraindiapvtltd_vcip_liv",
+              "x-parse-rest-api-key": "eb9d18a4478424e2cafccae3a61fb586",
+              "content-type": "application/json",
             }
           };
     
