@@ -15,15 +15,15 @@ module.exports = {
         contentEn: data.contentEn,
         is_active: true,
       }).lean();
-      if (dataExists) {
-        const existingData = await Model.updateOne(
-          { _id: mongoose.Types.ObjectId(dataExists._id) },
-          { $set: { is_active: false } }
-        );
-        if (existingData) {
-          console.log(`Existing ${dataExists.contentType} has be Disabled`);
+        if (dataExists) {
+          const existingData = await Model.updateOne(
+            { _id: mongoose.Types.ObjectId(dataExists._id) },
+            { $set: { is_active: false } }
+          );
+          if (existingData) {
+            console.log(`Existing ${dataExists.contentType} has be Disabled`);
+          }
         }
-      }
       const newData = new Model(data);
       const result = await newData.save();
       if (result) {
@@ -31,14 +31,14 @@ module.exports = {
           { is_active: true },
           { keyName: 1, minutes: 1, seconds: 1 }
         );
-        let newData = resData
+        let formatData = resData
           .filter((object) => object.seconds !== undefined)
           .map((object) => ({
             key: object.keyName,
             time: object.minutes + ":" + object.seconds,
           }));
         let outputObject = {};
-        newData.forEach(({ key, time }) => {
+        formatData.forEach(({ key, time }) => {
           let [minutes, seconds] = (time || "0:0")
             .split(":")
             .map((val) => parseInt(val) || 0);
@@ -60,30 +60,23 @@ module.exports = {
             },
           };
           axios
-            .post(
-              "http://10.115.204.28:8066/api/vkyc/controlpanel/timing",
-              outputObject,
-              config
-            )
-            .then(
-              (response) => {
-                console.log("response", response.data);
-                if (response.data.status == "success") {
-                  res.send({
-                    success: true,
-                    msg: "Data submitted successfully",
-                  });
-                } else {
-                  res.send({
-                    success: false,
-                    msg: "Failed to Submit Data in Video KYC",
-                  });
-                }
-              },
-              (error) => {
-                console.log(error);
+          .post(
+            "http://10.115.204.28:8066/api/vkyc/controlpanel/timing",
+            outputObject,
+            config
+          )
+            .then(async function (response) {
+              if (response.data.status == 'success') {
+                res.send({ success: true, msg: 'Data submitted successfully', data: formatData });
+              } else {
+                await Model.updateOne(
+                  { _id: mongoose.Types.ObjectId(result._id) },
+                  { $set: { is_active: false } }
+                );
+                console.log(`Existing ${result.contentTypeEn} has been Disabled`);
+                res.send({ success: false, msg: 'Failed to Submit Data' });
               }
-            );
+            })
         } catch (error) {
           next(error);
         }
@@ -125,8 +118,8 @@ module.exports = {
       if (name) {
         query.name = new RegExp(name, "i");
       }
-      if (is_active) {
-        query.is_active = true;
+      if(is_active){
+        query.is_active = true
       }
       const result = await Model.aggregate([
         {
@@ -134,7 +127,7 @@ module.exports = {
         },
         {
           $sort: {
-            is_active: -1,
+            is_active: -1, 
           },
         },
         {
@@ -211,28 +204,22 @@ module.exports = {
               outputObject,
               config
             )
-            .then(
-              (response) => {
-                if (response.data.status == "succces") {
-                  res.send({
-                    success: true,
-                    msg: "Data submitted successfully",
-                  });
-                } else {
-                  res.send({
-                    success: false,
-                    msg: "Failed to Submit Data in Video KYC",
-                  });
-                }
-              },
-              (error) => {
-                console.log(error);
+            .then(async function (response) {
+              if (response.data.status == 'success') {
+                res.send({ success: true, msg: 'Data Updated Successfully', data: outputObject });
+              } else {
+                await Model.updateOne(
+                  { _id: mongoose.Types.ObjectId(id) },
+                  { $set: { is_active: false } }
+                );
+                console.log(`Existing ${result.contentTypeEn} has been Disabled`);
+                res.send({ success: false, msg: 'Failed to Update Data' });
               }
-            );
+            })
         } catch (error) {
           next(error);
         }
-      }
+      } 
     } catch (error) {
       if (error.isJoi === true) error.status = 422;
       next(error);

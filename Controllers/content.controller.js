@@ -9,29 +9,27 @@ module.exports = {
   create: async (req, res, next) => {
     try {
       const data = req.body;
-      data.created_by = req.user ? req.user : "unauth";
-      data.updated_by = req.user ? req.user : "unauth";
+      data.created_by = req.user ? req.user : 'unauth';
+      data.updated_by = req.user ? req.user : 'unauth';
       data.created_at = Date.now();
-      data.content_english = data.content_english.split(".");
-      data.content_hindi = data.content_hindi.split("।");
-
+  
       const dataExists = await Model.findOne({
         contentTypeEn: data.contentTypeEn,
         vkycTypeEn: data.vkycTypeEn,
         is_active: true,
       }).lean();
-
+  
       if (dataExists) {
         await Model.updateOne(
           { _id: mongoose.Types.ObjectId(dataExists._id) },
           { $set: { is_active: false } }
         );
-        console.log(`Existing ${dataExists.contentType} has been Disabled`);
+        console.log(`Existing ${dataExists.contentTypeEn} has been Disabled`);
       }
-
+      
       const newData = new Model(data);
       const result = await newData.save();
-
+      
       if (result) {
         const resData = await Model.find(
           { is_active: true },
@@ -44,111 +42,76 @@ module.exports = {
             content_hindi: 1,
           }
         );
-
-        let newData = {};
-        let assisted_do_and_donts = {};
-        let non_assisted_do_and_donts = {};
-        let assisted_terms_conditions = {};
-        let non_assisted_terms_conditions = {};
-        let assisted_prerequisites = {};
-        let non_assisted_prerequisites = {};
+        let newData = {
+          Assisted: {
+            do_and_donts: {},
+            terms_conditions: {},
+            prerequisites: {}
+          },
+          Non_Assisted: {
+            do_and_donts: {},
+            terms_conditions: {},
+            prerequisites: {}
+          }
+        };
+        
         for (const item of resData) {
-          if (item.vkycTypeEn == "Assisted") {
-            if (item.contentTypeEn === "Do's and Don'ts") {
-              assisted_do_and_donts = {
-                English: item.content_english,
-                Hindi: item.content_hindi,
-              };
-            }
-            if (item.contentTypeEn === "Terms and Condition") {
-              assisted_terms_conditions = {
-                English: item.content_english,
-                Hindi: item.content_hindi,
-              };
-            }
-            if (item.contentTypeEn === "Prerequisites") {
-              assisted_prerequisites = {
-                English: item.content_english,
-                Hindi: item.content_hindi,
-              };
-            }
+          const key = item.vkycTypeEn === "Assisted" ? "Assisted" : "Non_Assisted";
+          const contentTypeEn = item.contentTypeEn;
+        
+          if (contentTypeEn === "Do's and Don'ts") {
+            newData[key].do_and_donts = {
+              English: item.content_english[0] ? item.content_english[0].split('\n') : [],
+              Hindi: item.content_hindi[0] ? item.content_hindi[0].split('\n') : []
+            };
           }
-          newData = {
-            Assisted: {
-              do_and_donts: assisted_do_and_donts,
-              terms_conditions: assisted_terms_conditions,
-              prerequisites: assisted_prerequisites,
-            },
-          };
-          if (item.vkycTypeEn == "Non Assisted") {
-            if (item.contentTypeEn === "Do's and Don'ts") {
-              non_assisted_do_and_donts = {
-                English: item.content_english,
-                Hindi: item.content_hindi,
-              };
-            }
-            if (item.contentTypeEn === "Terms and Condition") {
-              non_assisted_terms_conditions = {
-                English: item.content_english,
-                Hindi: item.content_hindi,
-              };
-            }
-            if (item.contentTypeEn === "Prerequisites") {
-              non_assisted_prerequisites = {
-                English: item.content_english,
-                Hindi: item.content_hindi,
-              };
-            }
+          if (contentTypeEn === "Terms and Condition") {
+            newData[key].terms_conditions = {
+              English: item.content_english[0] ? item.content_english[0].split('\n') : [],
+              Hindi: item.content_hindi[0] ? item.content_hindi[0].split('\n') : []
+            };
           }
-          newData = {
-            ...newData,
-            Non_Assisted: {
-              do_and_donts: non_assisted_do_and_donts,
-              terms_conditions: non_assisted_terms_conditions,
-              prerequisites: non_assisted_prerequisites,
-            },
-          };
+          if (contentTypeEn === "Prerequisites") {
+            newData[key].prerequisites = {
+              English: item.content_english[0] ? item.content_english[0].split('\n') : [],
+              Hindi: item.content_hindi[0] ? item.content_hindi[0].split('\n') : []
+            };
+          }
         }
-
+        
         const config = {
           headers: {
             "x-parse-application-id": "MPSEDC_UAT",
             "x-parse-rest-api-key": "5eefa031319958005f14c3cba94",
-            "content-type": "application/json",
-          },
+            "content-type": "application/json"
+          }
         };
-
-        axios
-          .post(
-            "http://10.115.204.28:8066/api/vkyc/controlpanel/content",
-            newData,
-            config
-          )
-          .then(function (response) {
-            if (response.data.status == "success") {
-              res.send({
-                success: true,
-                msg: "Data submitted successfully",
-                data: newData,
-              });
+  
+        axios.post('http://10.115.204.28:8066/api/vkyc/controlpanel/content', newData, config)
+          .then(async function (response) {
+            if (response.data.status == 'success') {
+              res.send({ success: true, msg: 'Data submitted successfully', data: newData });
             } else {
-              res.send({ success: false, msg: "Failed to Submit Data" });
+              await Model.updateOne(
+                { _id: mongoose.Types.ObjectId(result._id) },
+                { $set: { is_active: false } }
+              );
+              console.log(`Existing ${result.contentTypeEn} has been Disabled`);
+              res.send({ success: false, msg: 'Failed to Submit Data' });
             }
           })
           .catch(function (error) {
             console.log(error);
-            res.send({ success: false, msg: "Failed to Submit Data" });
+            res.send({ success: false, msg: 'Failed to Submit Data' });
           });
+  
       } else {
         res.send({ success: false, msg: "Failed to insert data." });
       }
     } catch (error) {
       if (error.isJoi === true) error.status = 422;
       console.log(error);
-      res.send({
-        success: false,
-        msg: "An error occurred while processing the request",
-      });
+      res.send({ success: false, msg: 'An error occurred while processing the request' });
     }
   },
   get: async (req, res, next) => {
@@ -193,8 +156,6 @@ module.exports = {
       if (contentTypeEn) {
         query.contentTypeEn = contentTypeEn;
       }
-      console.log("is_active", is_active);
-      console.log("query", query);
       const result = await Model.aggregate([
         {
           $match: query,
@@ -231,8 +192,6 @@ module.exports = {
         throw createError.BadRequest("Invalid Parameters");
       }
       data.updated_at = Date.now();
-      data.content_english = data.content_english.split(".");
-      data.content_hindi = data.content_hindi.split("।");
 
       const result = await Model.findOne({ _id: mongoose.Types.ObjectId(id) });
       const newData = {
@@ -266,100 +225,64 @@ module.exports = {
             content_hindi: 1,
           }
         );
-        let newData = {};
-        let assisted_do_and_donts = {};
-        let non_assisted_do_and_donts = {};
-        let assisted_terms_conditions = {};
-        let non_assisted_terms_conditions = {};
-        let assisted_prerequisites = {};
-        let non_assisted_prerequisites = {};
+        let newData = {
+          Assisted: {
+            do_and_donts: {},
+            terms_conditions: {},
+            prerequisites: {}
+          },
+          Non_Assisted: {
+            do_and_donts: {},
+            terms_conditions: {},
+            prerequisites: {}
+          }
+        };
+        
         for (const item of resData) {
-          if (item.vkycTypeEn == "Assisted") {
-            if (item.contentTypeEn === "Do's and Don'ts") {
-              assisted_do_and_donts = {
-                English: item.content_english,
-                Hindi: item.content_hindi,
-              };
-            }
-            if (item.contentTypeEn === "Terms and Condition") {
-              assisted_terms_conditions = {
-                English: item.content_english,
-                Hindi: item.content_hindi,
-              };
-            }
-            if (item.contentTypeEn === "Prerequisites") {
-              assisted_prerequisites = {
-                English: item.content_english,
-                Hindi: item.content_hindi,
-              };
-            }
+          const key = item.vkycTypeEn === "Assisted" ? "Assisted" : "Non_Assisted";
+          const contentTypeEn = item.contentTypeEn;
+        
+          if (contentTypeEn === "Do's and Don'ts") {
+            newData[key].do_and_donts = {
+              English: item.content_english[0] ? item.content_english[0].split('\n') : [],
+              Hindi: item.content_hindi[0] ? item.content_hindi[0].split('\n') : []
+            };
           }
-          newData = {
-            Assisted: {
-              do_and_donts: assisted_do_and_donts,
-              terms_conditions: assisted_terms_conditions,
-              prerequisites: assisted_prerequisites,
-            },
-          };
-          if (item.vkycTypeEn == "Non Assisted") {
-            if (item.contentTypeEn === "Do's and Don'ts") {
-              non_assisted_do_and_donts = {
-                English: item.content_english,
-                Hindi: item.content_hindi,
-              };
-            }
-            if (item.contentTypeEn === "Terms and Condition") {
-              non_assisted_terms_conditions = {
-                English: item.content_english,
-                Hindi: item.content_hindi,
-              };
-            }
-            if (item.contentTypeEn === "Prerequisites") {
-              non_assisted_prerequisites = {
-                English: item.content_english,
-                Hindi: item.content_hindi,
-              };
-            }
+          if (contentTypeEn === "Terms and Condition") {
+            newData[key].terms_conditions = {
+              English: item.content_english[0] ? item.content_english[0].split('\n') : [],
+              Hindi: item.content_hindi[0] ? item.content_hindi[0].split('\n') : []
+            };
           }
-          newData = {
-            ...newData,
-            Non_Assisted: {
-              do_and_donts: non_assisted_do_and_donts,
-              terms_conditions: non_assisted_terms_conditions,
-              prerequisites: non_assisted_prerequisites,
-            },
-          };
+          if (contentTypeEn === "Prerequisites") {
+            newData[key].prerequisites = {
+              English: item.content_english[0] ? item.content_english[0].split('\n') : [],
+              Hindi: item.content_hindi[0] ? item.content_hindi[0].split('\n') : []
+            };
+          }
         }
         try {
           const config = {
             headers: {
-              "x-parse-application-id": "mdpinfraindiapvtltd_vcip_liv",
-              "x-parse-rest-api-key": "eb9d18a4478424e2cafccae3a61fb586",
-              "content-type": "application/json",
-            },
+              "x-parse-application-id": "MPSEDC_UAT",
+              "x-parse-rest-api-key": "5eefa031319958005f14c3cba94",
+              "content-type": "application/json"
+            }
           };
-          axios
-            .post(
-              "http://10.115.204.28:8066/api/vkyc/controlpanel/content",
-              newData,
-              config
-            )
-            .then(
-              function (response) {
-                console.log("response", response.data);
-                if (response.data.status == "succces") {
-                  res.send({
-                    success: true,
-                    msg: "Data submitted successfully",
-                  });
-                } else {
-                  res.send({ success: false, msg: "Failed to Submit Data" });
-                }
-              },
-              (error) => {
-                console.log(error);
+    
+          axios.post("http://10.115.204.28:8066/api/vkyc/controlpanel/content", newData, config)
+            .then(async function (response) {
+              if (response.data.status == 'success') {
+                res.send({ success: true, msg: 'Data submitted successfully', data: newData });
+              } else {
+                await Model.updateOne(
+                  { _id: mongoose.Types.ObjectId(id) },
+                  { $set: { is_active: false } }
+                );
+                console.log(`Existing ${newData.contentTypeEn} has been Disabled`);
+                res.send({ success: false, msg: 'Failed to Update Data' });
               }
-            );
+            })
         } catch (error) {
           next(error);
         }
@@ -400,12 +323,10 @@ module.exports = {
       if (!id) {
         throw createError.BadRequest("Invalid Parameters");
       }
-      console.log(id);
       const restored_at = Date.now();
       const oldData = await Model.findById({
         _id: mongoose.Types.ObjectId(id),
       });
-      console.log("oldData", oldData);
       if (oldData) {
         const newQuery = await Model.findOne({
           contentTypeEn: oldData.contentTypeEn,
@@ -418,7 +339,6 @@ module.exports = {
             { _id: mongoose.Types.ObjectId(newQuery._id) },
             { $set: { is_active: false } }
           );
-          console.log("result", result);
         }
       }
       const result = await Model.updateOne(

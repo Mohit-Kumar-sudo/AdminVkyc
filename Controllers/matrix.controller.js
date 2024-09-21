@@ -30,57 +30,44 @@ module.exports = {
           { is_active: true },
           { keyName: 1, percentage: 1 }
         );
-        let newData = [];
+        let formatData = [];
         for (const object of resData) {
           const transformed = object.keyName + ":" + object.percentage;
-          newData.push(transformed);
+          formatData.push(transformed);
         }
-        console.log("newData", newData);
-        let result = newData.reduce((acc, ele) => {
-          console.log("ele", ele);
+        let reqResult = formatData.reduce((acc, ele) => {
           let [key, value] = ele.split(":");
-          console.log("key", key);
-          console.log("value", value);
           acc[key] = value;
           return acc;
         }, {});
-        if (result) {
-          res.send({ success: true, msg: "Detail Fetched", data: result });
-        } else {
-          res.send({ success: false, msg: "Failed to Fetch Detail" });
-        }
         try {
           const config = {
             headers: {
-              "x-parse-application-id": "mdpinfraindiapvtltd_vcip_liv",
-              "x-parse-rest-api-key": "eb9d18a4478424e2cafccae3a61fb586",
+              "x-parse-application-id": "MPSEDC_UAT",
+              "x-parse-rest-api-key": "5eefa031319958005f14c3cba94",
               "content-type": "application/json",
             },
           };
           axios
             .post(
               "http://10.115.204.28:8066/api/vkyc/controlpanel/matching",
-              result,
+              reqResult,
               config
             )
-            .then(
-              (response) => {
-                if (response.data.status == "succces") {
-                  res.send({
-                    success: true,
-                    msg: "Data submitted successfully",
-                  });
-                } else {
-                  res.send({
-                    success: false,
-                    msg: "Failed to Submit Data in Video KYC",
-                  });
-                }
-              },
-              (error) => {
-                console.log(error);
+            .then(async function (response) {
+              if (response.data.status == "success") {
+                res.send({ success: true, msg: "Data submitted successfully" });
+              } else {
+                await Model.updateOne(
+                  { _id: mongoose.Types.ObjectId(newData._id) },
+                  { $set: { is_active: false } }
+                );
+                console.log(
+                  `Existing ${newData.contentTypeEn} has been Disabled`
+                );
+                res.send({ success: false, msg: "Failed to Submit Data" });
               }
-            );
+            });
         } catch (error) {
           next(error);
         }
@@ -170,19 +157,18 @@ module.exports = {
           { is_active: true },
           { keyName: 1, percentage: 1 }
         );
-        let newData = [];
+        let formatData = [];
         for (const object of resData) {
           const transformed =
             object.keyName + ":" + '"' + object.percentage + '"';
-          newData.push(transformed);
+          formatData.push(transformed);
         }
-        let newResult = newData.reduce((acc, ele) => {
+        let newResult = formatData.reduce((acc, ele) => {
           let [key, value] = ele.split(":");
           let [a, b] = value.replace(/^"|"$/g, "").split(":");
-          acc[key] = a + ":0";
+          acc[key] = a;
           return acc;
         }, {});
-
         try {
           const config = {
             headers: {
@@ -197,24 +183,24 @@ module.exports = {
               newResult,
               config
             )
-            .then(
-              (response) => {
-                if (response.data.status == "succces") {
-                  res.send({
-                    success: true,
-                    msg: "Data submitted successfully",
-                  });
-                } else {
-                  res.send({
-                    success: false,
-                    msg: "Failed to Submit Data in Video KYC",
-                  });
-                }
-              },
-              (error) => {
-                console.log(error);
+            .then(async function (response) {
+              if (response.data.status == "success") {
+                res.send({
+                  success: true,
+                  msg: "Data Updated successfully",
+                  data: newResult,
+                });
+              } else {
+                await Model.updateOne(
+                  { _id: mongoose.Types.ObjectId(id) },
+                  { $set: { is_active: false } }
+                );
+                console.log(
+                  `Existing ${result.contentTypeEn} has been Disabled`
+                );
+                res.send({ success: false, msg: "Failed to Update Data" });
               }
-            );
+            });
         } catch (error) {
           next(error);
         }
