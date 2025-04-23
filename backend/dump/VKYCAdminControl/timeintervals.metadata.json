@@ -1,1 +1,0 @@
-{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"}],"uuid":"43e86f24f6c940f68f1d8e6db76468ee","collectionName":"timeintervals","type":"collection"}
