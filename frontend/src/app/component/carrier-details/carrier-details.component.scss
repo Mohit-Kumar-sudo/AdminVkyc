@@ -1,0 +1,58 @@
+/* Custom button style (kept for consistency with other components) */
+.btn-primary {
+  transition: color 0.3s ease;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  border-radius: 8px;
+  background-color: #0399FA;
+  border-color: #0399FA;
+  padding: 10px 26px;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  color: black;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    left: 15%;
+    right: -20%;
+    top: -4%;
+    height: 150%;
+    width: 150%;
+    background-color: #0a1019;
+    transform: skewX(45deg) scale(0, 1);
+    z-index: -1;
+    transition: transform 0.5s ease-out;
+    border-radius: 2px;
+  }
+  
+  &:hover {
+    color: white;
+    
+    &::after {
+      transform: skewX(45deg) scale(1, 1);
+    }
+  }
+}
+
+/* Ensure content appears below fixed navbar */
+.container-fluid {
+  margin-top: 80px;
+}
+
+/* Mobile-specific adjustments */
+@media (max-width: 991.98px) {
+  .container-fluid {
+    margin-top: 70px;
+    padding-top: 1rem;
+  }
+  
+  .card-title {
+    font-size: 1.1rem;
+  }
+  
+  .card-text {
+    font-size: 0.9rem;
+  }
+}

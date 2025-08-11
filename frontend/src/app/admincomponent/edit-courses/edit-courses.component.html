@@ -1,0 +1,83 @@
+<div class="content-page">
+    <div class="content">
+        <!-- Start Content-->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box">
+                        <div class="page-title-right">
+                            <a class="btn btn-primary btn-sm" routerLink="/courses">Courses</a>
+                        </div>
+                        <h4 class="page-title">Edit Course</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <form [formGroup]="myForm" (ngSubmit)="uploadImage()" id="course_form">
+                    <div class="row">
+                        <div class="form-group col-lg-12">
+                            <label for="title">Course Name ( <span class="text-danger">required *</span>)</label>
+                            <input type="text" class="form-control" id="title" formControlName="title" required>
+                        </div>
+                        <div class="form-group col-lg-12">
+                            <label for="title">Course Skill ( <span class="text-danger">required *</span>)</label>
+                            <input type="text" class="form-control" id="skill" formControlName="skill" required>
+                        </div>
+                        <div class="form-group col-lg-12">
+                            <label for="title">Course Duration ( <span class="text-danger">required 3 Months*</span>)</label>
+                            <input type="text" class="form-control" id="duration" formControlName="duration" required>
+                        </div>
+                        <div class="form-group col-lg-12">
+                            <label for="description">Course Heading 1( <span class="text-danger">required *</span>)</label>
+                            <textarea class="form-control" id="description" formControlName="heading" rows="5" required></textarea>
+                            <p class="text-danger">Max Character Count: 600 Characters</p>
+                        </div>
+                        <div class="form-group col-lg-12">
+                            <label for="description">Course Heading 2( <span class="text-danger">required *</span>)</label>
+                            <textarea class="form-control" id="description" formControlName="heading0" rows="5" required></textarea>
+                            <p class="text-danger">Max Character Count: 600 Characters</p>
+                        </div>
+                        <div class="form-group col-lg-12">
+                            <label for="description">Course Heading 3( <span class="text-danger">required *</span>)</label>
+                            <textarea class="form-control" id="description" formControlName="heading1" rows="5" required></textarea>
+                            <p class="text-danger">Max Character Count: 600 Characters</p>
+                        </div>
+                        <div class="form-group col-lg-12">
+                            <label for="description">Course Description 1( <span class="text-danger">required *</span>)</label>
+                            <textarea class="form-control" id="description" formControlName="description" rows="5" required></textarea>
+                            <p class="text-danger">Max Character Count: 600 Characters</p>
+                        </div>
+                        <div class="form-group col-lg-12">
+                            <label for="description">Course Description 2( <span class="text-danger">required *</span>)</label>
+                            <textarea class="form-control" id="description" formControlName="description0" rows="5" required></textarea>
+                            <p class="text-danger">Max Character Count: 600 Characters</p>
+                        </div>
+                        <div class="form-group col-lg-12">
+                            <label for="description">Course Description 3( <span class="text-danger">required *</span>)</label>
+                            <textarea class="form-control" id="description" formControlName="description1" rows="5" required></textarea>
+                            <p class="text-danger">Max Character Count: 600 Characters</p>
+                        </div>
+                        <div class="preview-image" *ngIf="selectedCourse.image">
+                            <img 
+                            style="width: 200px; height: 200px;" 
+                            [src]="(selectedCourse.image.startsWith('http') || selectedCourse.image.startsWith('/')) ? selectedCourse.image : env + '/'  + selectedCourse.image" 
+                            alt="Current Blog Image">
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <label for="image">Course Cover Image ( <span class="text-danger">Change Image If Required *</span>)</label>
+                            <div class="custom-dropzone" ngx-dropzone [accept]="'image/*'" (change)="onSelect($event)">
+                                <ngx-dropzone-label>Drag and drop an image here, or click to select an image</ngx-dropzone-label>
+                                <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" [removable]="true" *ngFor="let f of image" [file]="f" (removed)="onRemove(f)">
+                                </ngx-dropzone-image-preview>
+                            </div><br>
+                        </div>
+                        <hr>
+                        <div class="d-flex justify-content-center">
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div> <!-- container -->
+    </div> <!-- content -->
+</div>

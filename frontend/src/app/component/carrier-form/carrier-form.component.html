@@ -1,0 +1,179 @@
+<br><br><br>
+<div class="min-vh-100 py-3 py-md-5" style="margin-top: 80px; font-family: 'Roboto', Arial, sans-serif;">
+  <div class="container">
+    <div class="bg-white rounded-4 shadow-lg overflow-hidden mx-auto" style="max-width: 1200px; background: linear-gradient(135deg, #ffffff 50%, #ffda66 50%);">
+      <div class="row g-0">
+        
+        <!-- Left side with image and title -->
+        <div class="col-lg-6 d-flex flex-column align-items-center justify-content-center p-3 p-md-4 p-lg-5 position-relative" 
+             style="min-height: 300px; background: linear-gradient(135deg, transparent 50%, #ffda66 50%);">
+          
+          <!-- Background decorative elements -->
+          <div class="position-absolute rounded-circle d-none d-lg-block" 
+               style="width: 400px; height: 400px; left: -150px; top: -100px; background: linear-gradient(135deg, #e0f7fa, #80deea); z-index: 1; opacity: 0.5;"></div>
+          <div class="position-absolute rounded-circle d-none d-md-block" 
+               style="width: 200px; height: 200px; right: -50px; bottom: 25px; background: linear-gradient(135deg, #fff9c4, #ffee58); z-index: 1; opacity: 0.5;"></div>
+          <div class="position-absolute rounded-circle d-none d-lg-block" 
+               style="width: 80px; height: 80px; left: 30px; bottom: 10px; background: linear-gradient(135deg, #f3e5f5, #ce93d8); z-index: 1; opacity: 0.5;"></div>
+          
+          <h1 class="display-4 display-md-3 fw-bold mb-3 mb-md-4 text-center position-relative" style="z-index: 2;">
+            <span class="bg-primary text-white px-2 px-md-3 py-1 rounded d-inline-block" style="transform: rotate(-2deg); font-size: 0.8em;">Shape</span> Your Career
+          </h1>
+          
+          <div class="position-relative mt-2 mt-md-3" style="z-index: 2;">
+            <div class="position-relative" style="width: 150px; height: 150px;">
+              <img src="assets/images/carrier-form.webp" alt="Career profile" 
+                   class="w-100 h-100 rounded-circle border border-3 border-md-5 border-white shadow object-fit-cover">
+              
+              <!-- Floating icons around the profile image -->
+              <div class="position-absolute bg-primary text-white rounded-circle d-flex align-items-center justify-content-center fw-bold shadow-sm" 
+                   style="width: 30px; height: 30px; top: -5px; left: 50%; transform: translateX(-50%); z-index: 3; font-size: 0.8rem;">$</div>
+              <div class="position-absolute bg-warning text-white rounded-circle d-flex align-items-center justify-content-center shadow-sm" 
+                   style="width: 30px; height: 30px; top: 30%; right: -10px; z-index: 3; font-size: 0.7rem;">
+                <i class="fas fa-chart-line"></i>
+              </div>
+              <div class="position-absolute bg-danger text-white rounded-circle d-flex align-items-center justify-content-center shadow-sm" 
+                   style="width: 30px; height: 30px; bottom: -5px; left: 50%; transform: translateX(-50%); z-index: 3; font-size: 0.7rem;">
+                <i class="fas fa-briefcase"></i>
+              </div>
+              <div class="position-absolute bg-success text-white rounded-circle d-flex align-items-center justify-content-center shadow-sm" 
+                   style="width: 30px; height: 30px; top: 30%; left: -10px; z-index: 3; font-size: 0.7rem;">
+                <i class="fas fa-network-wired"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Right side with form -->
+        <div class="col-lg-6 p-2 p-md-3 p-lg-4">
+          <div class="bg-white rounded-3 shadow-sm h-100 p-3 p-md-4 position-relative overflow-auto" style="max-height: 85vh;">
+            <h2 class="h4 h-md-3 fw-bold mb-2 text-dark">Apply For This Position</h2>
+            <p class="text-muted mb-3 mb-md-4 small">Fill in your details to start your application process</p>
+            
+            <form [formGroup]="applicationForm" (ngSubmit)="submitApplication()">
+              
+              <!-- Name field -->
+              <div class="mb-2 mb-md-3">
+                <label for="applicantName" class="form-label fw-medium text-secondary small">Name</label>
+                <input type="text" class="form-control form-control-sm form-control-md-default rounded-2 bg-light border-light" 
+                       id="applicantName" formControlName="name" placeholder="John Doe">
+                <div *ngIf="applicationForm.get('name')?.invalid && 
+                           (applicationForm.get('name')?.dirty || applicationForm.get('name')?.touched)"
+                     class="text-danger small mt-1">
+                  Name is required
+                </div>
+              </div>
+              
+              <!-- Email field -->
+              <div class="mb-2 mb-md-3">
+                <label for="email" class="form-label fw-medium text-secondary small">E-Mail</label>
+                <input type="email" class="form-control form-control-sm form-control-md-default rounded-2 bg-light border-light" 
+                       id="email" formControlName="email" placeholder="example@mail.com">
+                <div *ngIf="applicationForm.get('email')?.invalid && 
+                           (applicationForm.get('email')?.dirty || applicationForm.get('email')?.touched)"
+                     class="text-danger small mt-1">
+                  Valid email required
+                </div>
+              </div>
+              
+              <!-- Contact Number field -->
+              <div class="mb-2 mb-md-3">
+                <label for="number" class="form-label fw-medium text-secondary small">Contact Number</label>
+                <div class="input-group input-group-sm input-group-md-default">
+                  <select class="form-select bg-light border-light rounded-start-2" 
+                          style="max-width: 120px;" formControlName="countryCode">
+                    <option value="+91">India (+91)</option>
+                    <option value="+1">USA (+1)</option>
+                    <option value="+44">UK (+44)</option>
+                  </select>
+                  <input type="tel" class="form-control bg-light border-light rounded-end-2" 
+                         id="number" formControlName="number" placeholder="0000000000">
+                </div>
+                <div *ngIf="applicationForm.get('number')?.invalid && 
+                           (applicationForm.get('number')?.dirty || applicationForm.get('number')?.touched)"
+                     class="text-danger small mt-1">
+                  Valid 10-digit number required
+                </div>
+              </div>
+              
+              <!-- LinkedIn Profile field -->
+              <div class="mb-2 mb-md-3">
+                <label for="linkedin" class="form-label fw-medium text-secondary small">LinkedIn Profile</label>
+                <input type="text" class="form-control form-control-sm form-control-md-default rounded-2 bg-light border-light" 
+                       id="linkedin" formControlName="linkedin" placeholder="linkedin.com/in/username">
+              </div>
+              
+              <!-- Category & Interest field -->
+              <div class="mb-2 mb-md-3">
+                <label for="category" class="form-label fw-medium text-secondary small">Category & Interest for Job</label>
+                <select class="form-select form-select-sm form-select-md-default bg-light border-light rounded-2" 
+                        formControlName="category">
+                  <option value="IT">IT</option>
+                  <option value="Digital Marketing">Digital Marketing</option>
+                  <option value="Web Development">Web Development</option>
+                </select>
+              </div>
+              
+              <!-- Experience field -->
+              <div class="mb-2 mb-md-3">
+                <label for="experience" class="form-label fw-medium text-secondary small">Year Of Experience</label>
+                <input type="text" class="form-control form-control-sm form-control-md-default rounded-2 bg-light border-light" 
+                       id="experience" formControlName="experience" placeholder="e.g. 2 years">
+                <div *ngIf="applicationForm.get('experience')?.invalid && 
+                           (applicationForm.get('experience')?.dirty || applicationForm.get('experience')?.touched)"
+                     class="text-danger small mt-1">
+                  Experience is required
+                </div>
+              </div>
+              
+              <!-- Resume/CV upload -->
+              <div class="mb-3 mb-md-4">
+                <label for="resumeUpload" class="form-label fw-medium text-secondary small">Attachment CV</label>
+                <div class="position-relative bg-light border border-light rounded-2 d-flex align-items-center" 
+                     style="height: 40px; padding: 0 10px;">
+                  <input type="file" class="form-control form-control-sm border-0 bg-transparent" 
+                         id="resumeUpload" (change)="onFileSelected($event)" accept=".pdf,.doc,.docx">
+                </div>
+                
+                <div *ngIf="selectedFileName" class="mt-2">
+                  <span class="text-success small">Selected: {{selectedFileName}}</span>
+                  
+                  <div *ngIf="uploadProgress !== null" class="mt-2">
+                    <div class="progress" style="height: 6px;">
+                      <div class="progress-bar" [style.width.%]="uploadProgress"
+                           [class.bg-success]="uploadProgress === 100">
+                      </div>
+                    </div>
+                    <small class="d-block text-center text-muted mt-1">
+                      {{ uploadProgress === 100 ? 'Processing...' : 'Uploading: ' + uploadProgress + '%' }}
+                    </small>
+                  </div>
+                  
+                  <div *ngIf="uploadError" class="text-danger small mt-2">
+                    {{ uploadError }}
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Submit button -->
+              <div class="text-center">
+                <button type="submit" 
+                        class="btn primary-btn3 fw-medium position-relative overflow-hidden px-4 px-md-5 py-2 py-md-3 rounded-pill w-100 w-md-auto"
+                        [disabled]="applicationForm.invalid || isSubmitting"
+                        style="background-color: #0095ff; border: none; color: black;">
+                  <span *ngIf="!isSubmitting">Submit Application</span>
+                  <span *ngIf="isSubmitting">
+                    <i class="fas fa-spinner fa-spin me-2"></i>Processing...
+                  </span>
+                </button>
+              </div>
+              
+            </form>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+<br><br><br>

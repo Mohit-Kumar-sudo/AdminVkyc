@@ -1,0 +1,102 @@
+// header.component.scss
+/* Preloader styles (kept as is since it's minimal) */
+.preloader {
+  height: 100vh;
+  width: 100vw;
+  background: #FFF;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  z-index: 1050;
+  top: 0;
+  overflow-y: hidden;
+}
+
+.loader {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #0399FA;
+  position: relative;
+}
+
+.loader:before,
+.loader:after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  inset: 0;
+  background: #ffc107;
+  transform: rotate(0deg) translate(30px);
+  animation: rotate 1s ease infinite;
+}
+
+.loader:after {
+  animation-delay: 0.5s
+}
+
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg) translate(30px)
+  }
+}
+
+/* Mega Menu Customizations */
+.mega-menu {
+  background-color: #0d2b4b;
+  margin-top: 0;
+  
+  .dropdown-item {
+    color: white;
+    transition: all 0.2s ease;
+    
+    &:hover {
+      color: #0d6efd !important;
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+  }
+}
+
+/* Mobile Bottom Bar */
+.a {
+  color: #fff !important;
+}
+.d-lg-none.fixed-bottom {
+  background-color: #ffffff !important;
+  
+  .text-white {
+    color: #fff !important;
+  }
+}
+
+/* Responsive adjustments */
+@media (min-width: 992px) {
+  .nav-item.dropdown:hover .mega-menu {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  
+  .nav-item.dropdown:hover .nav-link {
+    color: #0399fa;
+  }
+  
+  .mega-menu {
+    position: absolute;
+    left: 0;
+    width: 100vw;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    padding: 2rem 4rem;
+  }
+}
+
+/* Ensure proper spacing for fixed navbar */
+body {
+  padding-top: 70px;
+}
