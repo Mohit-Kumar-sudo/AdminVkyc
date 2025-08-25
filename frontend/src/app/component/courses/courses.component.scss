@@ -1,0 +1,159 @@
+/* HERO SECTION */
+.hero-section {
+    background: linear-gradient(to bottom, #0399FA, #FFFFFF);
+    padding: 100px 0;
+}
+
+/* HERO IMAGE WITH SHADOW */
+.hero-image {
+    max-width: 100%;
+    height: auto;
+}
+
+@media (max-width: 768px) {
+    .hero-image {
+        max-width: 80%;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero-image {
+        max-width: 100%;
+        height: 50vh;
+    }
+}
+
+/* SLIDER CONTAINER */
+.slider-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    overflow: hidden;
+    padding: 0 40px;
+}
+
+/* CARDS SLIDER */
+.cards-slider {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    user-select: none;
+    touch-action: pan-y;
+}
+
+.slider-track {
+    display: flex;
+    transition: transform 0.3s ease-out;
+    will-change: transform;
+}
+
+.course-card-wrapper {
+    flex: 0 0 auto;
+    width: calc(100% / 3); /* Default for desktop */
+    padding: 0 15px;
+    box-sizing: border-box;
+}
+
+/* SLIDER NAVIGATION BUTTONS */
+.slider-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: white;
+    border: none;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    z-index: 10;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.slider-btn:hover {
+    background: #f8f9fa;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+.slider-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.slider-btn-prev {
+    left: 0;
+}
+
+.slider-btn-next {
+    right: 0;
+}
+
+/* PAGINATION DOTS */
+.slider-pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #ccc;
+    margin: 0 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.pagination-dot.active {
+    background: #0399FA;
+    transform: scale(1.2);
+}
+
+/* COURSE CARDS WITH 3D EFFECT */
+.course-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2); /* Smooth drop shadow */
+    padding: 20px;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    height: 100%;
+}
+
+/* 3D Lift Effect on Hover */
+.course-card:hover {
+    transform: translateY(-8px); /* Slightly lifts up */
+    box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.3); /* Stronger shadow for 3D effect */
+}
+
+/* COURSE IMAGE WITH SHADOW */
+.course-image {
+    width: 100%;
+    height: 180px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2); /* Image shadow */
+}
+
+/* RESPONSIVE STYLES */
+@media (max-width: 992px) {
+    .course-card-wrapper {
+        width: 50%; /* 2 cards per row */
+    }
+}
+
+@media (max-width: 768px) {
+    .course-card-wrapper {
+        width: 100%; /* 1 card per row */
+    }
+    
+    .slider-container {
+        padding: 0 30px;
+    }
+}

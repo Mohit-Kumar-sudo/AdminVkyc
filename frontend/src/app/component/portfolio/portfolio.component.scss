@@ -1,0 +1,54 @@
+.gallery-part {
+  // Only necessary custom styles
+  margin-top: 80px;
+  
+  // If you need to adjust the thumbnail height on mobile
+  @media (max-width: 768px) {
+    img[style*="height: 120px"] {
+      height: 100px !important;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    img[style*="height: 120px"] {
+      height: 80px !important;
+    }
+  }
+}
+/* Custom button style (kept for consistency with other components) */
+.btn-primary {
+  transition: color 0.3s ease;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  border-radius: 8px;
+  background-color: #0399FA;
+  border-color: #0399FA;
+  padding: 10px 26px;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  color: black;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    left: 15%;
+    right: -20%;
+    top: -4%;
+    height: 150%;
+    width: 150%;
+    background-color: #0a1019;
+    transform: skewX(45deg) scale(0, 1);
+    z-index: -1;
+    transition: transform 0.5s ease-out;
+    border-radius: 2px;
+  }
+  
+  &:hover {
+    color: white;
+    
+    &::after {
+      transform: skewX(45deg) scale(1, 1);
+    }
+  }
+}

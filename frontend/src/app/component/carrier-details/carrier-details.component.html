@@ -1,0 +1,222 @@
+<br><br>
+<div class="container-fluid mt-5 pt-4">
+  <div class="row g-3">
+    <!-- Filter Toggle Button (Mobile Only) -->
+    <div class="col-12 d-lg-none mb-3">
+      <button class="btn btn-outline-primary w-100" (click)="showMobileFilters = !showMobileFilters">
+        <i class="bi bi-funnel me-2"></i>Filters
+      </button>
+    </div>
+
+    <!-- Left Sidebar (Filters) -->
+    <div class="col-lg-3 col-md-4" [class.d-none]="!showMobileFilters && isMobile">
+      <div class="card shadow-sm sticky-top" style="top: 80px;">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="mb-0">Filters</h5>
+            <button class="btn btn-primary btn-sm btn-outline-secondary"  style="background-color: #ffc107;" (click)="clearFilters()">Clear</button>
+          </div>
+
+          <!-- Employment Type Filter -->
+          <div class="mb-4">
+            <h6 class="fw-bold mb-2">Employment Type</h6>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="Full-time" 
+                     [checked]="filters.employmentType.FullTime"
+                     (change)="filters.employmentType.FullTime = !filters.employmentType.FullTime">
+              <label class="form-check-label" for="Full-time">Full Time</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="contract" 
+                     [checked]="filters.employmentType.contract"
+                     (change)="filters.employmentType.contract = !filters.employmentType.contract">
+              <label class="form-check-label" for="contract">Contract</label>
+            </div>
+          </div>
+
+          <!-- Location Filter -->
+          <div class="mb-4">
+            <h6 class="fw-bold mb-2">Location</h6>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="onsite" 
+                     [checked]="filters.location.onsite"
+                     (change)="filters.location.onsite = !filters.location.onsite">
+              <label class="form-check-label" for="onsite">Onsite</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="remote" 
+                     [checked]="filters.location.remote"
+                     (change)="filters.location.remote = !filters.location.remote">
+              <label class="form-check-label" for="remote">Remote</label>
+            </div>
+          </div>
+
+          <!-- Experience Level Filter -->
+          <div class="mb-4">
+            <h6 class="fw-bold mb-2">Experience Level</h6>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="zeroToOne" 
+                     [checked]="filters.experienceLevel.zeroToOne"
+                     (change)="filters.experienceLevel.zeroToOne = !filters.experienceLevel.zeroToOne">
+              <label class="form-check-label" for="zeroToOne">0 to 1 Year</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="oneToThree" 
+                     [checked]="filters.experienceLevel.oneToThree"
+                     (change)="filters.experienceLevel.oneToThree = !filters.experienceLevel.oneToThree">
+              <label class="form-check-label" for="oneToThree">1 to 3 Years</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="threeToFive" 
+                     [checked]="filters.experienceLevel.threeToFive"
+                     (change)="filters.experienceLevel.threeToFive = !filters.experienceLevel.threeToFive">
+              <label class="form-check-label" for="threeToFive">3 to 5 Years</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="fiveToEight" 
+                     [checked]="filters.experienceLevel.fiveToEight"
+                     (change)="filters.experienceLevel.fiveToEight = !filters.experienceLevel.fiveToEight">
+              <label class="form-check-label" for="fiveToEight">5 to 8 Years</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="tenPlus" 
+                     [checked]="filters.experienceLevel.tenPlus"
+                     (change)="filters.experienceLevel.tenPlus = !filters.experienceLevel.tenPlus">
+              <label class="form-check-label" for="tenPlus">10+ Years</label>
+            </div>
+          </div>
+
+          <button class="btn btn-primary w-100" (click)="applyFilters(); showMobileFilters = false">
+            Apply Filters
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Side (Job Listings) -->
+    <div class="col-lg-9 col-md-8">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h4 class="mb-0 text-light">Recommended <span class="badge bg-primary">Jobs</span></h4>
+        <div class="dropdown">
+          <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+            Sort by: Last Updated
+          </button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Last Updated</a></li>
+            <li><a class="dropdown-item" href="#">Newest First</a></li>
+            <li><a class="dropdown-item" href="#">Experience Level</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Loading State -->
+      <div *ngIf="isLoading" class="text-center py-5">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+        <p class="mt-2">Loading job listings...</p>
+      </div>
+
+      <!-- Error State -->
+      <div *ngIf="error" class="alert alert-danger" role="alert">
+        {{ error }}
+      </div>
+
+      <!-- Job Listings -->
+      <div *ngIf="!isLoading && !error" class="row g-3">
+        <!-- No Results -->
+        <div *ngIf="jobListings.length === 0" class="col-12">
+          <div class="alert alert-info">
+            No job listings match your filters.
+          </div>
+        </div>
+
+        <div *ngFor="let job of jobListings" class="col-12">
+          <div class="card shadow-sm h-100">
+            <div class="card-body">
+            <!-- First Row: Location Badge and Job Title -->
+              <div class="row g-0 mb-3">
+                <div class="col-12">
+                  <span class="badge bg-info text-dark mb-2">{{ job.location }}</span>
+                  <h5 class="card-title mb-0">{{ job.title }}</h5>
+                </div>
+              </div>
+      
+            <!-- Second Row: Job Description (Full Width) -->
+              <div class="row g-0 mb-3">
+                <div class="col-12">
+                  <p class="card-text text-muted text-justify mb-0" style="line-height: 1.6;">{{ job.description }}</p>
+                </div>
+              </div>
+      
+            <!-- Third Row: Experience Info -->
+              <div class="row g-0 mb-3">
+                <div class="col-12">
+                  <div class="d-flex flex-wrap gap-3">
+                    <span class="text-muted"><small>Experience:</small></span>
+                    <span class="text-muted">{{ job.experienceLevel }}</span>
+                    <span class="text-muted">{{ job.employmentType }}</span>
+                  </div>
+                </div>
+              </div>
+      
+            <!-- Fourth Row: Status and Actions -->
+              <div class="row g-0">
+                <div class="col-12">
+                  <div class="d-flex justify-content-between align-items-center">
+                  <!-- Status -->
+                    <div class="d-flex align-items-center">
+                      <span class="badge bg-success me-2" *ngIf="job.status === 'Applied'">✓</span>
+                      <span>{{ job.status }}</span>
+                    </div>
+            
+                  <!-- Days Ago and Buttons -->
+                    <div class="d-flex align-items-center gap-2 gap-md-3">
+                      <span class="text-muted d-none d-sm-inline"><small>{{ job.daysAgo }} days ago</small></span>
+                      <button class="btn btn-primary btn-sm d-none d-md-inline" (click)="viewDetails(job.id)">View Details</button>
+                      <button class="btn btn-primary btn-sm d-md-none" style="font-size: 0.7rem;">View</button>
+                      <button class="btn btn-primary btn-sm d-none d-md-inline" style="background-color: #ffc107; border-color: #ffc107;" routerLink="/carrier-form">Apply</button>
+                      <button class="btn btn-primary btn-sm d-md-none" style="background-color: #ffc107; border-color: #ffc107; font-size: 0.7rem;" routerLink="/carrier-form">Apply</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pagination -->
+      <div *ngIf="totalPages > 0" class="mt-4">
+        <nav aria-label="Job listings pagination">
+          <ul class="pagination justify-content-center">
+            <li class="page-item" [class.disabled]="currentPage === 1">
+              <a class="page-link" href="#" (click)="$event.preventDefault(); previousPage()">
+                Previous
+              </a>
+            </li>
+            
+            <ng-container *ngFor="let page of getPaginationArray()">
+              <li class="page-item" [class.active]="page === currentPage">
+                <a class="page-link" href="#" (click)="$event.preventDefault(); goToPage(page)">
+                  {{ page }}
+                </a>
+              </li>
+            </ng-container>
+            
+            <li class="page-item" [class.disabled]="currentPage === totalPages">
+              <a class="page-link" href="#" (click)="$event.preventDefault(); nextPage()">
+                Next
+              </a>
+            </li>
+          </ul>
+        </nav>
+        
+        <div class="text-center text-muted">
+          Showing page {{ currentPage }} of {{ totalPages }} ({{ totalItems }} total jobs)
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<br><br><br>

@@ -1,0 +1,113 @@
+<main class="hero-section">
+    <div class="container py-5">
+        <div class="row align-items-center">
+            <!-- Left Side: Text Content -->
+            <div class="col-md-6 text-center text-md-start">
+                <h1 class="text-dark">Unlock Your Potential With Our <br><span class="fw-bolder text-white">Courses & Bundles</span></h1>
+                <p class="text-dark">Improve Your Skills With Our Course Bundles. Learn At Your Own Speed And Grow In Your Career!</p>
+                <button class="btn btn-warning fw-bold">Join For Free</button>
+            </div>
+
+            <!-- Right Side: Image -->
+            <div class="col-md-6 text-center">
+                <img src="assets/images/wing.webp" alt="Courses & Bundles" class="img-fluid hero-image">
+            </div>
+        </div>
+    </div>
+
+    <div class="container text-center py-4">
+        <h1 class="fw-semibold">Unlock Your Future With <span class="fw-bolder text-white">Top-Quality Courses</span> At <span class="fw-bolder text-white">Unbeatable Prices</span><br>Learn More For Less!</h1>
+    </div>
+
+    <!-- Course Cards Slider Section -->
+    <div class="container py-5">
+        <div class="slider-container">
+            <button class="slider-btn slider-btn-prev" (click)="prevSlide()" [disabled]="currentIndex === 0">
+                <i class="bi bi-chevron-left"></i>
+            </button>
+            
+            <div class="cards-slider" 
+                 (mousedown)="touchStart($event)" 
+                 (touchstart)="touchStart($event)"
+                 (mousemove)="touchMove($event)" 
+                 (touchmove)="touchMove($event)"
+                 (mouseup)="touchEnd()" 
+                 (touchend)="touchEnd()"
+                 (mouseleave)="touchEnd()">
+                <div class="slider-track" [ngStyle]="{'transform': 'translateX(' + currentTranslate + 'px)'}">
+                    <!-- Course Card 1 -->
+                    <div class="course-card-wrapper">
+                        <div class="course-card text-center p-4">
+                            <div class="course-image" style="background-image: url('assets/images/degital-marketing-1.png');"></div>
+                            <h5 class="text-primary mt-3 fw-bolder">Digital Marketing</h5>
+                            <p><b class="text-primary">Skills You Gain:</b><br>Improve Your Skills With Our Course Bundles.<br><b class="text-primary fw-bold">Beginner To Advanced</b></p>
+                            <a routerLink="/digital-marketing" class="btn btn-warning fw-bold">Learn More</a>
+                        </div>
+                    </div>
+
+                    <!-- Course Card 2 -->
+                    <div class="course-card-wrapper">
+                        <div class="course-card text-center p-4">
+                            <div class="course-image" style="background-image: url('assets/images/web-development-1.png');"></div>
+                            <h5 class="text-primary mt-3 fw-bolder">Web Development</h5>
+                            <p><b class="text-primary">Skills You Gain:</b><br>Improve Your Skills With Our Course Bundles.<br><b class="text-primary fw-bold">Beginner To Advanced</b></p>
+                            <a routerLink="/web-development" class="btn btn-warning fw-bold">Learn More</a>
+                        </div>
+                    </div>
+
+                    <!-- Course Card 3 -->
+                    <div class="course-card-wrapper">
+                        <div class="course-card text-center p-4">
+                            <div class="course-image" style="background-image: url('assets/images/cybersecurity.png');"></div>
+                            <h5 class="text-primary mt-3 fw-bolder">Cyber Security</h5>
+                            <p><b class="text-primary">Skills You Gain:</b><br>Improve Your Skills With Our Course Bundles.<br><b class="text-primary fw-bold">Beginner To Advanced</b></p>
+                            <a routerLink="/cyber-security" class="btn btn-warning fw-bold">Learn More</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Course Card 4 -->
+                    <div class="course-card-wrapper">
+                        <div class="course-card text-center p-4">
+                            <div class="course-image" style="background-image: url('assets/images/data-science.png');"></div>
+                            <h5 class="text-primary mt-3 fw-bolder">Data Science</h5>
+                            <p><b class="text-primary">Skills You Gain:</b><br>Improve Your Skills With Our Course Bundles.<br><b class="text-primary fw-bold">Beginner To Advanced</b></p>
+                            <a routerLink="/data-science" class="btn btn-warning fw-bold">Learn More</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Course Card 5 -->
+                    <div class="course-card-wrapper">
+                        <div class="course-card text-center p-4">
+                            <div class="course-image" style="background-image: url('assets/images/ui-ux.png');"></div>
+                            <h5 class="text-primary mt-3 fw-bolder">UI/UX Design</h5>
+                            <p><b class="text-primary">Skills You Gain:</b><br>Improve Your Skills With Our Course Bundles.<br><b class="text-primary fw-bold">Beginner To Advanced</b></p>
+                            <a routerLink="/ui-ux-design" class="btn btn-warning fw-bold">Learn More</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Course Card 6 -->
+                    <div class="course-card-wrapper">
+                        <div class="course-card text-center p-4">
+                            <div class="course-image" style="background-image: url('assets/images/cloud-computing.png');"></div>
+                            <h5 class="text-primary mt-3 fw-bolder">Cloud Computing</h5>
+                            <p><b class="text-primary">Skills You Gain:</b><br>Improve Your Skills With Our Course Bundles.<br><b class="text-primary fw-bold">Beginner To Advanced</b></p>
+                            <a routerLink="/cloud-computing" class="btn btn-warning fw-bold">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="slider-btn slider-btn-next" (click)="nextSlide()" [disabled]="currentIndex === maxIndex">
+                <i class="bi bi-chevron-right"></i>
+            </button>
+        </div>
+        
+        <!-- Pagination Dots -->
+        <div class="slider-pagination">
+            <span *ngFor="let _ of [].constructor(maxIndex + 1); let i = index" 
+                  class="pagination-dot" 
+                  [class.active]="i === currentIndex"
+                  (click)="goToSlide(i)"></span>
+        </div>
+    </div>
+</main>

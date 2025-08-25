@@ -1,0 +1,90 @@
+<div class="content-page">
+    <div class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="page-title-box">
+              <div class="page-title-right">
+                <a class="btn btn-primary btn-sm" routerLink="/carriers">Job List</a>
+              </div>
+              <h4 class="page-title">Add Job</h4>
+            </div>
+          </div>
+        </div>
+  
+        <div class="container">
+          <form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm)" id="blog_form">
+            <div class="row">
+              <div class="form-group col-lg-12">
+                <label for="title">Job Title ( <span class="text-danger">required *</span>)</label>
+                <input type="text" class="form-control" id="tijobTitletle" formControlName="jobTitle" />
+              </div>
+
+              <div class="form-group col-lg-12">
+                <label for="title">JOb Role ( <span class="text-danger">required *</span>)</label>
+                <input type="text" class="form-control" id="jobRole" formControlName="jobRole" />
+              </div>
+
+              <div class="form-group col-lg-12">
+                <label for="title">JOb Duration ( <span class="text-danger">required *</span>)</label>
+                <input type="text" class="form-control" id="jobDuration" formControlName="jobDuration" />
+              </div>
+
+              <div class="form-group col-lg-12">
+                <label for="description">JOb Location ( <span class="text-danger">required *</span>)</label>
+                <input type="text" class="form-control" id="jobLocation" formControlName="jobLocation" />
+              </div>
+
+              <div class="form-group col-lg-12">
+                <label for="description">JOb Skills ( <span class="text-danger">required *</span>)</label>
+                <input type="text" class="form-control" id="jobSkills" formControlName="jobSkills" />
+              </div>
+
+              <div class="form-group col-lg-12">
+                <label for="description">JOb Experience ( <span class="text-danger">required *</span>)</label>
+                <input type="text" class="form-control" id="jobExperience" formControlName="jobExperience" />
+              </div>
+
+              <div class="form-group col-lg-12">
+                <label for="description">JOb Type( <span class="text-danger">required *</span>)</label>
+                <select type="text" class="form-control" formControlName="jobType" id="jobType">
+                    <option value="Full Time">Full Time</option>
+                    <option value="Part Time">Part Time</option>
+                    <option value="Contract">Contract</option>
+                    <!-- Add more country codes as needed -->
+                  </select>
+                <!-- <input type="text" class="form-control" id="jobType" formControlName="jobType" /> -->
+              </div>
+
+              <div class="form-group col-lg-12">
+                <label for="description">JOb Preference( <span class="text-danger">required *</span>)</label>
+                <select type="text" class="form-control" formControlName="jobPreference" id="jobPreference">
+                    <option value="Work from Home">Work from Home</option>
+                    <option value="Work From Office">Work From Office</option>
+                    <option value="Hybrid">Hybrid</option>
+                    <!-- Add more country codes as needed -->
+                  </select>
+                <!-- <input type="text" class="form-control" id="jobPreference" formControlName="jobPreference" /> -->
+              </div>
+  
+              <div class="form-group col-lg-12">
+                <label for="description">JOb Description( <span class="text-danger">required *</span>)</label>
+                <textarea class="form-control" id="description" formControlName="jobDescription" rows="5"></textarea>
+                <p class="text-danger">Max Character Count : 1500 Character</p>
+              </div>
+
+              <div class="form-group col-lg-12">
+                <label for="description">JOb Salary ( <span class="text-danger">required *</span>)</label>
+                <input type="text" class="form-control" id="jobSalary" formControlName="jobSalary" />
+              </div>
+              <hr>
+              <div class="d-flex justify-content-center">
+                <button type="submit" class="btn btn-primary">Add</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
