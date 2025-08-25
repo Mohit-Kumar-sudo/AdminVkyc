@@ -1,0 +1,102 @@
+<br><br>
+<div class="container py-5 mt-5">
+  <!-- Loading state -->
+  <div *ngIf="loading" class="card p-4 text-center">
+    <p class="mb-0">Loading job details...</p>
+  </div>
+
+  <!-- Error state -->
+  <div *ngIf="!loading && errorMessage" class="card p-4 text-center text-danger">
+    <p class="mb-0">{{ errorMessage }}</p>
+  </div>
+
+  <!-- Job card -->
+  <div *ngIf="!loading && !errorMessage && carrierData" class="card shadow-lg mb-4">
+    <div class="card-body p-4">
+      <!-- Card header -->
+      <div class="d-flex flex-column flex-md-row justify-content-between gap-4 mb-4">
+        <!-- Left section -->
+        <div class="flex-grow-1">
+          <div class="d-flex align-items-center gap-2 text-secondary mb-3">
+            <span>👥</span>
+            <span class="fw-semibold">{{ carrierData.status }}</span>
+          </div>
+          
+          <div class="d-flex align-items-center gap-3 mb-3">
+            <div class="bg-warning-subtle rounded-2 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+              <span class="fw-bold">{{ carrierData.jobTitle.charAt(0) }}</span>
+            </div>
+            <h2 class="h4 fw-bold mb-0">{{ carrierData.jobTitle }}</h2>
+          </div>
+          
+          <div class="d-flex gap-2 mb-2">
+            <span class="text-secondary">Duration:</span>
+            <span class="fw-semibold">{{ carrierData.jobDuration }} months</span>
+          </div>
+          
+          <div class="d-flex gap-2">
+            <span class="text-secondary">Salary:</span>
+            <span class="fw-semibold">{{ carrierData.jobSalary }} month</span>
+          </div>
+        </div>
+
+        <!-- Right section -->
+        <div class="flex-grow-1">
+          <div class="bg-primary-subtle text-primary d-inline-block px-3 py-1 rounded-pill fw-semibold mb-3">
+            {{ carrierData.jobPreference }}
+          </div>
+          
+          <div class="d-flex flex-wrap gap-3 mb-3">
+            <div class="bg-warning-subtle px-3 py-2 rounded-3 flex-grow-1">
+              <p class="text-secondary small mb-1">Experience</p>
+              <p class="fw-semibold mb-0">{{ carrierData.jobExperience }} years</p>
+            </div>
+            
+            <div class="bg-primary-subtle px-3 py-2 rounded-3 flex-grow-1">
+              <p class="text-secondary small mb-1">Job Type</p>
+              <p class="fw-semibold mb-0">{{ carrierData.jobType }}</p>
+            </div>
+          </div>
+          
+          <div class="d-flex align-items-center gap-2">
+            <span>📍</span>
+            <span>{{ carrierData.jobLocation }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Job description -->
+      <div class="mb-4">
+        <h3 class="h5 fw-bold mb-3">Job Description</h3>
+        <p class="text-justify mb-0">{{ carrierData.jobDescription }}</p>
+      </div>
+
+      <!-- Job role -->
+      <div class="mb-4">
+        <h3 class="h5 fw-bold mb-3">Job Role</h3>
+        <p class="text-justify mb-0">{{ carrierData.jobRole }}</p>
+      </div>
+
+      <!-- Skills -->
+      <div class="mb-4">
+        <h3 class="h5 fw-bold mb-3">Skills Required</h3>
+        <div class="row g-2">
+          <div *ngFor="let skill of carrierData.jobSkills.split(',')" class="col-6 col-md-4 col-lg-3">
+            <div class="d-flex align-items-center">
+              <span class="me-2">•</span>
+              <span>{{ skill.trim() }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Apply button -->
+      <div class="text-center mt-4">
+        <a routerLink="/carrier-form" class="btn btn-warning fw-semibold position-relative overflow-hidden" style="z-index: 1;">
+          <span class="position-relative">Apply</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+<br>

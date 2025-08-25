@@ -1,0 +1,78 @@
+<div class="content-page">
+    <div class="content">
+        <!-- Start Content-->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box">
+                        <div class="page-title-right">
+                            <a class="btn btn-primary btn-sm" routerLink="/carriers">JOb</a>
+                        </div>
+                        <h4 class="page-title">Edit JOb</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <form [formGroup]="myForm" (ngSubmit)="updateCarriers()" id="course_form">
+                    <div class="row">
+                        <div class="form-group col-lg-12">
+                            <label for="title">Job Title ( <span class="text-danger">required *</span>)</label>
+                            <input type="text" class="form-control" id="tijobTitletle" formControlName="jobTitle" />
+                          </div>
+            
+                          <div class="form-group col-lg-12">
+                            <label for="title">JOb Role ( <span class="text-danger">required *</span>)</label>
+                            <input type="text" class="form-control" id="jobRole" formControlName="jobRole" />
+                          </div>
+            
+                          <div class="form-group col-lg-12">
+                            <label for="title">JOb Duration ( <span class="text-danger">required *</span>)</label>
+                            <input type="text" class="form-control" id="jobDuration" formControlName="jobDuration" />
+                          </div>
+            
+                          <div class="form-group col-lg-12">
+                            <label for="description">JOb Location ( <span class="text-danger">required *</span>)</label>
+                            <input type="text" class="form-control" id="jobLocation" formControlName="jobLocation" />
+                          </div>
+            
+                          <div class="form-group col-lg-12">
+                            <label for="description">JOb Skills ( <span class="text-danger">required *</span>)</label>
+                            <input type="text" class="form-control" id="jobSkills" formControlName="jobSkills" />
+                          </div>
+            
+                          <div class="form-group col-lg-12">
+                            <label for="description">JOb Experience ( <span class="text-danger">required *</span>)</label>
+                            <input type="text" class="form-control" id="jobExperience" formControlName="jobExperience" />
+                          </div>
+            
+                          <div class="form-group col-lg-12">
+                            <label for="description">JOb Type( <span class="text-danger">required *</span>)</label>
+                            <input type="text" class="form-control" id="jobType" formControlName="jobType" />
+                          </div>
+            
+                          <div class="form-group col-lg-12">
+                            <label for="description">JOb Preference( <span class="text-danger">required *</span>)</label>
+                            <input type="text" class="form-control" id="jobPreference" formControlName="jobPreference" />
+                          </div>
+              
+                          <div class="form-group col-lg-12">
+                            <label for="description">JOb Description( <span class="text-danger">required *</span>)</label>
+                            <textarea class="form-control" id="description" formControlName="jobDescription" rows="5"></textarea>
+                            <p class="text-danger">Max Character Count : 1500 Character</p>
+                          </div>
+            
+                          <div class="form-group col-lg-12">
+                            <label for="description">JOb Salary ( <span class="text-danger">required *</span>)</label>
+                            <input type="text" class="form-control" id="jobSalary" formControlName="jobSalary" />
+                          </div>
+                        <hr>
+                        <div class="d-flex justify-content-center">
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div> <!-- container -->
+    </div> <!-- content -->
+</div>
+

@@ -1,0 +1,22 @@
+/* Only minimal custom styles needed */
+.account-pages {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+.object-fit-contain {
+    object-fit: contain;
+}
+
+/* Responsive adjustments */
+@media (max-width: 767.98px) {
+    .account-pages {
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+    }
+    
+    .text-center.w-75 {
+        width: 100% !important;
+    }
+}

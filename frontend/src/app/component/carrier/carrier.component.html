@@ -1,0 +1,130 @@
+<br><br>
+<main class="hero-section py-5 ">
+    <div class="container py-5">
+        <div class="row align-items-center g-4">
+            <!-- Left Side: Text Content -->
+            <div class="col-lg-6 text-center text-lg-start">
+                <h1 class="display-4 fw-bold mb-4 text-light">
+                    Grow Your <span class="text-primary">Career</span><br>
+                    <span class="fw-bold">With Us</span>
+                </h1>
+                <p class="lead mb-4 text-light">Grow Your Career With Us Grow Your Career With UsGrow Your Career With Us Grow Your Career With Us Grow Your Career With UsGrow Your Career With Us</p>
+                <a routerLink="/carrier-form" class="btn btn-warning primary-btn3 btn-lg px-4 py-2 fw-bold">Join For Free</a>
+            </div>
+
+            <!-- Right Side: Image -->
+            <div class="col-lg-6 text-center">
+                <img src="assets/images/carrier.webp" alt="Career Opportunities" class="img-fluid rounded shadow">
+            </div>
+        </div>
+    </div>
+
+    <div class="container text-center py-4">
+        <h2 class="display-5 fw-semibold mb-4 text-light">
+            Transform your future with <span class="fw-bold bg-warning px-2 text-dark">TaskHive</span> 
+            <span class="fw-bold">and kickstart your career in IT</span><br>
+            <span class="text-primary">Learn More For Less!</span>
+        </h2>
+    </div>
+    
+    <!-- Features Section -->
+    <div class="container py-4">
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="bg-primary text-white p-3 rounded shadow-sm d-flex align-items-center justify-content-center">
+                    <span class="me-2">⭐</span> Beginner To Advanced
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="bg-primary text-white p-3 rounded shadow-sm d-flex align-items-center justify-content-center">
+                    <span class="me-2">⭐</span> Hands-On Learning
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="bg-primary text-white p-3 rounded shadow-sm d-flex align-items-center justify-content-center">
+                    <span class="me-2">⭐</span> Easy To Understand
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Job Opportunities Section Header -->
+    <div class="container mt-5 mb-4">
+        <h2 class="text-center display-5 fw-bold mb-4 text-light">
+            <span>Job </span>
+            <span class="text-gradient-primary">Opportunities</span>
+            <span> For You</span>
+        </h2>
+    </div>
+
+    <!-- Job Cards Slider Section -->
+    <div class="container py-5 position-relative">
+        <div *ngIf="jobCards.length === 0 && !isLoading" class="alert alert-warning text-center text-light">
+            No jobs found or still loading...
+        </div>
+
+        <div class="slider-controls position-absolute top-50 start-0 end-0 d-flex justify-content-between ">
+            <button class="btn btn-dark rounded-circle shadow" (click)="prevSlide()" [disabled]="currentIndex === 0">
+                <i class="bi bi-chevron-left"></i>
+            </button>
+            <button class="btn btn-dark rounded-circle shadow" (click)="nextSlide()" [disabled]="currentIndex === maxIndex">
+                <i class="bi bi-chevron-right"></i>
+            </button>
+        </div>
+        
+        <div class="cards-slider overflow-hidden">
+            <div class="cards-track d-flex gap-3" 
+                 [ngStyle]="{'transform': 'translateX(' + currentTranslate + 'px)'}"
+                 (mousedown)="touchStart($event)"
+                 (touchstart)="touchStart($event)"
+                 (mousemove)="touchMove($event)"
+                 (touchmove)="touchMove($event)"
+                 (mouseup)="touchEnd()"
+                 (touchend)="touchEnd()"
+                 (mouseleave)="touchEnd()"
+                 (contextmenu)="$event.preventDefault()">
+                
+                <div class="slider-card" *ngFor="let job of jobCards; let i = index" #sliderCard>
+                    <div class="card h-100 border-0 shadow-sm" *ngIf="job?.jobTitle">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5 class="card-title fw-bold mb-0">{{ job.jobTitle }}</h5>
+                                <button (click)="viewDetails(job._id)" class="btn btn-primary primary-btn3 btn-sm" style="background-color: #0399FA; ">View Details</button>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <p class="mb-2"><strong>Skills:</strong> {{ job.jobSkills }}</p>
+                                <p class="mb-3"><strong>Duration:</strong> {{ job.jobDuration }}</p>
+                            </div>
+                            
+                            <div class="d-flex flex-wrap gap-2 mb-4">
+                                <span class="badge bg-primary">{{ job.jobType }}</span>
+                                <span class="badge bg-primary">{{ job.jobRole }}</span>
+                                <span class="badge bg-primary">{{ job.jobExperience }} Years</span>
+                            </div>
+                            
+                            <hr class="my-3">
+                            
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center">
+                                    <i class="bi bi-geo-alt-fill me-2"></i>
+                                    <span>{{ job.jobLocation }}</span>
+                                </div>
+                                <a routerLink="/carrier-form" class="btn btn-warning primary-btn3 btn-sm">Apply</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container text-center py-5">
+        <h2 class="display-5 fw-semibold mb-4 text-light">
+            Join the <span class="fw-bold bg-warning px-2 text-dark">TaskHive</span> community and unlock your potential!
+        </h2>
+        <a routerLink="/carrier-details" class="btn btn-warning primary-btn3 btn-lg px-4 py-2 fw-bold">See More</a>
+    </div>
+</main>

@@ -1,0 +1,25 @@
+.btn {
+    color: #000;
+    background: #FCDB38;
+    border: none;
+}
+
+.btn:hover {
+    color: #fff;
+    background: #0399FA;
+}
+
+.text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 200px;
+}
+
+.img-thumbnail {
+  object-fit: cover;
+}
+
+.delete_blog {
+  cursor: pointer;
+}
