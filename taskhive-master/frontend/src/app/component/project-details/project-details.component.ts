@@ -25,13 +25,16 @@ export class ProjectDetailsComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     if (this.ssrService.isBrowser()) {
       const AOS = await this.ssrService.loadAOS();
-      AOS.init({
-        offset: 200, 
-        duration: 1000, 
-        easing: 'ease', 
-        delay: 100, 
-        once: true      
-      });
+      const aosInstance = AOS?.default || AOS;
+      if (typeof aosInstance.init === 'function') {
+        aosInstance.init({
+          offset: 200, 
+          duration: 1000, 
+          easing: 'ease', 
+          delay: 100, 
+          once: true      
+        });
+      }
     }
 
     const projectId = this.route.snapshot.paramMap.get('id');

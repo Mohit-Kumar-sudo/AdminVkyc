@@ -28,13 +28,16 @@ export class PortfolioComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     if (this.ssrService.isBrowser()) {
       const AOS = await this.ssrService.loadAOS();
-      AOS.init({
-        offset: 200,
-        duration: 1000,
-        easing: 'ease',
-        delay: 100,
-        once: true
-      });
+      const aosInstance = AOS?.default || AOS;
+      if (typeof aosInstance.init === 'function') {
+        aosInstance.init({
+          offset: 200,
+          duration: 1000,
+          easing: 'ease',
+          delay: 100,
+          once: true
+        });
+      }
     }
 
     this.route.params.subscribe((params: any) => {

@@ -63,6 +63,7 @@ export class CourseDetailsComponent implements OnInit, AfterViewInit, OnDestroy 
   coursesCardWidth = 0;
   coursesMaxIndex = 0;
   courseImage: string = 'assets/images/degital-marketing-1.webp'; // default/fallback
+  courseImage1: string = 'assets/images/degital-marketing-1.webp';
 
     partnerLogos = [
     { name: 'Microsoft', logo: '/assets/images/Microsoft1.webp' },
@@ -96,13 +97,16 @@ export class CourseDetailsComponent implements OnInit, AfterViewInit, OnDestroy 
   async ngOnInit() {
     if (this.ssrService.isBrowser()) {
       const AOS = await this.ssrService.loadAOS();
-      AOS.init({
-        offset: 200,
-        duration: 1000,
-        easing: 'ease',
-        delay: 100,
-        once: true
-      });
+      const aosInstance = AOS?.default || AOS;
+      if (typeof aosInstance.init === 'function') {
+        aosInstance.init({
+          offset: 200,
+          duration: 1000,
+          easing: 'ease',
+          delay: 100,
+          once: true
+        });
+      }
     }
 
     this.route.params.subscribe(params => {
@@ -664,11 +668,13 @@ loadCourseDetails(): void {
             }
             
             this.courseImage = this.getCourseImage(this.course);
+            this.courseImage1 = this.getCourseImage1(this.course);
         },
         error: (error) => {
             console.error('Error loading course details:', error);
             this.course = null;
             this.courseImage = 'assets/images/degital-marketing-1.webp';
+            this.courseImage1 = 'assets/images/degital-marketing-1.webp';
             this.titleService.setTitle('Course Details | TaskHive');
         }
     });
@@ -891,6 +897,33 @@ setupSaleTimer(): void {
     // server path - ensure no double slashes
     return `${environment.url.replace(/\/$/, '')}/${imagePath.replace(/^\/?/, '')}`;
   }
+
+  getCourseImage1(course: any): string {
+  if (!course) {
+    return 'assets/images/degital-marketing-1.webp';
+  }
+
+  // Check for image1 field specifically
+  const imagePath: string | undefined = course.image1;
+
+  if (!imagePath) {
+    // Fallback to regular image if image1 doesn't exist
+    return this.getCourseImage(course);
+  }
+
+  // absolute URL
+  if (imagePath.startsWith('http://') || imagePath.startsWith('https://')) {
+    return imagePath;
+  }
+
+  // assets path
+  if (imagePath.startsWith('assets/')) {
+    return imagePath;
+  }
+
+  // server path - ensure no double slashes
+  return `${environment.url.replace(/\/$/, '')}/${imagePath.replace(/^\/?/, '')}`;
+}
 
   // Helper method to get course route
   getCourseRoute(course: any): string {

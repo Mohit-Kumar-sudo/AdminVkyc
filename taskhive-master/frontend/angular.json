@@ -24,7 +24,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/taskhive/server",
+            "outputPath": "dist/taskhive",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -60,12 +60,12 @@
                 {
                   "type": "initial",
                   "maximumWarning": "2mb",
-                  "maximumError": "2MB"
+                  "maximumError": "5MB"
                 },
                 {
                   "type": "anyComponentStyle",
                   "maximumWarning": "2mb",
-                  "maximumError": "2mb"
+                  "maximumError": "4mb"
                 }
               ],
               "outputHashing": "all"
@@ -74,12 +74,7 @@
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true,
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.ts"
-                }
-              ]
+              "namedChunks": true
             }
           },
           "defaultConfiguration": "production"
@@ -97,10 +92,7 @@
           "defaultConfiguration": "development"
         },
         "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "buildTarget": "taskhive:build"
-          }
+          "builder": "@angular-devkit/build-angular:extract-i18n"
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
@@ -121,8 +113,70 @@
             ],
             "scripts": []
           }
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/taskhive/server",
+            "main": "src/main.server.ts",
+            "tsConfig": "tsconfig.server.json"
+          },
+          "configurations": {
+            "production": {
+              "outputPath": "dist/taskhive/server",
+              "main": "src/main.server.ts",
+              "tsConfig": "tsconfig.server.json"
+            },
+            "development": {
+              "outputPath": "dist/taskhive/server",
+              "main": "src/main.server.ts",
+              "tsConfig": "tsconfig.server.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve-ssr": {
+          "builder": "@angular-devkit/build-angular:ssr-dev-server",
+          "options": {
+            "browserTarget": "taskhive:build",
+            "serverTarget": "taskhive:build",
+            "port": 4200
+          },
+          "configurations": {
+            "development": {
+              "browserTarget": "taskhive:build:development",
+              "serverTarget": "taskhive:build:development"
+            },
+            "production": {
+              "browserTarget": "taskhive:build:production",
+              "serverTarget": "taskhive:build:production"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "prerender": {
+          "builder": "@angular-devkit/build-angular:prerender",
+          "options": {
+            "routes": [
+              "/"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "taskhive:build:production",
+              "serverTarget": "taskhive:build:production"
+            },
+            "development": {
+              "browserTarget": "taskhive:build:development",
+              "serverTarget": "taskhive:build:development"
+            }
+          },
+          "defaultConfiguration": "production"
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "e5a29833-73be-43ce-97b8-ccb4147e26e5"
   }
 }

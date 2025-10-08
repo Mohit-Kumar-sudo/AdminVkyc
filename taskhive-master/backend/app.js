@@ -9,9 +9,10 @@ const path = require("path");
 
 const app = express();
 app.use(cors());
+app.options('*', cors());// handle preflight globally
 app.use(morgan("dev"));
 app.use(express.json({ limit: "50mb" }));
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ limit: "50mb", extended: true })); 
 
 app.use("/auth", require("./Routes/Auth.Route"));
 app.use("/contact", require("./Routes/Contact.Route"));
