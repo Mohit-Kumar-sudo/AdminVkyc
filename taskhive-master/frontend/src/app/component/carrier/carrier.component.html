@@ -1,0 +1,149 @@
+<br><br>
+<main class="hero-section py-5 ">
+    <div class="container py-5">
+        <div class="row align-items-center g-4">
+            <!-- Left Side: Text Content -->
+            <div class="col-lg-6 text-center text-lg-start">
+                <h1 class="fw-bold mb-4 text-light" style="font-size: 64px;">Grow Your <span class="text-primary">Career</span><br><span class="fw-bold">With Us</span></h1>
+                <p class="lead mb-4 text-light">Grow Your Career With Us Grow Your Career With UsGrow Your Career With Us Grow Your Career With Us Grow Your Career With UsGrow Your Career With Us</p>
+                <a routerLink="/career-form" class="btn btn-warning primary-btn3 btn-lg px-4 py-2 fw-bold">Join For Free</a>
+            </div>
+
+            <!-- Right Side: Image -->
+            <div class="col-lg-6 text-center">
+                <img src="assets/images/carrier.webp" alt="Career Opportunities" class="img-fluid rounded shadow">
+            </div>
+        </div>
+    </div>
+
+    <div class="container text-center py-4">
+        <h2 class="display-3 fw-semibold mb-4 text-light">Transform your future with <span class="fw-bold bg-warning px-2 text-dark">TaskHive</span> 
+            <span class="fw-bold"> and kickstart your career in IT</span><br>
+            <span class="text-primary">Learn More For Less!</span>
+        </h2>
+    </div>
+    
+    <!-- Features Section -->
+    <div class="container py-4">
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="bg-primary text-white p-3 rounded shadow-sm d-flex align-items-center justify-content-center">
+                    <span class="me-2" style="font-size: 20px;">⭐</span> Beginner To Advanced
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="bg-primary text-white p-3 rounded shadow-sm d-flex align-items-center justify-content-center">
+                    <span class="me-2" style="font-size: 20px;">⭐</span> Hands-On Learning
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="bg-primary text-white p-3 rounded shadow-sm d-flex align-items-center justify-content-center">
+                    <span class="me-2" style="font-size: 20px;">⭐</span> Easy To Understand
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Job Opportunities Section Header -->
+    <div class="container mt-5 mb-4">
+        <h2 class="text-center display-3 fw-bold mb-4 text-light">
+            <span>Job </span>
+            <span class="text-gradient-primary">Opportunities</span>
+            <span> For You</span>
+        </h2>
+    </div>
+
+    <!-- Job Cards Slider Section -->
+    <div class="container py-5 position-relative">
+        <div *ngIf="jobCards.length === 0 && !isLoading" class="alert alert-warning text-center text-light">
+            No jobs found or still loading...
+        </div>
+
+        <!-- Navigation Controls -->
+        <div class="slider-nav-buttons" *ngIf="jobCards.length > cardsToShow">
+            <button class="slider-nav-btn slider-nav-prev" (click)="prevSlide()" aria-label="Previous slide">&lt;</button>
+            <button class="slider-nav-btn slider-nav-next" (click)="nextSlide()" aria-label="Next slide">&gt;</button>
+        </div>
+        
+        <div class="cards-slider-container" (mouseenter)="pauseAutoSlide()" (mouseleave)="resumeAutoSlide()">
+            <div class="cards-track d-flex transition-transform" 
+                 [class.dragging]="isDragging"
+                 (touchstart)="touchStart($event)"
+                 (touchmove)="touchMove($event)"
+                 (touchend)="touchEnd()"
+                 (mousedown)="touchStart($event)"
+                 (mousemove)="touchMove($event)"
+                 (mouseup)="touchEnd()"
+                 (mouseleave)="touchEnd()">
+                
+                <div class="slider-card-wrapper px-3" *ngFor="let job of jobCards; trackBy: trackByJob">
+                    <div class="card h-100 border-0 shadow-sm job-card" *ngIf="job?.jobTitle">
+                        <div class="card-body p-4">
+                            <div class="card-top d-flex justify-content-between align-items-start mb-3">
+                                <h5 class="card-title fw-bold mb-0" [title]="job.jobTitle">{{ job.jobTitle }}</h5>
+                                <i class="bi bi-geo-alt-fill me-2"></i>
+                                <span class="location-text">{{ job.jobLocation }}</span>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <p class="mb-2 skills-text">
+                                    <strong>Skills:</strong> 
+                                    <span class="skills-content" [title]="job.jobSkills">
+                                        {{ truncateText(job.jobSkills, 30) }}
+                                    </span>
+                                </p>
+                                <p class="mb-3"><strong>Job Duration:</strong> {{ job.jobDuration }}</p>
+                            </div>
+                            
+                            <div class="d-flex flex-wrap gap-2 mb-4 badges-container">
+                                <span class="badge bg-primary">{{ job.jobType }}</span>
+                                <span class="badge bg-primary">{{ job.jobRole }}</span>
+                                <span class="badge bg-primary">{{ job.jobExperience }} Years</span>
+                            </div>
+                            
+                            <hr class="my-3">
+                            
+                            <div class="d-flex justify-content-between align-items-center card-footer-content">
+                                <div class="d-flex align-items-center location-info">
+                                    <a
+                                        (click)="viewDetails(job._id)" 
+                                        class="btn btn-primary primary-btn3 btn-sm view-details flex-shrink-0"
+                                        
+                                        style="background-color: #0399FA;">
+                                        View Details
+                                    </a>
+                                    
+                                </div>
+                                <a 
+                                    routerLink="/career-form" 
+                                    class="btn btn-warning primary-btn3 btn-sm apply-btn flex-shrink-0">
+                                    Apply
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slider Indicators -->
+        <div class="slider-indicators d-flex justify-content-center mt-4" *ngIf="jobCards.length > cardsToShow">
+            <button 
+                *ngFor="let indicator of [].constructor(maxIndex + 1); let i = index"
+                class="slider-indicator mx-1"
+                [class.active]="i === currentIndex"
+                (click)="goToSlide(i)"
+                [attr.aria-label]="'Go to slide ' + (i + 1)">
+            </button>
+        </div>
+    </div>
+
+    <div class="container text-center py-5">
+        <h2 class="display-3 fw-semibold mb-4 text-light">
+            Join the <span class="fw-bold bg-warning px-2 text-dark">TaskHive</span> community and unlock your potential!
+        </h2>
+        <a routerLink="/career-details" class="btn btn-warning primary-btn3 btn-lg px-4 py-2 fw-bold">See More</a>
+    </div>
+</main>

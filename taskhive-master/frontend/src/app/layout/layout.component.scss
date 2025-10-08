@@ -1,0 +1,102 @@
+// layout.component.scss
+
+// Keep your existing styles
+.active {
+    text-decoration: none !important;
+    color: #0399fa !important;
+}
+
+.btn {
+    --bs-btn-border-width: 0px !important;
+}
+
+// Updated main-panel styling
+.main-panel {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  //overflow: visible !important;
+  overflow-x: hidden;
+  background: linear-gradient(135deg, #14162d 0%, #1e1c22 100%);
+  z-index: 1;
+}
+
+// Add gradient overlay
+.main-panel::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 5% 20%, rgba(33, 150, 243, 0.15) 0%, transparent 25%),
+    radial-gradient(circle at 95% 70%, rgba(233, 30, 99, 0.15) 0%, transparent 25%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+// Gradient accent elements
+.gradient-accent {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.12;
+  z-index: -2;
+}
+
+.gradient-accent.blue {
+  top: -10%;
+  right: -5%;
+  width: 50vw;
+  height: 50vw;
+  background: radial-gradient(circle, #2196f3 0%, transparent 80%);
+  animation: float 20s ease-in-out infinite;
+}
+
+.gradient-accent.purple {
+  bottom: -15%;
+  left: -10%;
+  width: 60vw;
+  height: 60vw;
+  background: radial-gradient(circle, #e91e63 0%, transparent 70%);
+  animation: float 25s ease-in-out infinite reverse;
+}
+
+.gradient-accent.pink {
+  top: 40%;
+  right: -20%;
+  width: 70vw;
+  height: 70vw;
+  background: radial-gradient(circle, #ff2e9f 0%, transparent 80%);
+  animation: float 30s ease-in-out infinite 5s;
+}
+
+@keyframes float {
+  0% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(-5%, 5%);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+// Common card styling - you can apply this class to your existing cards
+.card {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}

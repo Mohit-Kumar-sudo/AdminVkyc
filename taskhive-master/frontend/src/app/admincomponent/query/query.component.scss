@@ -1,0 +1,22 @@
+.btn {
+    color: #000;
+    background: #FCDB38;
+    border: none;
+}
+
+.btn:hover {
+    color: #fff;
+    background: #0399FA;
+}
+
+/* Optional: custom spacing or style overrides */
+textarea {
+  resize: vertical;
+}
+
+.text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 250px;
+}

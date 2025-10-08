@@ -1,0 +1,103 @@
+<main class="hero-section">
+    <div class="container py-5">
+        <div class="row align-items-center">
+            <!-- Left Side: Text Content -->
+            <div class="col-md-6 text-center text-md-start">
+                <h1 class="text-dark fw-bold" style="font-size: 64px;">Unlock Your Potential With Our <br><span class="fw-bolder text-white">Courses & Bundles</span></h1>
+                <p class="text-dark fw-bold" style="font-size: 20px;">Improve Your Skills With Our Course Bundles. Learn At Your Own Speed And Grow In Your Career!</p>
+                <button class="btn btn-warning fw-bold primary-btn3" (click)="scrollToSection('cards')">Check Courses</button>
+            </div>
+
+            <!-- Right Side: Image -->
+            <div class="col-md-6 text-center">
+                <img src="assets/images/wing.webp" alt="Courses & Bundles" class="img-fluid hero-image">
+            </div>
+        </div>
+    </div>
+
+    <div class="container text-center py-4">
+        <h1 class="fw-semibold" style="font-size: 64px;">Unlock Your Future With <span class="fw-bolder text-white">Top-Quality Courses</span> At <span class="fw-bolder text-white">Unbeatable Prices</span><br>Learn More For Less!</h1>
+    </div>
+
+    <!-- Course Cards Slider Section -->
+    <div id="cards" class="container py-5">
+
+        <!-- Loading State -->
+        <div *ngIf="isLoading" class="text-center py-5">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading courses...</span>
+            </div>
+            <p class="mt-3 text-white">Loading courses...</p>
+        </div>
+
+        <!-- Error State -->
+        <div *ngIf="error && !isLoading" class="text-center py-5">
+            <div class="alert alert-danger" role="alert">
+                <i class="bi bi-exclamation-triangle"></i>
+                {{ error }}
+            </div>
+            <button class="btn btn-primary" (click)="loadCourses()">
+                <i class="bi bi-arrow-clockwise"></i> Retry
+            </button>
+        </div>
+
+        <!-- Course Slider -->
+        <div *ngIf="!isLoading && !error && courseCards.length > 0" class="slider-container">
+            <button class="slider-btn slider-btn-prev" 
+                    (click)="prevSlide()" 
+                    [disabled]="currentIndex === 0">
+                <i class="bi bi-chevron-left"></i>
+            </button>
+            
+            <div class="cards-slider" 
+                 (mousedown)="touchStart($event)" 
+                 (touchstart)="touchStart($event)"
+                 (mousemove)="touchMove($event)" 
+                 (touchmove)="touchMove($event)"
+                 (mouseup)="touchEnd()" 
+                 (touchend)="touchEnd()"
+                 (mouseleave)="touchEnd()">
+                <div class="slider-track" [ngStyle]="{'transform': 'translateX(' + currentTranslate + 'px)'}">
+                    <!-- Dynamic Course Cards -->
+                    <div class="course-card-wrapper" *ngFor="let course of courseCards; trackBy: trackByCourse">
+                        <div class="course-card text-center p-4">
+                            <div class="course-image" 
+                                 [style.background-image]="'url(' + getCourseImage(course) + ')'">
+                            </div>
+                            <h5 class="text-primary mt-3 fw-bolder">{{ course.title }}</h5>
+                            <p>
+                                <b class="text-primary">Skills You Gain:</b><br>
+                                {{ course.skill || course.description || 'Improve Your Skills With Our Course Bundles.' }}<br>
+                                <b class="text-primary">Course Duration:&nbsp;</b>
+                                <b class="text-primary fw-bold">{{ course.duration || 'Beginner To Advanced' }} months</b>
+                            </p>
+                            <a [routerLink]="getCourseRoute(course)" class="btn btn-warning fw-bold primary-btn3">Learn More</a>
+                        </div>
+                    </div>
+                </div><br>
+            </div>
+            
+            <button class="slider-btn slider-btn-next" 
+                    (click)="nextSlide()" 
+                    [disabled]="currentIndex === maxIndex">
+                <i class="bi bi-chevron-right"></i>
+            </button>
+        </div>
+        
+        <!-- Pagination Dots -->
+        <div *ngIf="!isLoading && !error && courseCards.length > 0" class="slider-pagination">
+            <span *ngFor="let _ of [].constructor(maxIndex + 1); let i = index" 
+                  class="pagination-dot" 
+                  [class.active]="i === currentIndex"
+                  (click)="goToSlide(i)"></span>
+        </div>
+
+        <!-- No Courses Found -->
+        <div *ngIf="!isLoading && !error && courseCards.length === 0" class="text-center py-5">
+            <div class="alert alert-info" role="alert">
+                <i class="bi bi-info-circle"></i>
+                No courses available at the moment.
+            </div>
+        </div>
+    </div>
+</main>

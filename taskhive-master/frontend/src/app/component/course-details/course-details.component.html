@@ -1,0 +1,444 @@
+<main class="container my-lg-5">
+
+    <!-- Hero Section -->
+    <div class="container mb-5">
+        <div class="row align-items-center text-light g-4">
+            <!-- Text Content -->
+            <div class="col-12  text-center">
+                <div *ngIf="hasSale && isSaleActive" class="sale-badge">
+                🔥 Limited Time Offer - Sale Ends Soon!
+                </div>
+                <h1 class="fw-bolder fs-1 mb-4 text-center">Learn {{course?.title }}</h1>
+                <p class="lead fs-3 mb-4 text-center">{{course?.tdescription}}</p>
+
+                <!-- Benefits Section -->
+                <div class="benefits-section mb-4">
+                    <h3 class="fw-bolder fs-2 text-warning mb-3">{{course?.pointer0}}</h3>
+                    <ul class="benefits-list fs-5">
+                        <li>✅ {{course?.pointer1}}</li>
+                        <li>✅ {{course?.pointer2}}</li>
+                        <li>✅ {{course?.pointer3}}</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-7">    
+                
+                <!-- Workshop Details -->
+                <div class="workshop-details mb-4 p-4 rounded">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="bg-gradient mb-2 mb-2 rounded-pill text-center">
+                                <p class="mb-0">
+                                <i class="fa-solid fa-calendar-days text-warning me-2"></i>
+                                <strong class="text-warning">On {{ course?.cdate || 'Oct 12, 2025' }}</strong>
+                            </p>
+                            </div>
+                            <div class="bg-gradient mb-2 rounded-pill text-center">
+                                <p class="mb-0">
+                                    <i class="fa-solid fa-video text-warning me-2"></i>
+                                    Live Session
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="bg-gradient mb-2 rounded-pill text-center">
+                                <p class="mb-0">
+                                    <i class="fa-solid fa-hourglass-half text-warning me-2"></i>
+                                    <strong class="text-warning">{{ course?.chour || '11:00' }}+ Hours</strong>
+                                </p>
+                            </div> 
+                            <div class="bg-gradient mb-2 rounded-pill text-center">
+                                <p class="mb-0">
+                                    <i class="fa-solid fa-clock text-warning me-2"></i>
+                                    {{ course?.ctime || '11:00' }} {{ course?.csession || 'AM' }} Onwards
+                                </p>
+                            </div>   
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Features List -->
+                <div class="features-list">
+                    <p class="mb-2"> {{ course?.pointer4}}</p>
+                    <p class="mb-2"> Learn from IIT Kharagpur alumni</p>
+                    <p class="mb-2"> Be among the top 1% professionals to avoid being laid off</p>
+                    <p class="mb-2"> No technical AI knowledge required to master AI tools</p>
+                    <p class="mb-0"> Proven to reduce your work by 2 hours daily</p>
+                </div>
+            </div>
+
+            <!-- Image Column -->
+            <div class="col-12 col-md-6 col-lg-5 d-flex align-items-center justify-content-center justify-content-lg-end">
+                <img [src]="courseImage" class="img-fluid rounded shadow hero-image1" [alt]="course?.title" loading="lazy">
+            </div>
+        </div>
+        <!-- Price Button -->
+        <div class="text-center mt-5 mb-4">
+            <button (click)="onBuyCourse()" id="pricingButton" class="btn primary-btn2 text-center d-inline-flex flex-column align-items-center justify-content-center">
+                <div class="price-section">
+                    <div class="fw-bold mb-1">Become a super working professional now!</div>
+                    <div class="price-tag">
+                        <span *ngIf="hasSale && isSaleActive && course?.original_price" 
+                      class="text-decoration-line-through me-2">₹{{course?.original_price}}</span>
+                        <span class="fw-bold text-success">₹ {{course?.price}}</span>
+                    </div>
+                </div>
+            </button>
+        </div>
+
+        <div class="text-center mt-5 mb-4">
+            
+                <div class="price-section text-light text-center d-inline-flex flex-column align-items-center justify-content-center">
+                    <div class="fw-bold display-6 mb-1">#1 🇮🇳 We're highest rated program in the world 🌎</div>
+                    <div class="fw-bold display-6 mb-1">Accelerate your career at price of less than a chai ☕!</div>
+                </div>
+            
+        </div>
+    </div>
+
+     <!-- Sticky Bottom Timer Section -->
+    <div class="sticky-timer-section" *ngIf="hasSale && isSaleActive">
+      <div class="container">
+        <div class="timer-content">
+            <!-- Price Section -->
+            <div class="price-section">
+                <div class="current-price">Rs. {{course?.price}}</div>
+                <div class="original-price">Rs. {{course?.original_price}}</div>
+            </div>
+            
+            <!-- Timer Section -->
+            <div class="timer-display">
+                <span class="timer-digit" *ngIf="daysLeft > 0">{{daysLeft}}</span>
+                <span class="timer-separator" *ngIf="daysLeft > 0">Days</span>
+                <span class="timer-digit">{{hours}}</span>
+                <span class="timer-separator">Hrs</span>
+                <span class="timer-digit">{{minutes}}</span>
+                <span class="timer-separator">Min</span>
+                <span class="timer-digit">{{seconds}}</span>
+                <span class="timer-separator">Sec</span>
+            </div>
+            
+            <!-- CTA Button -->
+            <button (click)="onBuyCourse()" class="primary-btn3">
+                Enroll Now
+            </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="row text-center mt-5 mb-5">
+        <div class="col-12 col-sm-12 col-md-4 mb-3 mb-md-0">
+            <div class="feature-badge bg-primary text-white p-3 rounded">
+                ⭐ Beginner To Advanced
+            </div>
+        </div>
+        <div class="col-12 col-sm-12 col-md-4 mb-3 mb-md-0">
+            <div class="feature-badge bg-primary text-white p-3 rounded">
+                ⭐ Hands-On Learning
+            </div>
+        </div>
+        <div class="col-12 col-sm-12 col-md-4">
+            <div class="feature-badge bg-primary text-white p-3 rounded">
+                ⭐ Easy To Understand
+            </div>
+        </div>
+    </div>
+
+    <!-- Why Learn Web Development -->
+    <div class="container mb-5">
+    <h3 class="text-center text-light fw-bolder fs-1 lh-lg">Why Learn {{ course?.title }}?</h3>
+
+        <div class="row align-items-center g-4 text-light">
+            <!-- give text more space on large screens -->
+            <div class="col-12 col-md-6 col-lg-7">
+                <p><strong class="fw-bolder fs-2">{{ course?.heading }}</strong></p>
+                <p style="font-size: 20px;">{{ course?.description }}</p>
+                <p><strong class="fw-bolder fs-2">{{ course?.heading0 }}</strong></p>
+                <p style="font-size: 20px;">{{ course?.description0 }}</p>
+                <p><strong class="fw-bolder fs-2">{{ course?.heading1 }}</strong></p>
+                <p style="font-size: 20px;">{{ course?.description1 }}</p>
+                <p style="font-size: 20px;">{{ course?.pointer1 }}</p>
+            </div>
+
+            <!-- image column: center on small, align-right on large -->
+            <div class="col-12 col-md-6 col-lg-5 d-flex align-items-center justify-content-center justify-content-lg-end">
+                <img [src]="courseImage" class="img-fluid rounded shadow hero-image" [alt]="course?.title" loading="lazy">
+            </div>
+        </div>
+        <div class="text-center mt-5 mb-4">
+            <button (click)="onBuyCourse()" id="pricingButton" class="btn primary-btn2 text-center d-inline-flex flex-column align-items-center justify-content-center">
+                <div class="price-section">
+                    <div class="fw-bold mb-1">Become a super working professional now!</div>
+                    <div class="price-tag">
+                        <span *ngIf="hasSale && isSaleActive && course?.original_price" 
+          class="text-decoration-line-through me-2">₹{{course?.original_price}}</span>
+                        <span class="fw-bold text-success">₹ {{course?.price}}</span>
+                    </div>
+                </div>
+            </button>
+        </div>
+    </div>
+
+    <!-- Certificate Section -->
+    <div class="certificate-section text-center py-5">
+    <div class="container">
+        <!-- Header -->
+        <h2 class="fw-bolder display-5 text-light mb-4">Get a certification of the workshop</h2>
+        <p class="lead text-light mb-5 fs-4">Yes! You will be certified by Expert Trainers which brings a lot of credibility to your certificate & resume.</p>
+
+        <div class="row align-items-center justify-content-center">
+            <!-- Certificate Image -->
+            <div class="col-lg-8 col-md-10 mb-5">
+                <div class="certificate-container position-relative">
+                    <img src="/assets/images/cert.png" alt="Certificate of Completion" class="certificate-img img-fluid rounded shadow-lg" style="border: 3px solid #ffc107;">
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA Button -->
+        <div class="text-center mt-5 mb-4">
+            <button (click)="onBuyCourse()" id="pricingButton" class="btn primary-btn2 text-center d-inline-flex flex-column align-items-center justify-content-center">
+                <div class="price-section">
+                    <div class="fw-bold mb-1">Become a super working professional now!</div>
+                    <div class="price-tag">
+                        <span *ngIf="hasSale && isSaleActive && course?.original_price" 
+          class="text-decoration-line-through me-2">₹{{course?.original_price}}</span>
+                        <span class="fw-bold text-success">₹ {{course?.price}}</span>
+                    </div>
+                </div>
+            </button>
+        </div>
+    </div>
+    </div>
+
+    <!-- Optimized Partners Section -->
+    <section class="py-5 text-light overflow-hidden">
+        <div class="container-fluid">
+            <div class="text-center mb-5">
+                <span class="d-block fw-bolder text-uppercase opacity-10 mb-n4" style="font-size: 64px;">Our Partner</span>
+                <h5 class="fw-medium text-white">We Worked With Global Largest Brands</h5>
+            </div>
+
+            <div class="position-relative overflow-hidden py-3">
+                <div class="d-flex gap-4 animate-marquee">
+                    <!-- First set -->
+                    <div
+                        class="partner-logo border rounded d-flex align-items-center justify-content-center bg-transparent px-3 py-2"
+                        *ngFor="let logo of partnerLogos">
+                        <img [src]="logo.logo" [alt]="logo.name" class="img-fluid partner-img" loading="lazy" decoding="async">
+                    </div>
+
+                    <!-- Duplicate set for seamless loop -->
+                    <div
+                        class="partner-logo border rounded d-flex align-items-center justify-content-center bg-transparent px-3 py-2"
+                        *ngFor="let logo of partnerLogos">
+                        <img [src]="logo.logo" [alt]="logo.name" class="img-fluid partner-img" loading="lazy" decoding="async">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Optimized Students Section -->
+    <section class="py-5 text-light overflow-hidden">
+        <div class="container-fluid">
+            <div class="text-center mb-5">
+                <span class="d-block fw-bolder text-uppercase opacity-10 display-1 mb-n4">Our Students</span>
+                <h5 class="fw-medium text-white">We Students at Top Tech Companies</h5>
+            </div>
+            <div class="position-relative overflow-hidden py-3">
+                <div *ngIf="isStudentsLoading" class="text-center py-3">Loading placements…</div>
+                <div *ngIf="studentsError" class="text-center text-danger py-3">{{ studentsError }}</div>
+                <div class="marquee-wrapper" *ngIf="students && students.length > 0">
+                    <!-- First strip -->
+                    <div class="animate-marquee">
+                        <div class="partner-logo" *ngFor="let s of students; trackBy: trackByStudent">
+                            <img [src]="getStudentImage(s)" [alt]="s.name || 'Student'" class="student-img" loading="lazy" />
+                            <div class="student-company">{{ s.company || '—' }}</div>
+                            <div class="student-college">{{ s.college || '—' }}</div>
+                        </div>
+                    </div>
+
+                    <!-- Second strip (exact same) -->
+                    <div class="animate-marquee">
+                        <div class="partner-logo" *ngFor="let s of students; trackBy: trackByStudent">
+                            <img [src]="getStudentImage(s)" [alt]="s.name || 'Student'" class="student-img" loading="lazy" />
+                            <div class="student-company">{{ s.company || '—' }}</div>
+                            <div class="student-college">{{ s.college || '—' }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+
+    <!-- Testimonials Section -->
+    <div class="container text-center my-5 text-light">  
+        <h2 class="fw-bolder fs-1 lh-lg">Testimonials</h2>
+        <!-- Testimonial Slider Section -->
+        <div *ngIf="isTestimonialsLoading" class="text-center py-5">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading testimonials...</span>
+            </div>
+            <p class="mt-3 text-white">Loading testimonials...</p>
+        </div>
+
+        <div *ngIf="testimonialError && !isTestimonialsLoading" class="text-center py-5">
+            <div class="alert alert-danger" role="alert">
+                <i class="bi bi-exclamation-triangle"></i>
+                {{ testimonialError }}
+            </div>
+            <button class="btn btn-primary" (click)="loadTestimonials()">
+                <i class="bi bi-arrow-clockwise"></i> Retry
+            </button>
+        </div>
+
+        <div *ngIf="!isTestimonialsLoading && !testimonialError && testimonials.length > 0" class="slider-container">
+            <button class="slider-btn slider-btn-prev" 
+                    (click)="prevTestimonialSlide()" 
+                    [disabled]="testimonialCurrentIndex === 0">
+                <i class="bi bi-chevron-left"></i>
+            </button>
+            
+            <div class="testimonials-slider" 
+                 (mousedown)="testimonialTouchStart($event)" 
+                 (touchstart)="testimonialTouchStart($event)"
+                 (mousemove)="testimonialTouchStart($event)" 
+                 (touchmove)="testimonialTouchStart($event)"
+                 (mouseup)="testimonialTouchEnd()" 
+                 (touchend)="testimonialTouchEnd()"
+                 (mouseleave)="testimonialTouchEnd()">
+                <div class="testimonials-slider-track" [ngStyle]="{'transform': 'translateX(' + testimonialCurrentTranslate + 'px)'}">
+                    <!-- Dynamic Testimonial Cards -->
+                    <div class="testimonial-card-wrapper" *ngFor="let testimonial of testimonials; trackBy: trackByTestimonial">
+                        <div class="testimonial-card">
+                            <div class="card-content">
+                                <p class="comment">"{{ testimonial.comment }}"</p>
+                                <div class="rating-stars mb-2">
+                                    <i *ngFor="let star of [1, 2, 3, 4, 5]" 
+                                       class="bi"
+                                       [class.bi-star-fill]="star <= testimonial.rating"
+                                       [class.bi-star]="star > testimonial.rating">
+                                    </i>
+                                </div>
+                                <div class="card-author">
+                                    <img [src]="getTestimonialImage(testimonial)" [alt]="testimonial.name" class="profile-image">
+                                    <div class="author-details">
+                                        <div class="name">{{ testimonial.name }}</div>
+                                        <div class="profession">{{ testimonial.profession }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="slider-btn slider-btn-next" 
+                    (click)="nextTestimonialSlide()" 
+                    [disabled]="testimonialCurrentIndex === testimonialMaxIndex">
+                <i class="bi bi-chevron-right"></i>
+            </button>
+        </div>
+        
+        <!-- Pagination Dots -->
+        <div *ngIf="!isTestimonialsLoading && !testimonialError && testimonials.length > 0" class="slider-pagination">
+            <span *ngFor="let _ of [].constructor(testimonialMaxIndex + 1); let i = index" 
+                  class="pagination-dot" 
+                  [class.active]="i === testimonialCurrentIndex"
+                  (click)="goToTestimonialSlide(i)"></span>
+        </div>
+
+        <div *ngIf="!isTestimonialsLoading && !testimonialError && testimonials.length === 0" class="text-center py-5">
+            <div class="alert alert-info" role="alert">
+                <i class="bi bi-info-circle"></i>
+                No testimonials available at the moment.
+            </div>
+        </div>
+    </div>
+    
+    <!-- Other Courses Section with Slider -->
+    <div class="container text-center my-5 text-light">
+        <h3 class="fw-bolder fs-1 lh-lg">Other Courses</h3>
+        
+        <!-- Loading State for Other Courses -->
+        <div *ngIf="isOtherCoursesLoading" class="text-center py-5">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading other courses...</span>
+            </div>
+            <p class="mt-3 text-white">Loading other courses...</p>
+        </div>
+
+        <!-- Error State for Other Courses -->
+        <div *ngIf="otherCoursesError && !isOtherCoursesLoading" class="text-center py-5">
+            <div class="alert alert-danger" role="alert">
+                <i class="bi bi-exclamation-triangle"></i>
+                {{ otherCoursesError }}
+            </div>
+            <button class="btn btn-primary" (click)="loadOtherCourses()">
+                <i class="bi bi-arrow-clockwise"></i> Retry
+            </button>
+        </div>
+
+        <!-- Other Courses Slider -->
+        <div *ngIf="!isOtherCoursesLoading && !otherCoursesError && otherCourses.length > 0" class="slider-container">
+            <button class="slider-btn slider-btn-prev" 
+                    (click)="prevCoursesSlide()" 
+                    [disabled]="coursesCurrentIndex === 0">
+                <i class="bi bi-chevron-left"></i>
+            </button>
+            
+            <div class="courses-slider" 
+                 (mousedown)="coursesTouchStart($event)" 
+                 (touchstart)="coursesTouchStart($event)"
+                 (mousemove)="coursesTouchMove($event)" 
+                 (touchmove)="coursesTouchMove($event)"
+                 (mouseup)="coursesTouchEnd()" 
+                 (touchend)="coursesTouchEnd()"
+                 (mouseleave)="coursesTouchEnd()">
+                <div class="courses-slider-track" [ngStyle]="{'transform': 'translateX(' + coursesCurrentTranslate + 'px)'}">
+                    <!-- Dynamic Course Cards -->
+                    <div class="course-card-wrapper" *ngFor="let otherCourse of otherCourses; trackBy: trackByCourse">
+                        <div class="course-card text-center p-4">
+                            <div class="course-image" 
+                                 [style.background-image]="'url(' + getCourseImage(otherCourse) + ')'" alt="Course image">
+                            </div>
+                            <h5 class="text-primary mt-3 fw-bolder">{{ otherCourse.title }}</h5>
+                            <p>
+                                <b class="text-primary">Skills You Gain:</b><br>
+                                <span class="text-black">{{ otherCourse.skill || otherCourse.description || 'Improve Your Skills With Our Course Bundles.' }}</span><br>
+                                <b class="text-primary">Course Duration:&nbsp;</b>
+                                <b class="text-primary fw-bold">{{ otherCourse.duration || 'Beginner To Advanced' }} months</b>
+                            </p>
+                            <a [routerLink]="getCourseRoute(otherCourse)" class="btn btn-warning fw-bold primary-btn3">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="slider-btn slider-btn-next" 
+                    (click)="nextCoursesSlide()" 
+                    [disabled]="coursesCurrentIndex === coursesMaxIndex">
+                <i class="bi bi-chevron-right"></i>
+            </button>
+        </div>
+        
+        <!-- Other Courses Pagination Dots -->
+        <div *ngIf="!isOtherCoursesLoading && !otherCoursesError && otherCourses.length > 0" class="slider-pagination">
+            <span *ngFor="let _ of [].constructor(coursesMaxIndex + 1); let i = index" 
+                  class="pagination-dot" 
+                  [class.active]="i === coursesCurrentIndex"
+                  (click)="goToCoursesSlide(i)"></span>
+        </div>
+
+        <!-- No Other Courses Found -->
+        <div *ngIf="!isOtherCoursesLoading && !otherCoursesError && otherCourses.length === 0" class="text-center py-5">
+            <div class="alert alert-info" role="alert">
+                <i class="bi bi-info-circle"></i>
+                No other courses available
+                </div>
+        </div>
+    </div>
+</main>

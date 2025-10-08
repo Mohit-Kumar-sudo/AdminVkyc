@@ -1,0 +1,215 @@
+<br><br><br>
+<section class="container pt-5 mt-5">
+    <div>
+        <h1 style="font-size: 64px;" class="text-center text-white">Certificate Verification</h1>
+    </div>
+    
+    <!-- Success Message -->
+    <!-- <div *ngIf="successMessage" class="alert alert-success alert-dismissible fade show mt-3" role="alert" style="max-width: 800px; margin: 0 auto;">
+        <i class="fas fa-check-circle me-2"></i> {{ successMessage }}
+        <button type="button" class="btn-close" aria-label="Close" (click)="successMessage = ''"></button>
+    </div> -->
+
+    <div class="container my-5 mt-5">
+        <!-- Search Input -->
+        <div class="d-flex flex-column gap-4 align-items-center my-2">
+            <label for="certificateId" class="form-label fw-bold display-6 text-light">Verify Certificate</label>
+            
+            <div class="input-group" style="max-width: 500px;">
+                <input 
+                    type="text" 
+                    class="form-control form-control-lg" 
+                    placeholder="Enter Certificate ID" 
+                    aria-label="Certificate ID" 
+                    [(ngModel)]="certificateId"
+                    (keydown)="onEnterKey($event)"
+                    (input)="clearError()"
+                    [disabled]="isLoading"
+                    required>
+                <button 
+                    class="btn btn-warning primary-btn3" 
+                    type="button"
+                    (click)="verifyCertificate()"
+                    [disabled]="isLoading">
+                    <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                    {{ isLoading ? 'Verifying...' : 'Verify' }}
+                </button>
+            </div>
+
+            <!-- Error Message -->
+            <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade show" role="alert" style="max-width: 500px;">
+                <strong>Error:</strong> {{ errorMessage }}
+                <button type="button" class="btn-close" aria-label="Close" (click)="errorMessage = ''"></button>
+            </div>
+
+            <!-- Instructions -->
+            <div class="text-center mt-3">
+                <p class="text-light mb-1">Enter your certificate ID to verify and view your certificate</p>
+                <small class="text-muted">Only active certificates will be displayed</small>
+            </div>
+        </div>
+
+        <!-- Certificates List Section -->
+        <!-- <div class="row mt-5" *ngIf="allCertificates.length > 0">
+            <div class="col-12">
+                <div class="card bg-dark text-light">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">
+                            <i class="fas fa-certificate me-2"></i>
+                            Available Certificates ({{ allCertificates.length }})
+                            <span *ngIf="isLoadingCertificates" class="spinner-border spinner-border-sm ms-2"></span>
+                        </h5>
+                        
+                        
+                        <div class="mt-3">
+                            <div class="input-group">
+                                <input 
+                                    type="text" 
+                                    class="form-control" 
+                                    placeholder="Search by name, course, or certificate ID..." 
+                                    [(ngModel)]="searchTerm"
+                                    (input)="searchCertificates()">
+                                <button class="btn btn-outline-secondary" type="button" (click)="clearSearch()">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-dark table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Certificate ID</th>
+                                        <th>Name</th>
+                                        <th>Course</th>
+                                        <th>Completion Date</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let cert of filteredCertificates" class="certificate-row">
+                                        <td>
+                                            <code>{{ cert.certification_id }}</code>
+                                        </td>
+                                        <td>{{ cert['First Name'] }} {{ cert['Last Name'] }}</td>
+                                        <td>{{ cert['Course Title'] }}</td>
+                                        <td>{{ formatCertificationDate(cert.certification_date) }}</td>
+                                        <td>
+                                            <button 
+                                                class="btn btn-sm btn-outline-warning"
+                                                (click)="selectCertificate(cert)">
+                                                <i class="fas fa-eye me-1"></i> View
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            
+                            <div *ngIf="filteredCertificates.length === 0" class="text-center py-4">
+                                <p class="text-muted">No certificates found matching your search.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+
+        <!-- Loading State -->
+        <div *ngIf="isLoadingCertificates" class="text-center mt-4">
+            <div class="spinner-border text-warning" role="status">
+                <span class="visually-hidden">Loading certificates...</span>
+            </div>
+            <p class="text-light mt-2">Loading certificates...</p>
+        </div>
+    </div>
+</section>
+
+<!-- View Certificate Modal -->
+<ng-template #viewCertificateModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Certificate Verification</h4>
+    <div class="ms-auto">
+      <button type="button" class="btn btn-outline-primary btn-sm me-2" (click)="printCertificate()">
+        <i class="fas fa-print"></i> Print
+      </button>
+      <button type="button" class="btn btn-outline-success btn-sm me-2" (click)="downloadCertificate()">
+        <i class="fas fa-download"></i> Download
+      </button>
+    </div>
+    <button type="button" class="btn-close" (click)="modal.dismiss('Cancel')"></button>
+  </div>
+  <div class="modal-body p-1 pt-5 mt-5">
+    <div class="certificate-preview" *ngIf="viewingCertificate">
+      <!-- Certificate Template -->
+      <div class="cert-container">
+        <div class="border-gray">
+          <div class="border-red">
+            <div class="content">
+              <img id="mt-logo" src="/assets/images/logo.jpg"
+                   alt="Logo Goes Here" style="height: 80px; width: 200px;" />
+              
+              <img id="mt-stamp-sign" src="./assets/images/sign.png" alt="Certified Stamp"
+                   style="height: 100px; width: 200px; margin-top: 36px;" />
+
+              <h3 id="mt-stamp" style="margin-top: 120px;" class="py-3"><b>Instructor Signature</b></h3>
+
+              <ul class="credentials">
+                <li>
+                  <p id="cert-id">Certificate Id: <span>{{ viewingCertificate.certification_id || 'PENDING' }}</span></p>
+                </li>
+                <li>
+                  <p id="host-server-id">Hosting Server Id: <span>{{ viewingCertificate.server_id }}</span></p>
+                </li>
+                <li>
+                  <p id="lms-id">Learning Management System Id: <span>{{ viewingCertificate.lms_id }}</span></p>
+                  <br>
+                  <hr>
+                </li>
+                <li>
+                  <div id="qrcode-container">
+                    <div id="certificate-qrcode">
+                      <img *ngIf="qrCodeDataUrl" [src]="qrCodeDataUrl" alt="Certificate QR Code" />
+                      <div *ngIf="!qrCodeDataUrl" class="qr-placeholder">
+                        <span>QR Code Pending</span>
+                      </div>                  
+                    </div>                 
+                  </div>
+                </li>
+              </ul>
+              
+              <div class="copytext-container">
+                <div class="congrats-copytext">
+                  <h1>Certificate of Completion</h1><br><br>
+                  <h2>Congratulations <span>{{ viewingCertificate['First Name'] }}</span> <span>{{ viewingCertificate['Last Name'] }}</span></h2><br>
+                  <h5 id="user-id-string">User Id: <span>{{ viewingCertificate.user_id || 'PENDING' }}</span></h5>
+                </div>
+
+                <div class="course-copytext">
+                  <h1><span>{{ viewingCertificate['Course Title'] }}</span></h1><br><br>
+                  <h2>Course Completed on: <span id="certification_date">{{ formatCertificationDate(viewingCertificate.certification_date) }}</span></h2>
+                  <br>
+                  <h5 id="course-id-string">Course Id: <span id="course_id">{{ viewingCertificate.course_id }}</span></h5>
+                </div>
+                
+                <div class="address-copytext">
+                  <address>Taskhive <br> 4/20, Shiv Sangam Nagar, Regal Town, Khajurikala,<br> Bhopal, Madhya Pradesh 462024</address>
+                  <a href="#" style="text-decoration: none !important;" id="mt-site"><em>taskhive.co.in</em></a>
+                  <hr style="width: 300px;">
+                  <b style="font-size: 10px;" id="verifyLink">taskhive.co.in/verify?cert={{ viewingCertificate.certification_id || 'PENDING' }}</b>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <div class="alert alert-success mb-0 me-auto">
+      <i class="fas fa-check-circle me-1"></i> Certificate Verified Successfully
+    </div>
+    <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Cancel')">Close</button>
+  </div>
+</ng-template>
