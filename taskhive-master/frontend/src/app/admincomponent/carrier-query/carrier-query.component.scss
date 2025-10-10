@@ -1,0 +1,60 @@
+ // In carrier-query.component.scss
+.btn {
+    color: #000;
+    background: #FCDB38;
+    border: none;
+}
+
+.btn:hover {
+    color: #fff;
+    background: #0399FA;
+}
+
+.btn-info {
+  background-color: #17a2b8;
+  color: white;
+  border: none;
+  
+  &:hover {
+    background-color: #138496;
+    color: white;
+  }
+}
+
+.btn-success {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  
+  &:hover {
+    background-color: #218838;
+    color: white;
+  }
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  
+  &:hover {
+    background-color: #c82333;
+    color: white;
+  }
+}
+
+.btn-sm {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  border-radius: 0.2rem;
+}
+
+/* Optional for layout fine-tuning */
+textarea {
+  resize: vertical;
+}
+
+table td, table th {
+  vertical-align: middle;
+}

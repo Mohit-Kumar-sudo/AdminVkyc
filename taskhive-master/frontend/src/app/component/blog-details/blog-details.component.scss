@@ -1,0 +1,58 @@
+/* Custom button style */
+.btn-primary {
+  transition: color 0.3s ease;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  border-radius: 8px;
+  background-color: #0399FA;
+  border-color: #0399FA;
+  color: #0a1019;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    left: 15%;
+    right: -20%;
+    top: -4%;
+    height: 150%;
+    width: 150%;
+    background-color: #0a1019;
+    transform: skewX(45deg) scale(0, 1);
+    z-index: -1;
+    transition: transform 0.5s ease-out;
+    border-radius: 2px;
+  }
+  
+  &:hover {
+    color: white;
+    background-color: #0399FA;
+    border-color: #0399FA;
+    
+    &::after {
+      transform: skewX(45deg) scale(1, 1);
+    }
+  }
+}
+
+/* Additional custom styles */
+h1 {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 400;
+  font-size: 2.5rem;
+}
+
+.text-justify {
+  font-family: 'Raleway', sans-serif;
+  font-size: 1.1rem;
+  line-height: 1.8;
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 1.8rem;
+  }
+  
+  .text-justify {
+    font-size: 1rem;
+  }
+}

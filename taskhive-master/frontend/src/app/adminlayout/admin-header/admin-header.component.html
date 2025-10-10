@@ -1,0 +1,26 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light px-2">
+<div class="d-flex align-items-center">
+  <!-- <img class="navbar-brand px-3" src="/assets/images/logo.png" alt="" height="60"> -->
+     <div class="side-nav-button p-3 me-3 text-dark" (click)="SideNavToggle()">
+      <i class="fa-solid fa-bars"></i>
+  </div>
+  <a class="navbar-brand" routerLink="/home">
+      <span class="logo-text fw-bold" style="color: #6638fc;">Task<b
+          style="color: #fcdb38; font-weight: 900;border-color: #000000;">Hive</b></span> <br>
+      <span class="text-black text-sm-start">Swift Solutions, Trusted Reliability</span>
+    </a>
+
+
+</div>
+
+<div class="flex-grow-1"></div>
+
+<div class="profile-logo">
+    <button class="btn btn-outline-dark d-none d-lg-block" (click)="toggleDropdown()"><span class="logo-text fw-bold" style="color: #6638fc;">Task<b
+          style="color: #fcdb38; font-weight: 900;border-color: #000000;">Hive</b></span></button>
+    <i class="fa fa-user profile-icon d-lg-none" (click)="toggleDropdown()"></i>
+    <ul class="dropdown-menu" [class.show]="showDropdown">
+      <li><a href="javascript:void(0)" class="dropdown-item" (click)="logout()">Log Out</a></li>
+    </ul>
+  </div>
+</nav>
