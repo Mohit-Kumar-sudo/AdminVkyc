@@ -1,1 +1,0 @@
-{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"},{"v":{"$numberInt":"2"},"key":{"is_active":{"$numberInt":"1"}},"name":"is_active_1","background":true}],"uuid":"35d3b7ba4feb466094abc8de53417698","collectionName":"course-query","type":"collection"}
