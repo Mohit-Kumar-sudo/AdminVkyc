@@ -1,0 +1,83 @@
+<div class="position-relative">
+  <div class="mr-auto">
+    <button type="button" class="modal-close-btn btn btn-secondary" aria-label="Close" (click)="doClose()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-6 scroll-75-height">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Pie chart Details</h5>
+            <form [formGroup]="pieChartForm" (ngSubmit)="onSubmitPieInfo()" class="mfr-form">
+              <div class="container">
+                <div class="row">
+                  <mat-form-field class="mfr-full-width">
+                    <input matInput placeholder="Chart Title" type="text" name="title" id="title"
+                           formControlName="title"
+                           required>
+                  </mat-form-field>
+                </div>
+                <div class="row">
+                  <mat-form-field class="mfr-full-width">
+                    <input matInput placeholder="Source" type="text" name="source" id="source" formControlName="source"
+                           required>
+                  </mat-form-field>
+                </div>
+                <div class="row">
+                  <mat-radio-group aria-label="Select an option" name="calType" id="calType" formControlName="calType">
+                    <mat-radio-button value="BY_VALUE" [checked]="true">By Value</mat-radio-button>
+                  </mat-radio-group>
+                </div>
+                <div class="row">
+                  <mat-card>
+                    <mat-card-content formArrayName="columnData">
+                      <table>
+                        <div *ngFor="let item of columns.controls; let i = index;">
+                          <div [formGroupName]="i">
+                            <tr>
+                              <td colspan="1">
+                                <mat-form-field class="mfr-full-width">
+                                  <input matInput formControlName="header" placeholder="Header">
+                                </mat-form-field>
+                              </td>
+                              <td colspan="1">
+                                <mat-form-field class="mfr-full-width">
+                                  <input matInput type="number" formControlName="value" placeholder="Value">
+                                </mat-form-field>
+                              </td>
+                              <td>
+                                <button (click)="removePieHeader(i)" type="button" class="btn btn-danger pie-cross-btn">
+                                  <i class="fa fa-times"></i></button>
+                              </td>
+                            </tr>
+                          </div>
+                        </div>
+                      </table>
+                      <button mat-raised-button type="button" (click)="addColumn()" color="primary">Add</button>
+                    </mat-card-content>
+                  </mat-card>
+                </div>
+                <div class="row mt-2">
+                  <button mat-raised-button color="primary">Create Pie Chart</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 align-self-center scroll-75-height">
+        <canvas *ngIf="isSubmit" baseChart [data]="chartData" [labels]="chartLabels" [chartType]="chartType"
+                [options]="chartOptions" [plugins]="chartPlugins" [colors]="chartColors" [legend]="chartLegend">
+        </canvas>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col">
+        <button mat-raised-button [disabled]="!isSubmit" (click)="submitPieChartInput()" color="primary">Save</button>
+        <button class="ml-2" mat-raised-button (click)="doClose()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,63 @@
+<div class="position-relative">
+  <div class="mr-auto">
+    <button type="button" class="modal-close-btn btn btn-secondary" aria-label="Close" (click)="doClose()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-4 scroll-75-height">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Image Details</h5>
+            <form [formGroup]="imageInfoForm" (ngSubmit)="onSubmitImageInfo()" class="mfr-form">
+              <div class="container">
+                <div class="row">
+                  <mat-form-field class="mfr-full-width">
+                    <input matInput placeholder="Image Title" type="text" name="title" id="title"
+                           formControlName="title"
+                           required>
+                  </mat-form-field>
+                </div>
+                <div class="row">
+                  <mat-form-field class="mfr-full-width">
+                    <input matInput placeholder="Source" type="text" name="source" id="source" formControlName="source"
+                           required>
+                  </mat-form-field>
+                </div>
+                <div class="row">
+                  <mat-form-field class="mfr-full-width">
+                    <mat-select placeholder="Select Image content" name="contentType" id="contentType"
+                                formControlName="contentType">
+                      <mat-option>-- Select Any --</mat-option>
+                      <mat-option value="1">Chart</mat-option>
+                      <mat-option value="2">Table</mat-option>
+                      <mat-option value="3">None of the above</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="row">
+                  <input style="display: none" type="file" (change)="onFileChanged($event)" #fileInput>
+                  <a mat-raised-button color="primary" (click)="fileInput.click()">Select File</a>
+                  <span>&nbsp;</span>
+                  <a mat-raised-button color="primary" (click)="onUpload()">Upload!</a>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="col-8 scroll-75-height align-self-center">
+        <mat-card *ngIf="showImage">
+          <img [src]="imageUrl" class="responsiveImg" *ngIf="imageUrl">
+        </mat-card>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col">
+        <button mat-raised-button [disabled]="!showImage" (click)="onSubmitImageInfo()" color="primary">Save</button>
+        <button class="ml-2" mat-raised-button (click)="doClose()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

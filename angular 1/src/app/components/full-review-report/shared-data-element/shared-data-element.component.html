@@ -1,0 +1,90 @@
+<div class="comment-item" *ngFor="let dataElement of inputData">
+  <div class="card-element w-100">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col" style="padding-left: 0;">
+          <div class="card-body" style="padding: 0.5rem;">
+            <ng-container class="component-element-renderer" [ngSwitch]="dataElement?.type">
+              <!-- TEXT -->
+              <div class="container-fluid" *ngSwitchCase="'TEXT'">
+                <div [innerHTML]="dataElement.data"></div>
+              </div>
+
+              <!-- TABLE -->
+              <div class="container-fluid" *ngSwitchCase="'TABLE'">
+                <p class="mat-caption"><b>Title:</b> {{dataElement.data.metaDataValue.title}}
+                </p>
+                <table mat-table [dataSource]="dataElement.data.dataStore"
+                       class="table table-bordered table-hover conponent-table">
+                  <ng-container *ngFor="let colMetadata of dataElement.data.cols"
+                                matColumnDef="{{colMetadata}}">
+                    <th *matHeaderCellDef> {{colMetadata}} </th>
+                    <td *matCellDef="let element">
+                      {{element[colMetadata]}}
+                    </td>
+                  </ng-container>
+                  <tr mat-header-row *matHeaderRowDef="dataElement.data.cols"></tr>
+                  <tr mat-row *matRowDef="let row; columns: dataElement.data.cols;"></tr>
+                </table>
+                <p class="mat-caption"><span class="font-weight-bold">Source :</span>
+                  {{dataElement.data.metaDataValue?.source}}
+                </p>
+              </div>
+
+              <!-- IMAGE -->
+              <div class="container-fluid" *ngSwitchCase="'IMAGE'">
+                <p class="mat-caption">
+                  <b>Title:</b> {{dataElement.data.metaDataValue.title}}
+                </p>
+                <img [src]="dataElement.data.imageUrl" class="float-l-width img-responsive"
+                     *ngIf="dataElement.data.imageUrl">
+                <br>
+                <p class="mat-caption image-source">
+                  <b>Source:</b> {{dataElement.data.metaDataValue.source}}
+                </p>
+              </div>
+
+              <!-- PIE -->
+              <div class="container-fluid" *ngSwitchCase="'PIE'">
+                <p class="mat-caption"><b>Title: </b>{{dataElement.data.metaDataValue.title}}
+                </p>
+                <canvas height="50" baseChart [data]="dataElement.data.chartData"
+                        [labels]="dataElement.data.chartLabels" [chartType]="pieChartType"
+                        [options]="pieChartOptions"
+                        [plugins]="pieChartPlugins" [colors]="pieChartColors" [legend]="pieChartLegend">
+                </canvas>
+                <p class="mat-caption"><span class="font-weight-bold">Source
+                          :</span>{{dataElement.data.metaDataValue.source}}
+                </p>
+              </div>
+
+              <!-- BAR -->
+              <div class="container-fluid" *ngSwitchCase="'BAR'">
+                <p class="mat-caption"><b>Title:</b> {{dataElement.data.metaDataValue.title}}
+                </p>
+                <canvas height="50" baseChart [datasets]="dataElement.data.chartData"
+                        [labels]="dataElement.data.chartLabels" [options]="barChartOptions"
+                        [plugins]="barChartPlugins"
+                        [legend]="barChartLegend" [chartType]="barChartType">
+                </canvas>
+                <p class="mat-caption"><span class="font-weight-bold">Source
+                          :</span>{{dataElement.data.metaDataValue.source}}
+                </p>
+              </div>
+            <!-- CUSTOM -->
+            <div class="container-fluid" *ngSwitchCase="'CUSTOM'">
+              <app-table-heading-output [dataElement]="dataElement?.data.title"></app-table-heading-output>
+              <app-custom-output [dataElement]="dataElement"></app-custom-output>
+            </div>
+            <!-- HEADING -->
+            <div class="container-fluid" *ngSwitchCase="'HEADING'">
+              <p><b>{{dataElement.data}}</b></p>
+            </div>
+
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

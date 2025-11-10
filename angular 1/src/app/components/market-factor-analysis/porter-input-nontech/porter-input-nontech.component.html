@@ -1,0 +1,162 @@
+<div class="container-fluid">
+  <div class="row justify-content-center mt-5">
+    <div class="col-8">
+      <mat-card>
+        <mat-card-content>
+          <div class="container-fluid">
+
+            <div class="row pb-3">
+              <div class="col">
+                <p class="font-weight-bold">Add Conclusion</p>
+                <div class="row">
+                  <app-ngx-editor autofocus [placeholder]="'Enter text here...'" [config]="editorConfig"
+                    [(ngModel)]="conclusion">
+                  </app-ngx-editor>
+                </div>
+              </div>
+            </div>
+            <mat-divider></mat-divider>
+
+            <div class="row pb-3">
+              <div class="col">
+                <p class="font-weight-bold">Create Entity</p>
+                <div class="container">
+                  <div class="row form-row">
+                    <div class="col-3">
+                      <input type="text" class="form-control" placeholder="Add name" [(ngModel)]="childSectionName">
+                    </div>
+                    <div class="col-4">
+                      <select class="custom-select" [(ngModel)]="childSectionEntity">
+                        <option selected disabled value="">Entity Type</option>
+                        <option *ngFor="let entity of entity_type" value="{{entity}}">{{entity}}</option>
+                      </select>
+                    </div>
+                    <div class="col-2">
+                      <select class="custom-select" [(ngModel)]="childSectionRating">
+                        <option selected disabled value="">Rating</option>
+                        <option *ngFor="let rating of ratings" value="{{rating}}">{{rating}}</option>
+                      </select>
+                    </div>
+
+                    <div class="col-3">
+                      <button mat-raised-button color="primary" (click)="addElement()"
+                        [disabled]="childSectionName === ''">Add</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="row">
+              <div class="col">
+                <p class="mt-3 font-weight-bold">Entity Information</p>
+                <table class="table table-bordered">
+                  <tbody>
+                    <tr *ngFor="let subSubSec of subSubSectionList">
+                      <td style="width: 30%">
+                        <div class="container">
+                          <div class="row">
+                            {{subSubSec?.name}}
+                          </div>
+                        </div>
+                      </td>
+                      <td style="width: 30%">
+                        <div class="container">
+                          <div class="row">
+                            {{subSubSec?.type}}
+                          </div>
+                        </div>
+                      </td>
+                      <td style="width: 20%">
+                        <div class="container">
+                          <div class="row">
+                            {{subSubSec?.rating}}
+                          </div>
+                        </div>
+                      </td>
+                      <td style="width: 20%">
+                        <div class="container">
+                          <div class="row">
+                            <button type="button" class="close" aria-label="Close" (click)="removeElement(subSubSec)">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                        </div>
+                      </td>
+
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <p class="mt-3 font-weight-bold">Default Entity</p>
+                <table class="table table-bordered">
+                  <tbody>
+                    <tr *ngFor="let item of defaultInputList">
+                      <td style="width: 30%">
+                        <div class="container">
+                          <div class="row">
+                            {{item?.name}}
+                          </div>
+                        </div>
+                      </td>
+                      <td style="width: 20%">
+                        <div class="container">
+                          <div class="row">
+                            <select class="custom-select" [(ngModel)]="item.rating">
+                              <option selected disabled value="">Rating</option>
+                              <option *ngFor="let rating of ratings" value="{{rating}}">{{rating}}</option>
+                            </select>
+                          </div>
+                        </div>
+                      </td>
+
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col">
+                <p class="mt-3 font-weight-bold">Impact</p>
+                <table class="table table-bordered">
+                  <tbody>
+                    <tr *ngFor="let item of impactInput">
+                      <td style="width: 30%">
+                        <div class="container">
+                          <div class="row">
+                            {{item?.name}}
+                          </div>
+                        </div>
+                      </td>
+                      <td style="width: 20%">
+                        <div class="container">
+                          <div class="row">
+                            <select class="custom-select" [(ngModel)]="item.impact">
+                              <option selected disabled value="">Impact</option>
+                              <option *ngFor="let impact of impacts" value="{{impact}}">{{impact}}</option>
+                            </select>
+                          </div>
+                        </div>
+                      </td>
+
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <a mat-raised-button (click)="onSubmit()" color="primary">Save</a>
+                <button mat-raised-button color="primary" class="float-right" (click)="toPreviousPage()">Back</button>
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

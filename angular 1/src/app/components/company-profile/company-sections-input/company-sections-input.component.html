@@ -1,0 +1,96 @@
+<div class="container-fluid">
+  <div class="row justify-content-center mt-5">
+    <div class="col-8">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>
+            <span>{{currentReport.title}}-{{currentReport.vertical}}: {{currentCompany}}</span>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="container">
+            <div class="row mb-2">
+              <div class="col-4 border p-2">
+                <div>Stocks : <input type="text" [formControl]="stock" title="search company name or company ticker"></div>
+                <div class="p-2" *ngIf="stockArray?.length">
+                  <div class="my-2 sm-window border p-2 fonter">
+                    <mat-radio-group [(ngModel)]='stockContentCompare' (ngModelChange)="stockOut()">
+                      <mat-radio-button *ngFor="let c of stockArray" value="{{c['1. symbol']}} {{c['2. name']}}"
+                        title="{{c['1. symbol']}}    {{c['2. name']}}">
+                        <span class="text-secondary f-size">Ticker: </span>{{c["1. symbol"]}} <span
+                          class="text-secondary f-size">Name: </span>{{c["2. name"]}}
+                      </mat-radio-button>
+                    </mat-radio-group>
+                  </div>
+                  <div class="mt-1 fonter" *ngIf="splitTicker">
+                    <span class="font-weight-bold">Selected : </span> <span class="text-secondary f-size">Ticker:
+                    </span>{{splitTicker}} <span class="text-secondary f-size">Name: </span>{{splitName}}
+                  </div>
+                </div>
+                <div *ngIf="!stockArray?.length" class="p-2 text-info">
+                  No results found, Please try to search manually.
+                </div>
+              </div>
+              <div class="col-4 border p-2">
+                <div>Leads : <input type="text" [formControl]="leads" title="search company name excluding common word for max results"></div>
+                <div class="pt-2" *ngIf="leadsArray?.length">
+                  <div class="my-2 sm-window border p-2 fonter">
+                    <mat-selection-list [(ngModel)]='leadContentCompare' (focusout)="leadsOut()">
+                      <mat-list-option *ngFor="let c of leadsArray" [value]="c?.company" title="{{c.company}}">
+                        {{c?.company}}
+                      </mat-list-option>
+                    </mat-selection-list>
+                  </div>
+                  <div class="mt-1 fonter" *ngIf="leadContentCompare">
+                    <span class="font-weight-bold">Selected : </span> <span
+                      *ngFor="let item of leadContentCompare">{{item}}, </span>
+                  </div>
+                </div>
+                <div *ngIf="!leadsArray?.length" class="p-2 text-info">
+                  No results found, Please try to search manually.
+                </div>
+              </div>
+              <div class="col-4 border p-2">
+                <div>Filings : <input type="text" [formControl]="filings" title="search company name or keyword from company name"></div>
+                <div class="pt-2" *ngIf="filingArray?.length">
+                  <div class="sm-window border my-2 fonter">
+                    <div *ngFor="let item of filingArray" [innerHTML]="item?.display_names" class="py-1 px-2"></div>
+                  </div>
+                  <div class="flexer fonter">
+                    <p>
+                      Are the suggestions consist company name?
+                    </p>
+                    <mat-checkbox [(ngModel)]="checkFiling" (ngModelChange)="filingCheck()">Yes</mat-checkbox>
+                  </div>
+                </div>
+                <div *ngIf="!filingArray?.length" class="p-2 text-info">
+                  No results found, Please try to search manually.
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <table class="table table-bordered">
+                  <tbody>
+                    <tr *ngFor="let menu of menuList">
+                      <td class="col-8">{{menu.value}}</td>
+                      <td>
+                        <button mat-raised-button color="primary" (click)="onSectionSelection(menu)">Add Info</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <a mat-raised-button color="primary">Save</a>
+                <button mat-raised-button color="primary" class="float-right" (click)="toPreviousPage()">Back</button>
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

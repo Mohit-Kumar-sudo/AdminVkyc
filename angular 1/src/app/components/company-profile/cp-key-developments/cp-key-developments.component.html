@@ -1,0 +1,10 @@
+<div class="container-fluid mt-2">
+  <div class="row ml-2">
+    <p>{{this.currentCompany.name}} : Key Developments</p>
+  </div>
+  <div class="row">
+    <app-cp-secondary-element style="width: 100%;" [secondarySectionModel]="secondarySectionModel"
+      [sectionName]="'key_development'" (dataChange)="saveData($event)">
+    </app-cp-secondary-element>
+  </div>
+</div>

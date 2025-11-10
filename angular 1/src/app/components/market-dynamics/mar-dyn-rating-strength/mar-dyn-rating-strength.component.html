@@ -1,0 +1,32 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <mat-card>
+                <mat-card-content>
+                    <div class="container">
+                        <div class="row">
+                            <p class="font-weight-bold">Year-wise rating</p>
+                        </div>
+                        <div class="row form-row" *ngFor="let yearR of yearRatingList">
+                            <td class="col-8">{{yearR.year}}</td>
+                            <td>
+                                <mat-form-field class="mfr-full-width">
+                                    <mat-select placeholder="Rating" name="rating" id="rating"
+                                        [(ngModel)]="yearR.rating">
+                                        <mat-option *ngFor="let rating of ratingValue" value="{{rating}}">
+                                            {{rating}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </td>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col">
+            <button mat-raised-button (click)="onSubmitInfo()" color="primary">Ok</button>
+        </div>
+    </div>
+</div>

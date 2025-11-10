@@ -1,0 +1,35 @@
+<div class="container mt-3">
+  <h6>Select featured reports</h6>
+  <mat-form-field class="btn-block">
+    <mat-label>Select report</mat-label>
+    <input type="text" class="search-t-box" placeholder="Search report" matInput
+           [formControl]="searchReport" [matAutocomplete]="auto">
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)='addReport($event.option.id)'>
+      <mat-option *ngFor="let report of options" [id]="report._id" [value]="report.title">
+        {{report?.title}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <h6>Current featured reports</h6>
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th>Sr. No.</th>
+      <th>Report Title</th>
+      <th>Vertical</th>
+      <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let report of featuredReports; let i = index">
+      <td>{{i + 1}}</td>
+      <td>{{report?.title}}</td>
+      <td>{{report?.vertical}}</td>
+      <td><i (click)="deleteReport(report._id)" class="fa fa-trash-o delete-report"></i></td>
+    </tr>
+    <tr *ngIf="featuredReports && !featuredReports.length">
+      <td colspan="4" class="center">No reports found</td>
+    </tr>
+    </tbody>
+  </table>
+</div>

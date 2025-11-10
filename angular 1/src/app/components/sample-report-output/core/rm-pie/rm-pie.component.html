@@ -1,0 +1,9 @@
+<div class="d-flex" #rmPies *ngIf="hidermPies == false">
+  <div *ngFor="let item of dataElement?.data">
+    <app-rm-pie-chart-output [dataElement]="item"></app-rm-pie-chart-output>
+  </div>
+</div>
+<div>
+  <img #rmPiesImage>
+  <app-source-output></app-source-output>
+</div>

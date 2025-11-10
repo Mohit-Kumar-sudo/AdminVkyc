@@ -1,0 +1,21 @@
+<div>
+    <table style="width:100%;margin-right:auto;margin-left:auto;border:1px solid #000;border-collapse:collapse">
+        <tbody>
+            <tr style="height:1.45pt;" *ngFor="let row of dataElement.data.data; let i=index">
+                <td
+                    style="border:1px solid #000;padding-right:5.03pt;padding-left:5.03pt;vertical-align:middle;width:40%">
+                    <app-table-th-output [dataElement]="row.title"></app-table-th-output>
+                </td>
+                <td
+                    style="border:1px solid #000;padding-right:5.03pt;padding-left:5.03pt;vertical-align:middle;width: 60%;">
+                    <ul style="margin:0pt;padding-left:10pt;">
+                        <li *ngFor="let dt of row.data; let j = index">
+                            <app-table-bullet-level-one [dataElement]="dt.data"></app-table-bullet-level-one>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <app-source-output></app-source-output>
+</div>

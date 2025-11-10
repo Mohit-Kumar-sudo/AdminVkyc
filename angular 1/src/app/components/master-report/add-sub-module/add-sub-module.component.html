@@ -1,0 +1,22 @@
+<div class="position-relative">
+  <button type="button" class="modal-close-btn btn btn-secondary" aria-label="Close" (click)="dialogRef.close()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <div class="container">
+    <h5 class="card-title">Add sub module under - <b>{{currentMenu?.section_name}}</b></h5>
+    <mat-chip-list class="float-l mb-4" *ngIf="currentMenu.subSections && currentMenu.subSections.length">
+      <mat-chip color="primary" selected *ngFor="let section of currentMenu.subSections">
+        {{section?.value}}
+      </mat-chip>
+    </mat-chip-list>
+
+    <input type="text" class="form-control" (keyup.enter)="addSubModule()" placeholder="Enter sub module" [(ngModel)]="subModule">
+    <br>
+    <button mat-raised-button (click)="addSubModule()" color="primary">Add Sub Module</button>
+    <br>
+    <div class="float-l-width mt-2">
+      <button mat-raised-button [mat-dialog-close]="allMenu" color="primary">Save</button>
+      <button class="ml-2" mat-raised-button (click)="dialogRef.close()">Cancel</button>
+    </div>
+  </div>
+</div>

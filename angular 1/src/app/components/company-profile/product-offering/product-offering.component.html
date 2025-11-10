@@ -1,0 +1,48 @@
+<div class="container">
+    <div class="row mt-3">
+        <p class="font-weight-bold" style="padding-left: 70px;">Product Offerings</p>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div id="Sample" style="margin-bottom: 5px;">
+                <!-- <app-tree-grid [data]="segmentData"></app-tree-grid> -->
+                <div id="input-chart-container"></div>
+                <div id="edit-panel">
+                    <div style="display: flex;
+                            align-items: center">
+                        <!-- <div id="chart-state-panel" class="radio-panel">
+                                    <input type="radio" name="chart-state" id="rd-view" value="view"><label
+                                        for="rd-view">View</label>
+                                    <input type="radio" name="chart-state" id="rd-edit" value="edit" checked="true"><label
+                                        for="rd-edit">Edit</label>
+                                </div> -->
+                        <div style="margin: 0 5px;">
+                            <label class="selected-node-group">selected node:</label>
+                            <input type="text" id="selected-node" class="selected-node-group">
+                            <label>new node:</label>
+                            <ul id="new-nodelist" style="margin: 0;">
+                                <li><input type="text" class="new-node"></li>
+                            </ul>
+                        </div>
+                        <div id="node-type-panel" class="radio-panel">
+                            <input type="radio" name="node-type" id="rd-child" value="children"><label
+                                for="rd-child">Child</label>
+                        </div>
+                        <div>
+                            <button type="button" id="btn-add-nodes" mat-raised-button color="primary">Add</button>
+                            <button type="button" id="btn-delete-nodes" mat-raised-button
+                                color="primary">Delete</button>
+                            <button type="button" id="btn-reset" mat-raised-button color="primary">Reset</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="padding-left: 50px;padding-right: 50px;">
+        <div class="col">
+            <button mat-raised-button color="primary" (click)="onSubmitInfo()">Save</button>
+            <button mat-raised-button color="primary" class="float-right" (click)="toPreviousPage()">Back</button>
+        </div>
+    </div>
+</div>

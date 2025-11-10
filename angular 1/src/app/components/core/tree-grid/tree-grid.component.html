@@ -1,0 +1,21 @@
+    <div id="editForm" style="display:none; text-align:center;z-index:10000;position:absolute;">
+      <mat-card>
+        <mat-card-header class="cyan white-text text-center py-4">
+          <h5>
+            <strong>Edit Details</strong>
+          </h5>
+        </mat-card-header>
+        <mat-card-content>
+          <div>
+            <mat-form-field>
+              <input matInput placeholder="Segment Name" type="text" name="name" id="name" required>
+            </mat-form-field>
+            <div class="mfr-tree-grid-form-button-row">
+              <button mat-raised-button color="primary" id="save">Save</button>
+              <button mat-raised-button color="warn" id="cancel">Cancel</button>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div id="treeView"></div>

@@ -1,0 +1,8 @@
+<div *ngIf="!isList">
+    <div>
+        <p *ngIf="!heading" [innerHTML]="dataElement"
+            style="color:#000000;font-family: Roboto Condensed;font-size:10pt;text-align: justify;"></p>
+    </div>
+    <app-sub-heading-output *ngIf="heading" [dataElement]="heading"></app-sub-heading-output>
+</div>
+<div *ngIf="isList" [innerHTML]="dataElement"></div>

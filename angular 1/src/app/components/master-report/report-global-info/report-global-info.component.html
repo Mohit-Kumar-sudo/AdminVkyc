@@ -1,0 +1,117 @@
+<div class="container-fluid">
+  <div class="row justify-content-center mt-2">
+    <div class="col-8">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>
+            <span>Global {{currentReport.title}} report ( {{currentReport.category }} -
+              {{currentReport.vertical}})</span>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="container">
+            <div class="row">
+              <div class="col-sm-4">
+                <a (click)="onModuleSequence()" class="btn-block" mat-raised-button color="primary">Adjust Module Sequence</a>
+              </div>
+            </div>
+            <hr>
+            <div class="row scroll-area">
+              <div class="col">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th scope="col"></th>
+                      <th scope="col" style="width: 50px;"></th>
+                      <th scope="col" style="width: 50px;">Status</th>
+                      <th scope="col">Analyst</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let menu of menuInputList;let i=index">
+                      <td>{{menu.section_name}}</td>
+                      <td>
+                        <a mat-raised-button color="primary" (click)="onSectionSelection(menu)">Add Info</a>
+                        <ng-container *ngIf="menu.urlpattern == 'other-module'">
+                          <a mat-raised-button color="primary" class="mt-1" (click)="addSubCustomModule(menu)">Add sub custom module</a>
+                        </ng-container>
+
+                      </td>
+                      <td>
+                        <mat-radio-group aria-labelledby="example-radio-group-label" style="display: flex;"
+                          [(ngModel)]="statusSelector[i]" (change)="finishedStatus(menu, i)">
+                          <mat-radio-button style="margin-right: 10px;font-size: 12px;"
+                            *ngFor="let season of statusArray" [value]="season" [disabled]="season != 'Finished'">
+                            {{season}}
+                          </mat-radio-button>
+                        </mat-radio-group>
+                      </td>
+                      <td>-</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="row pt-3 pb-3">
+              <div class="col">
+                <p class="font-weight-bold">Add New Module</p>
+                <div class="row">
+                  <div class="col-6">
+                    <mat-form-field class="btn-block">
+                      <input matInput placeholder="Add Module name" [(ngModel)]="newModuleName">
+                    </mat-form-field>
+                  </div>
+                  <div class="col-3">
+                    <button mat-raised-button color="primary" class="btn-block" (click)="addNewModule()"
+                      [disabled]="newModuleName === ''">Add
+                    </button>
+                  </div>
+                  <div class="col-3">
+                    <a routerLink="/full-review-report" class="btn-block" mat-raised-button color="primary">Review full
+                      Info</a>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-2">
+                    <button class="btn-block" mat-raised-button color="primary" (click)="toPreviousPage()">Back</button>
+                  </div>
+                  <div class="col-7">
+                  </div>
+                  <div class="col-3">
+                    <a routerLink="" class="btn-block" mat-raised-button color="primary">Final Submit</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row pb-3" *ngIf="newModuleArr.length>0">
+              <div class="col">
+                <p class="mt-3 font-weight-bold">New Module Information</p>
+                <table class="table table-bordered">
+                  <tbody>
+                    <tr *ngFor="let module of newModuleArr">
+                      <td style="width: 60%">{{module.section_name}}</td>
+                      <td>
+                        <button mat-raised-button color="primary" (click)="onSectionSelection(module)">Add
+                          Info
+                        </button>
+                      </td>
+                      <td>
+                        <i (click)="removeElement(module)" class="fa fa-trash-o delete-module"></i>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid1">
+<app-document-upload></app-document-upload>
+</div>
+

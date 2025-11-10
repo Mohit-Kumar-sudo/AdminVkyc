@@ -1,0 +1,24 @@
+<div class="card">
+  <div class="card-body">
+    <button type="button" class="close" aria-label="Close" (click)="doClose(listData)">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <h5 class="card-title">List Details</h5>
+
+    <div class="example-container">
+      <mat-form-field>
+        <textarea matInput placeholder="Textarea"  [(ngModel)]="content"></textarea>
+      </mat-form-field>
+    </div>
+    <div class="container">
+      <div class="row">
+
+      <div class="row mt-2">
+        <button mat-raised-button [mat-dialog-close]="content" (click)="stringToList()" color="primary">Save</button>
+        <button class="ml-2" mat-raised-button (click)="doClose(listData)">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+

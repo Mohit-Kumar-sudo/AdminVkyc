@@ -1,0 +1,32 @@
+.admin-container {
+    .heading {
+        text-align: center;
+        color: #333;
+    }
+    width: 80%;
+    margin: 20px auto;
+    .admin-action {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        button {
+            margin-right: 10px;
+        }
+    }
+    .admin-contents {
+        table {
+            width: 100%;
+            td,
+            th {
+                width: 20%;
+                padding-right: 10px;
+                text-overflow: clip;
+            }
+        }
+
+        .mat-form-field {
+            font-size: 14px;
+            width: 100%;
+        }
+    }
+}

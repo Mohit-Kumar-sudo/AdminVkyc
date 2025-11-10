@@ -1,0 +1,57 @@
+<div class="container-fluid">
+  <div class="row justify-content-center mt-5">
+    <div class="col-8">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>
+            <span>Market Factor Analysis</span>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col">
+                <table class="table table-bordered">
+                  <tbody>
+                  <ng-container *ngFor="let menu of menuInputList">
+                    <tr *ngIf="menu.id !== 1">
+                      <td>{{menu.value}}</td>
+                      <td>
+                        <button mat-raised-button color="primary"
+                                (click)="onSectionSelection(menu, 'common')">Add Info
+                        </button>
+                      </td>
+                    </tr>
+                    <tr *ngIf="menu.id == 1">
+                      <td>{{menu.value}} - Non Tech</td>
+                      <td>
+                        <button mat-raised-button color="primary"
+                                (click)="onSectionSelection(menu, 'nontech')">Add Info
+                        </button>
+                      </td>
+                  </ng-container>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="alert alert-success">
+              <label>Add Custom MFA Module </label>
+              <input class="form-control" placeholder="Enter custom MFA Module" type="text"
+                     [(ngModel)]="customMFAModule">
+              <br>
+              <button class="btn btn-primary" (click)="addCustomMFAModule()">Add custom module</button>
+            </div>
+            <div class="row">
+              <div class="col">
+                <a mat-raised-button color="primary">Save</a>
+                <button mat-raised-button color="primary" class="float-right"
+                        (click)="toPreviousPage()">Back
+                </button>
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

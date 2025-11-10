@@ -1,0 +1,19 @@
+<div *ngFor="let item of tocModules">
+    <app-market-estimation-sample-output *ngIf="item.section_key == 'MARKET_ESTIMATION'"[selectedModule]=item>
+    </app-market-estimation-sample-output>
+    <app-executive-summary-sample-output *ngIf="item.section_key == 'EXECUTIVE_SUMMARY'" [selectedModule]=item>
+    </app-executive-summary-sample-output>
+    <app-market-introduction-sample-output *ngIf="item.section_key == 'MARKET_INTRODUCTION'" [selectedModule]=item>
+    </app-market-introduction-sample-output>
+    <app-research-methodology-sample-output *ngIf="item.section_key == 'RESEARCH_METHODOLOGY'" [selectedModule]=item>
+    </app-research-methodology-sample-output>
+    <app-market-dynamics-sample-output *ngIf="item.section_key == 'MARKET_DYNAMICS'" [selectedModule]=item>
+    </app-market-dynamics-sample-output>
+    <app-market-factor-analysis *ngIf="item.section_key == 'MARKET_FACTOR_ANALYSIS'" [selectedModule]=item></app-market-factor-analysis>
+    <app-company-profiles-sample-output *ngIf="item.section_key == 'COMPANY_PROFILES'" [selectedModule]=item>
+    </app-company-profiles-sample-output>
+    <app-competitive-landscape *ngIf="item.section_key == 'COMPETITIVE_LANDSCAPE'" [selectedModule]=item></app-competitive-landscape>
+    <app-sample-output-appendix *ngIf="item.section_key == 'APPENDIX'" [selectedModule]=item></app-sample-output-appendix>
+    <app-custom-module-sample-output *ngIf="item.urlpattern == 'other-module' && item.section_key != 'RESEARCH_METHODOLOGY'"
+        [selectedModule]=item></app-custom-module-sample-output>
+</div>

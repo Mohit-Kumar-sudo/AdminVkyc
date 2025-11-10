@@ -1,0 +1,98 @@
+<div *ngIf="subHeading">
+  <app-heading-output [dataElement]="subHeading.name" [counter]="subHeading.id" [level]="subHeading.level">
+  </app-heading-output>
+</div>
+<div *ngFor="let dataElement of secondaryInputData">
+  <div>
+    <div class="container-fluid">
+      <div class="row">
+        <div style="padding-left: 0;">
+          <div>
+            <ng-container class="component-element-renderer" [ngSwitch]="dataElement?.type">
+              <!-- TEXT -->
+              <div *ngSwitchCase="'TEXT'">
+                <app-text-output [dataElement]="dataElement?.data"></app-text-output>
+              </div>
+
+              <!-- TABLE -->
+              <div *ngSwitchCase="'TABLE'">
+                <app-table-heading-output [dataElement]="dataElement.data.metaDataValue.title">
+                </app-table-heading-output>
+                <app-table-output [dataElement]="dataElement"></app-table-output>
+              </div>
+
+              <!-- IMAGE -->
+              <div *ngSwitchCase="'IMAGE'">
+                <app-figure-heading-output [dataElement]="dataElement.data.metaDataValue.title">
+                </app-figure-heading-output>
+                <app-image-output [dataElement]="dataElement"></app-image-output>
+              </div>
+
+              <!-- PIE -->
+              <div *ngSwitchCase="'PIE'">
+                <app-figure-heading-output [dataElement]="dataElement.data.metaDataValue.title">
+                </app-figure-heading-output>
+                <app-pie-chart-output [dataElement]="dataElement"></app-pie-chart-output>
+              </div>
+
+              <!-- BAR -->
+              <div *ngSwitchCase="'BAR'">
+                <app-bar-chart-output [dataElement]="dataElement"></app-bar-chart-output>
+              </div>
+
+              <!-- CUSTOMTABLE -->
+              <div *ngSwitchCase="'CUSTOM_TABLE'">
+                <app-table-heading-output [dataElement]="dataElement?.data.title"></app-table-heading-output>
+                <app-custom-table-output [dataElement]="dataElement"></app-custom-table-output>
+              </div>
+
+              <!-- HEADING -->
+              <div *ngSwitchCase="'HEADING'">
+                <app-heading-output [dataElement]="dataElement?.data?.name" [counter]="dataElement?.data?.id"
+                  [level]="dataElement?.data?.level"></app-heading-output>
+              </div>
+              <!-- METABLE -->
+              <div *ngSwitchCase="'ME_TABLE'">
+                <app-me-table-output [dataElement]="dataElement"></app-me-table-output>
+              </div>
+              <!-- MD_IMAGE -->
+              <div *ngSwitchCase="'MD_IMAGE'">
+                <app-md-impact-table [dataElement]="dataElement"></app-md-impact-table>
+              </div>
+              <!-- ME_LIST -->
+              <div *ngSwitchCase="'ME_LIST'">
+                <app-me-list-output [dataElement]="dataElement"></app-me-list-output>
+              </div>
+              <!-- CP_LIST -->
+              <div *ngSwitchCase="'CP_LIST'">
+                <app-cp-list-output [dataElement]="dataElement"></app-cp-list-output>
+              </div>
+              <!-- RM_PIE -->
+              <div *ngSwitchCase="'RM_PIE'">
+                <app-rm-pie [dataElement]="dataElement"></app-rm-pie>
+              </div>
+              <!-- CHAIN -->
+              <div *ngSwitchCase="'CHAIN'">
+                <app-supply-value-chain [dataElement]="dataElement?.data"></app-supply-value-chain>
+              </div>
+             <!-- CUSTOM -->
+             <div *ngSwitchCase="'CUSTOM'">
+              <app-table-heading-output [dataElement]="dataElement?.data.title"></app-table-heading-output>
+              <app-custom-output [dataElement]="dataElement"></app-custom-output>
+            </div>
+            <!-- ME TABLE HEADING -->
+            <div *ngSwitchCase="'ME_TABLE_HEADING'">
+              <app-table-heading-output [dataElement]="dataElement.data"></app-table-heading-output>
+            </div>
+            <!-- MARKET_STRUCTURE -->
+            <div *ngSwitchCase="'MARKET_STRUCTURE'">
+              <app-sample-type-market-strucutre [dataElement]="dataElement?.data"></app-sample-type-market-strucutre>
+            </div>
+            </ng-container>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,174 @@
+<div class="container-fluid">
+  <div class="row justify-content-center mt-5">
+    <div class="col-8">
+      <mat-card>
+        <mat-card-content>
+          <div class="container-fluid">
+            <div class="row pb-3">
+              <div class="col">
+                <p class="font-weight-bold">Company Profiles-SWOT Analysis</p>
+                <table class="table table-bordered">
+                  <tbody>
+                    <!-- Strength Row -->
+                    <tr>
+                      <div class="container p-2">
+                        <p class="font-weight-bold">STRENGTH section</p>
+                        <div class="row">
+                          <div class="col-4">
+                            <input type="text" class="form-control" placeholder="Add Strength"
+                              [(ngModel)]="currentStrength">
+                          </div>
+                          <div class="col-4">
+                            <button mat-raised-button color="primary" (click)="addStrength()"
+                              [disabled]="currentStrength === ''">{{(selectedStrengthIndex>=0) ? 'Edit' : 'Add' }}
+                              Info</button>
+                          </div>
+                        </div>
+                        <div class="row mt-2" *ngIf="strengths.length>0">
+                          <div class="container">
+                            <table class="table table-bordered">
+                              <tbody>
+                                <tr *ngFor="let element of strengths">
+                                  <td style="width: 60%">{{element.name}}</td>
+                                  <td><a mat-raised-button color="primary" (click)="selectCurrentStrength(element)">Edit
+                                      Info</a></td>
+                                  <td>
+                                    <button type="button" class="close" aria-label="Close"
+                                      (click)="removeStrength(element)">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </tr>
+
+                    <!-- Weakness Row -->
+                    <tr>
+                      <div class="container p-2">
+                        <p class="font-weight-bold">WEAKNESS section</p>
+                        <div class="row">
+                          <div class="col-4">
+                            <input type="text" class="form-control" placeholder="Add Weakness"
+                              [(ngModel)]="currentWeakNess">
+                          </div>
+                          <div class="col-4">
+                            <button mat-raised-button color="primary" (click)="addWeakness()"
+                              [disabled]="currentWeakNess === ''">{{(selectedWeaknessIndex>=0) ? 'Edit' : 'Add' }}
+                              Info</button>
+                          </div>
+                        </div>
+                        <div class="row mt-2" *ngIf="weakness.length>0">
+                          <div class="container">
+                            <table class="table table-bordered">
+                              <tbody>
+                                <tr *ngFor="let element of weakness">
+                                  <td style="width: 60%">{{element.name}}</td>
+                                  <td><a mat-raised-button color="primary" (click)="selectCurrentWeakness(element)">Edit
+                                      Info</a></td>
+                                  <td>
+                                    <button type="button" class="close" aria-label="Close"
+                                      (click)="removeWeakness(element)">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </tr>
+
+                    <!-- Opportunities Row -->
+                    <tr>
+                      <div class="container p-2">
+                        <p class="font-weight-bold">OPPORTUNITIES section</p>
+                        <div class="row">
+                          <div class="col-4">
+                            <input type="text" class="form-control" placeholder="Add Opportunities"
+                              [(ngModel)]="currentOppourtunities">
+                          </div>
+                          <div class="col-4">
+                            <button mat-raised-button color="primary" (click)="addOpportunities()"
+                              [disabled]="currentOppourtunities === ''">{{(selectedOppIndex>=0) ? 'Edit' : 'Add' }}
+                              Info</button>
+                          </div>
+                        </div>
+                        <div class="row mt-2" *ngIf="opportunities.length>0">
+                          <div class="container">
+                            <table class="table table-bordered">
+                              <tbody>
+                                <tr *ngFor="let element of opportunities">
+                                  <td style="width: 60%">{{element.name}}</td>
+                                  <td><a mat-raised-button color="primary"
+                                      (click)="selectCurrentOpportunity(element)">Edit Info</a></td>
+                                  <td>
+                                    <button type="button" class="close" aria-label="Close"
+                                      (click)="removeOpportunity(element)">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </tr>
+
+                    <!-- Threat Row -->
+                    <tr>
+                      <div class=" container p-2">
+                        <p class="font-weight-bold">THREAT section</p>
+                        <div class="row">
+                          <div class="col-4">
+                            <input type="text" class="form-control" placeholder="Add Threats"
+                              [(ngModel)]="currentThreat">
+                          </div>
+                          <div class="col-4">
+                            <button mat-raised-button color="primary" (click)="addOrUpdateThreat()"
+                              [disabled]="currentThreat === ''">{{(selectedThreatIndex>=0) ? 'Edit' : 'Add' }}
+                              Info</button>
+                          </div>
+                        </div>
+                        <div class="row mt-2" *ngIf="threats.length>0">
+                          <div class="container">
+                            <table class="table table-bordered">
+                              <tbody>
+                                <tr *ngFor="let element of threats">
+                                  <td style="width: 60%">{{element.name}}</td>
+                                  <td><a mat-raised-button color="primary" (click)="selectCurrentThread(element)">Edit
+                                      Info</a></td>
+                                  <td>
+                                    <button type="button" class="close" aria-label="Close"
+                                      (click)="removeThreat(element)">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <button mat-raised-button color="primary" (click)="onSubmitInfo()">Save</button>
+                <button mat-raised-button color="primary" class="float-right" (click)="toPreviousPage()">Back</button>
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

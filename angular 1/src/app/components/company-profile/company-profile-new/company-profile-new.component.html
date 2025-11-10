@@ -1,0 +1,62 @@
+<div class="container-fluid">
+  <div class="row justify-content-center mt-2">
+    <div class="col-8">
+      <mat-card>
+        <mat-card-content>
+          <div class="container-fluid">
+            <div class="row pb-3">
+              <p class="font-weight-bold">Company Profiles</p>
+              <div class="container">
+                <div class="row form-row">
+                  <div class="col-4">
+                    <mat-form-field class="btn-block">
+                      <mat-label>Select company</mat-label>
+                      <input type="text" class="search-t-box" placeholder="Search company" matInput
+                        [formControl]="searchCompany" [matAutocomplete]="auto">
+                      <mat-autocomplete #auto="matAutocomplete">
+                        <mat-option *ngFor="let company of filteredCompany" [value]="company.company_name">
+                          {{company?.company_name}}
+                        </mat-option>
+                      </mat-autocomplete>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-4">
+                    <mat-form-field class="btn-block">
+                      <input matInput placeholder="Enter Company name" (keyup.enter)="addDetails()"
+                        [(ngModel)]="newCompanyInfo">
+                    </mat-form-field>
+                  </div>
+                  <div class="col-4">
+                    <button mat-raised-button class="btn-block" color="primary" (click)="addDetails()"
+                      [disabled]="selectedCompanyInfo === '' && newCompanyInfo === '' && selectedCompanyInfo.length && newCompanyInfo.length">Add
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row" *ngIf="currentCompanyList.length>0">
+              <mat-divider></mat-divider>
+              <p class="mt-3 font-weight-bold">Company Information</p>
+              <table class="table table-bordered table-striped table-hover">
+                <tbody>
+                  <tr *ngFor="let company of currentCompanyList">
+                    <td style="width: 60%">{{company.company_name}}</td>
+                    <td>
+                      <button mat-raised-button color="primary" (click)="onSectionSelection(company)">Add Info</button>
+                    </td>
+                    <td class="text-center">
+                      <i (click)="deleteCompany(company)" class="fa fa-trash-o delete-company"></i>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="row">
+              <button mat-raised-button color="primary" (click)="toPreviousPage()">Back</button>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

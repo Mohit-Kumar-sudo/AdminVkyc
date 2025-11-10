@@ -1,0 +1,71 @@
+<div class="container-fluid">
+  <div class="d-flex img-box-container" #marketStructure *ngIf="hide">
+    <div *ngFor="let item of parents" class="m-2 childs backgrounds">
+      <div class="box-design px-2">
+        <p class="font-weight-bold text-center mt-2">BY {{item?.name | uppercase}}</p>
+        <div *ngIf="item.childrens.length">
+          <ul>
+            <li *ngFor="let child of item.childrens">{{child?.name}}
+              <div *ngIf="child.childrens.length">
+                <ul>
+                  <li *ngFor="let child1 of child.childrens">{{child1.name}}</li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="m-2 childs backgrounds">
+      <div *ngIf="regions.length" class="box-design px-2">
+        <p class="font-weight-bold text-center mt-2">BY REGION</p>
+        <div>
+          <ul>
+            <li *ngFor="let region of regions">{{region.region}}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-center mt-2">
+    <div class="col-8">
+      <mat-card>
+        <mat-card-content>
+          <div class="container-fluid">
+            <div>
+              <div class="row mb-4">
+                <div class="col-12">
+                  <p class="font-weight-bold">Market Introduction - Generate Data</p>
+                </div>
+                <div class="col-12">
+                  <button mat-raised-button class="margin-right-40" color="primary" (click)="generateData()">Generate
+                    Data
+                  </button>
+                  <button mat-raised-button class="margin-right-40" color="primary" (click)="saveAndContinue()">Save
+                  </button>
+                  <button mat-raised-button class="margin-right-40" color="primary" (click)="onEdit()">Edit</button>
+                  <button mat-raised-button class="float-right" color="primary" (click)="toPreviousPage()">Back</button>
+                </div>
+              </div>
+              <hr>
+              <div class="component-renderer mb-3">
+                <ng-container *ngFor="let element of commonMenuList">
+                  <div *ngIf="element?.data" class="alert alert-secondary btn-block">
+                    <h6 class="element-head">{{element?.value}}</h6>
+                    <i (click)="deleteElement(element)" class="fa fa-trash-o delete-company"></i>
+                    <hr>
+                    <app-shared-data-element [inputData]="element?.data"></app-shared-data-element>
+                    <hr>
+                    <br>
+                  </div>
+                </ng-container>
+              </div>
+              <hr>
+            </div>
+
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

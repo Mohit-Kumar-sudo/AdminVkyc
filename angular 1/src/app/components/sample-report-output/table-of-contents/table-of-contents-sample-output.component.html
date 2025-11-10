@@ -1,0 +1,20 @@
+<app-toc-heading-output [dataElement]="heading"></app-toc-heading-output>
+<div *ngFor="let toc of tocContent">
+    <app-toc-heading-output [dataElement]="toc.name" [counter]="toc.id" [level]="toc.level">
+    </app-toc-heading-output>
+    <div *ngFor="let levelOneChild of toc.children">
+        <app-toc-heading-output [dataElement]="levelOneChild.name" [counter]="levelOneChild.id"
+            [level]="levelOneChild.level">
+        </app-toc-heading-output>
+        <div *ngFor="let levelTwoChild of levelOneChild?.children">
+            <app-toc-heading-output [dataElement]="levelTwoChild.name" [counter]="levelTwoChild.id"
+                [level]="levelTwoChild.level">
+            </app-toc-heading-output>
+            <div *ngFor="let levelThreeChild of levelTwoChild?.children">
+                <app-toc-heading-output [dataElement]="levelThreeChild.name" [counter]="levelThreeChild.id"
+                    [level]="levelThreeChild.level">
+                </app-toc-heading-output>
+            </div>
+        </div>
+    </div>
+</div>

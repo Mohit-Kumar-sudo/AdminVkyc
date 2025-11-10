@@ -1,0 +1,65 @@
+<div class="admin-container">
+  <h4 class="heading">Users Account Confirmation</h4>
+  <div class="admin-action">
+    <button mat-raised-button color="primary" (click)="changeLabel(2)">All</button>
+    <button mat-raised-button color="primary" (click)="changeLabel(0)">Pending</button>
+    <button mat-raised-button color="primary" (click)="changeLabel(1)">Confirmed</button>
+    <button mat-raised-button color="primary" (click)="back()">Back</button>    
+  </div>
+  <div class="admin-contents mt-2">
+    <div>
+      <h5>{{btnLabel | titlecase}} users |
+        <small style="color: #333;"> {{actualData?.data?.length}}</small></h5>
+      <mat-form-field>
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+      </mat-form-field>
+
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z2">
+
+        <ng-container matColumnDef="_id">
+          <th mat-header-cell *matHeaderCellDef> No. </th>
+          <td mat-cell *matCellDef="let i = index"> {{i+1}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef> Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.firstName}} {{element.lastName}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef> Email </th>
+          <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="email confirm">
+          <th mat-header-cell *matHeaderCellDef> Email Confirmed</th>
+          <td mat-cell *matCellDef="let element">
+            <span *ngIf="element.emailConfirm">Yes</span>
+            <span *ngIf="!element.emailConfirm">No</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="access">
+          <th mat-header-cell *matHeaderCellDef>
+            <mat-checkbox *ngIf="selection" color="primary" (change)="$event ? masterToggle() : null"
+              [checked]="selection.hasValue() && isAllSelected()"
+              [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
+              Grant access
+            </mat-checkbox>
+          </th>
+          <td mat-cell *matCellDef="let element">
+            <mat-checkbox *ngIf="selection" color="primary" (click)="$event.stopPropagation()"
+              (change)="$event ? selection.toggle(element) : null" [checked]="selection.isSelected(element)"
+              [aria-label]="checkboxLabel(element)">
+            </mat-checkbox>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
+    </div>
+    <button mat-raised-button (click)="grantAccess()" color="primary">Proceed</button>
+  </div>
+</div>

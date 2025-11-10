@@ -1,0 +1,68 @@
+<div class="position-relative">
+  <div class="mr-auto">
+    <button type="button" class="modal-close-btn btn btn-secondary" aria-label="Close" (click)="doClose()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="row">
+    <div class="col-4 scroll-75-height">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Table Details</h5>
+          <form [formGroup]="tableInfoForm" (ngSubmit)="onSubmitTableInfo()" class="mfr-form">
+            <div class="container">
+              <div class="row">
+                <mat-form-field class="mfr-full-width">
+                  <input matInput placeholder="Table Title" type="text" name="title" id="title" formControlName="title"
+                         required>
+                </mat-form-field>
+              </div>
+              <div class="row">
+                <mat-form-field class="mfr-full-width">
+                  <input matInput placeholder="Source" type="text" name="source" id="source" formControlName="source"
+                         required>
+                </mat-form-field>
+              </div>
+              <div class="row">
+                <mat-form-field class="mfr-full-width">
+                  <input matInput placeholder="No of rows" type="number" name="rows" id="rows" formControlName="rows"
+                         required>
+                </mat-form-field>
+              </div>
+              <div class="row">
+                <mat-card>
+                  <mat-card-content formArrayName="columnData">
+                    <div *ngFor="let item of columns.controls; let i = index;">
+                      <div [formGroupName]="i">
+                        <mat-form-field>
+                          <input matInput formControlName="header" placeholder="Column header">
+                        </mat-form-field>
+                        <button (click)="removeTableHeader(i)" type="button" class="btn btn-danger table-cross-btn"><i
+                          class="fa fa-times"></i></button>
+                      </div>
+                    </div>
+                    <button mat-raised-button type="button" (click)="addColumn(); tableInfoForm.markAsTouched()"
+                            color="primary">Add
+                    </button>
+                  </mat-card-content>
+                </mat-card>
+              </div>
+              <div class="row mt-2">
+                <button [disabled]="!tableInfoForm.valid" mat-raised-button color="primary">Create Table</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="isSubmitted" class="col-8 scroll-75-height">
+      <app-editable-grid [columnsMetaData]="colMetaData" [dataStore]="dataStore"></app-editable-grid>
+    </div>
+  </div>
+  <div class="row mt-2">
+    <div class="col">
+      <button mat-raised-button [disabled]="!isSubmitted" (click)="submitTableInput()" color="primary">Save</button>
+      <button class="ml-2" mat-raised-button (click)="doClose()">Cancel</button>
+    </div>
+  </div>
+</div>

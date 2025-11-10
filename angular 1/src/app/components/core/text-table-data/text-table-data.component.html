@@ -1,0 +1,31 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col">
+      <strong>{{data.title}}</strong>
+    </div>
+  </div>
+  <div class="row flex-row flex-nowrap">
+    <div class="col">
+      <h5>Details:</h5>
+      <app-ngx-editor autofocus [placeholder]="data.text" [config]="editorConfig" [(ngModel)]="data.text">
+      </app-ngx-editor>
+      <h5>Customized details:</h5>
+      <app-ngx-editor autofocus [placeholder]="data.custom_text" [config]="editorConfig" [(ngModel)]="data.custom_text">
+      </app-ngx-editor>
+    </div>
+    <div class="col overflow-scroll">
+      <table class="table table-bordered">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col" *ngFor="let header of data.rowHeader">{{header}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr scope="row" *ngFor="let dataRow of data.value">
+            <td *ngFor="let key of data.rowHeader">{{dataRow[key]}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

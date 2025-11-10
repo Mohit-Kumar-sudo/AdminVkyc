@@ -1,0 +1,33 @@
+<div>
+  <app-figure-heading-output [dataElement]="dataElement?.title"></app-figure-heading-output>
+  <div class="d-flex" #marketStructure *ngIf="hide">
+    <div *ngFor="let item of parents" class="m-2 childs backgrounds">
+      <div class="box-design px-2">
+        <p class="font-weight-bold text-center mt-2">BY {{item?.name | uppercase}}</p>
+        <div *ngIf="item.childrens.length">
+          <ul>
+            <li *ngFor="let child of item.childrens">{{child?.name}}
+              <div *ngIf="child.childrens.length">
+                <ul>
+                  <li *ngFor="let child1 of child.childrens">{{child1.name}}</li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="m-2 childs backgrounds">
+      <div *ngIf="regions.length" class="box-design px-2">
+        <p class="font-weight-bold text-center mt-2">BY REGION</p>
+        <div>
+          <ul>
+            <li *ngFor="let region of regions">{{region.region}}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <img style="text-align: center;" #marketStructureImg>
+  <app-source-output></app-source-output>
+</div>

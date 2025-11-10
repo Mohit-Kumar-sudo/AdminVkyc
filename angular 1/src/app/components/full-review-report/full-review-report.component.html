@@ -1,0 +1,51 @@
+<div class="outer-container">
+  <div class="back-container">
+    <a (click)="toPreviousPage()" class="back-button" mat-raised-button color="accent">
+      <mat-icon aria-hidden="false" aria-label="Example home icon">arrow_back</mat-icon>
+      Back
+    </a>
+  </div>
+  <div class="module-link-container">
+    <div *ngFor="let item of reportAllData; let i = index">
+      <a class="module-link" href="full-review-report#module{{i+1}}" mat-raised-button
+         color="primary">{{item?.section_name | titlecase}}</a>
+    </div>
+  </div>
+  <div *ngFor="let item of reportAllData; let i = index">
+    <div class="module-container" id="module{{i+1}}">
+      <div class="module-header">
+        {{item?.section_name | titlecase }}
+      </div>
+      <div *ngIf="item.section_name !== 'MARKET DYNAMICS'">
+        <app-shared-data-element *ngIf="item?.data" [inputData]="item?.data"></app-shared-data-element>
+      </div>
+      <div *ngIf="item.section_name == 'MARKET DYNAMICS'">
+        <div class="driver-header">Drivers</div>
+        <div *ngFor="let id of item?.data">
+          <div *ngIf="id?.section_name == 'MARKET DYNAMICS'">
+            <app-shared-data-element *ngIf="id?.content" [inputData]="id?.content"></app-shared-data-element>
+          </div>
+          <div class="div-border" *ngIf="id?.meta?.type == 'DRIVERS'">
+            <div class="driver-rating-header">Driver name: {{id?.meta?.data?.name}} </div>
+            <app-shared-data-element *ngIf="id?.content" [inputData]="id?.content"></app-shared-data-element>
+            <div class="driver-rating-header">Driver's Ratings with Year:</div>
+            <ul class="list-group list-group-horizontal">
+              <li class="list-group-item" *ngFor="let rat of id?.meta?.data?.rating">
+                <span class="badge badge-pill badge-info">{{rat?.year}} -{{rat?.rating}}</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <ul class="list-group list-group-horizontal">
+          <div class="header-1">{{item?.meta?.name}}</div>
+          <li class="list-group-item" *ngFor="let rat of item?.meta?.data?.rating">
+            <span class="badge badge-pill badge-info">{{rat?.year}} -{{rat?.rating}}</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <a (click)="navigateToTop()" class="up-button" mat-fab color="primary">
+    <mat-icon aria-hidden="false" aria-label="Example home icon">arrow_upward</mat-icon>
+  </a>
+</div>

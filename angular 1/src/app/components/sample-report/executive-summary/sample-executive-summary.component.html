@@ -1,0 +1,153 @@
+<div class="container-fluid">
+  <div class="row justify-content-center mt-2">
+    <div class="col-8">
+      <mat-card>
+        <mat-card-content>
+          <div class="container-fluid">
+            <div>
+              <div class="row">
+                <div class="col-4">
+                  <p class="font-weight-bold">Executive Summary</p>
+                </div>
+                <div class="col-8">
+                  <button mat-raised-button class="margin-right-40" color="primary"
+                    (click)="generateChartData()">Generate
+                  </button>
+                  <button mat-raised-button class="margin-right-40" color="primary" (click)="save()">Save
+                  </button>
+                  <button mat-raised-button class="margin-right-40" color="primary" (click)="onEdit()">Edit
+                  </button>
+                  <button mat-raised-button color="primary" (click)="toPreviousPage()">Back
+                  </button>
+                </div>
+              </div>
+
+              <div class="container">
+
+                <div class="component-renderer">
+                  <div tabindex="1" #commentDiv class="comment-item" *ngFor="let dataElement of secondaryInputData">
+                    <div class="card w-100">
+                      <div class="container-fluid">
+                        <div class="row">
+                          <div class="col" style="padding-left: 0;">
+                            <div class="card-body" style="padding: 0.5rem;">
+                              <ng-container class="component-element-renderer" [ngSwitch]="dataElement?.type">
+                                <!-- TEXT -->
+                                <div class="container-fluid" *ngSwitchCase="'TEXT'">
+                                  <div [innerHTML]="dataElement.data"></div>
+                                </div>
+
+                                <!-- TABLE -->
+                                <div class="container-fluid" *ngSwitchCase="'TABLE'">
+                                  <p class="mat-caption"><span class="font-weight-bold">Title
+                                      :</span>{{dataElement.data.metaDataValue.title}}
+                                  </p>
+                                  <table mat-table [dataSource]="dataElement.data.dataStore" class="conponent-table">
+                                    <ng-container *ngFor="let colMetadata of dataElement.data.cols"
+                                      matColumnDef="{{colMetadata}}">
+                                      <th mat-header-cell *matHeaderCellDef> {{colMetadata}} </th>
+                                      <td mat-cell *matCellDef="let element">
+                                        {{element[colMetadata]}}
+                                      </td>
+                                    </ng-container>
+                                    <tr mat-header-row *matHeaderRowDef="dataElement.data.cols"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: dataElement.data.cols;"></tr>
+                                  </table>
+                                  <p class="mat-caption"><span class="font-weight-bold">Source :</span>
+                                    {{dataElement.data.metaDataValue.source}}
+                                  </p>
+                                </div>
+
+                                <!-- IMAGE -->
+                                <div class="container-fluid" *ngSwitchCase="'IMAGE'">
+                                  <p class="mat-caption"><span class="font-weight-bold">Title
+                                      :</span>{{dataElement.data.metaDataValue.title}}
+                                  </p>
+                                  <img [src]="dataElement.data.imageUrl" class="responsiveImg full-width"
+                                    *ngIf="dataElement.data.imageUrl">
+                                  <p class="mat-caption"><span class="font-weight-bold">Source
+                                      :</span>{{dataElement.data.metaDataValue.source}}
+                                  </p>
+                                </div>
+
+                                <!-- PIE -->
+                                <div class="container-fluid" *ngSwitchCase="'PIE'">
+                                  <p class="mat-caption"><span class="font-weight-bold">Title
+                                      :</span>{{dataElement.data.metaDataValue.title}}
+                                  </p>
+                                  <canvas height="50" baseChart [data]="dataElement.data.chartData"
+                                    [labels]="dataElement.data.chartLabels" [chartType]="pieChartType"
+                                    [options]="pieChartOptions" [plugins]="pieChartPlugins" [colors]="pieChartColors"
+                                    [legend]="pieChartLegend">
+                                  </canvas>
+                                  <p class="mat-caption"><span class="font-weight-bold">Source
+                                      :</span>{{dataElement.data.metaDataValue.source}}
+                                  </p>
+                                </div>
+
+                                <!-- BAR -->
+                                <div class="container-fluid" *ngSwitchCase="'BAR'">
+                                  <p class="mat-caption"><span class="font-weight-bold">Title
+                                      :</span>{{dataElement.data.metaDataValue.title}}
+                                  </p>
+                                  <canvas height="50" baseChart [datasets]="dataElement.data.chartData"
+                                    [labels]="dataElement.data.chartLabels" [options]="barChartOptions"
+                                    [plugins]="barChartPlugins" [legend]="barChartLegend" [chartType]="barChartType">
+                                  </canvas>
+                                  <p class="mat-caption"><span class="font-weight-bold">Source
+                                      :</span>{{dataElement.data.metaDataValue.source}}
+                                  </p>
+                                </div>
+
+                                <!-- CUSTOMTABLE -->
+                                <div class="container-fluid" *ngSwitchCase="'CUSTOM_TABLE'">
+                                  <p class="mat-caption"><span class="font-weight-bold">Title
+                                      :</span>{{dataElement.data.title}}
+                                  </p>
+                                  <table class="table table-bordered table-hover">
+                                    <tbody>
+                                      <tr *ngFor="let row of dataElement.data.data; let i=index">
+                                        <td>
+                                          <ul>
+                                            <li *ngFor="let dt of row.title">
+                                              {{dt?.title}} </li>
+                                          </ul>
+                                        </td>
+                                        <td>
+                                          <ul>
+                                            <li *ngFor="let dt of row.data; let j = index">
+                                              {{dt.data}} </li>
+                                          </ul>
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </div>
+                                <!-- CUSTOM -->
+                                <div *ngSwitchCase="'CUSTOM'">
+                                  <p class="mat-caption"><span class="font-weight-bold">Title
+                                      :</span>{{dataElement?.data?.title}}
+                                  </p>
+                                  <app-custom-output [dataElement]="dataElement"></app-custom-output>
+                                </div>
+                                <!-- HEADING -->
+                                <div *ngSwitchCase="'HEADING'">
+                                  <p><b>{{dataElement.data}}</b></p>
+                                </div>
+                              </ng-container>
+                            </div>
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

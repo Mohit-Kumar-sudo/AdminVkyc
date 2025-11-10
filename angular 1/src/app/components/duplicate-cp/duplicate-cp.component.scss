@@ -1,0 +1,12 @@
+.vs-container{
+    height: 80vh !important;
+    overflow-y: auto;
+    margin-top: 65px;
+    overflow-x: hidden;
+    .flexer{
+        display: flex;
+        align-items: center;
+        font-size: 14px;
+        padding: 0 10px;
+    }
+}

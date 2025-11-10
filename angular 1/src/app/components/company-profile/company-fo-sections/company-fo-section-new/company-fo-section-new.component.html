@@ -1,0 +1,60 @@
+<div class="container-fluid">
+  <div class="row justify-content-center mt-5">
+    <div class="col-10">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>
+            <span>Company Profile -</span>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="container-fluid">
+
+            <div class="row pb-3">
+              <div class="container">
+                <div class="row form-row">
+                  <div class="col-4">
+                    <select class="custom-select" [(ngModel)]="selectedCurrency">
+                      <option *ngFor="let currency of currencyList" value="{{currency}}">{{currency}}</option>
+                    </select>
+                  </div>
+                  <div class="col-4">
+                    <select class="custom-select" [(ngModel)]="selectedSuffix">
+                      <option *ngFor="let suff of suffixList" value="{{suff}}">{{suff}}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="container scroll-content-x">
+                <div class="row">
+                  <div class="col overflow-auto" *ngIf="renderTable">
+                    <app-editable-grid [columnsMetaData]="colMetaData" [dataStore]="dataStore"></app-editable-grid>
+                  </div>
+                </div>
+                <div class="row mt-2 mb-2">
+                  <div *ngFor="let dataRow of this.dataStore">
+                    <div class="col m-1">
+                      <button mat-raised-button color="primary" (click)="addText(dataRow)">Add
+                        Info({{dataRow.rowHeader}})</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mt-2">
+              <div class="col">
+                <button mat-raised-button (click)="submitFoSectionInput()"
+                  color="primary">Save</button>
+                <button mat-raised-button color="primary" class="float-right" (click)="toPreviousPage()">Back</button>
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

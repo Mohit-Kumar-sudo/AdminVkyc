@@ -1,0 +1,36 @@
+<div class="container-fluid">
+    <div class="row justify-content-center mt-5">
+        <div class="col-8">
+            <mat-card>
+                <mat-card-header>
+                    <mat-card-title>
+                        <span>Market insights</span>
+                    </mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <table class="table table-bordered">
+                                    <tbody>
+                                        <tr *ngFor="let menu of menuInputList">
+                                            <td>{{menu.value}}</td>
+                                            <td><button mat-raised-button color="primary"
+                                                (click)="onSectionSelection(menu)">Add Info</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <a mat-raised-button color="primary">Save</a>
+                                <button mat-raised-button color="primary" class="float-right"
+                                    (click)="toPreviousPage()">Back</button></div>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+</div>

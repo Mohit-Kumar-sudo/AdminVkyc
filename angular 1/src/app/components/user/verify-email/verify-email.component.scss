@@ -1,0 +1,16 @@
+.container-ver-email {
+    display: flex;
+    justify-content: center;
+    margin: 20px auto;
+    ::ng-deep .mat-card {
+        width: 50%;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        ::ng-deep .mat-card-title {
+            width: 100%;
+            text-align: center;
+        }
+    }
+}

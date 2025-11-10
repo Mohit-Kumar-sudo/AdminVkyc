@@ -1,0 +1,10 @@
+<div class="chartjs-container">
+    <canvas height="130" class="canvas-size" #canvas baseChart [datasets]="dataElement.data.chartData"
+        [labels]="dataElement.data.chartLabels" [options]="barChartOptions" [plugins]="barChartPlugins"
+        [chartType]="barChartType">
+    </canvas>
+    <div style="text-align:center;margin: auto;width: 50%;padding: 10px;">
+        <img style="text-align: center;" width="600" #img>
+        <app-source-output></app-source-output>
+    </div>
+</div>

@@ -1,0 +1,22 @@
+.delete-row {
+    font-size: 24px;
+    color: red;
+    cursor: pointer;
+    margin:10px;
+  
+    &:hover {
+      color: black;
+      opacity: 0.7;
+    }
+}
+.add-row {
+  font-size: 24px;
+  color: green;
+  cursor: pointer;
+  margin:10px;
+
+  &:hover {
+    color: black;
+    opacity: 0.7;
+  }
+}
