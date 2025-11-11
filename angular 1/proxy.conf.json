@@ -1,8 +1,0 @@
-{
-  "/api/v1/*": {
-    "target": "https://mfr-backend.herokuapp.com",
-    "secure": true,
-    "changeOrigin": true,
-    "logLevel": "debug"
-  }
-}
