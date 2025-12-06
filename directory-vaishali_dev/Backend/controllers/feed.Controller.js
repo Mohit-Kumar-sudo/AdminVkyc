@@ -83,9 +83,9 @@ try {
  get: async (req, res) => {
   try {
     const cutoff = new Date(Date.now() - 15 * 24 * 60 * 60 * 1000);
-    await Feeds.deleteMany({ createdAt: { $lt: cutoff } });
+    await Item.deleteMany({ createdAt: { $lt: cutoff } });
 
-    const items = await Feeds.find().sort({ createdAt: -1 });
+    const items = await Item.find().sort({ createdAt: -1 });
 
     res.json({
       success: true,
