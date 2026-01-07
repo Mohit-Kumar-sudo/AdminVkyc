@@ -21,6 +21,25 @@ const userSchema = new Schema(
         return ['dashboard', 'patients', 'appointments'];
       }
     },
+    // Image conversion limits for doctors
+    imageConversionLimit: {
+      type: Number,
+      default: 10, // Default limit per month
+      min: 0
+    },
+    imageConversionsUsed: {
+      type: Number,
+      default: 0,
+      min: 0
+    },
+    lastResetDate: {
+      type: Date,
+      default: Date.now
+    },
+    canShowImprovementPlans: {
+      type: Boolean,
+      default: true
+    },
   },
   { timestamps: true }
 );

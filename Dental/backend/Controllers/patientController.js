@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const sharp = require('sharp');
 const Patient = require('../Models/Patient');
+const { incrementImageConversionUsage } = require('../Helpers/imageConversionLimits');
 
 function ensureDirSync(dirPath) {
   if (!fs.existsSync(dirPath)) {
@@ -462,6 +463,9 @@ async function generateImage(req, res) {
       // Construct data URL and return
       const generatedImage = `data:${outMime};base64,${outBase64}`;
       
+      // Increment usage count for this doctor
+      await incrementImageConversionUsage(req.user.id);
+      
       return res.json({
         success: true,
         generatedImage,
@@ -872,6 +876,9 @@ async function generateProgressImages(req, res) {
     if (progressData.length === 0) {
       return res.status(500).json({ error: 'Failed to generate any progress images' });
     }
+
+    // Increment usage count for generating progress images (counts as 1 conversion for all milestones)
+    await incrementImageConversionUsage(req.user.id);
 
     return res.json({
       progressData,

@@ -113,4 +113,112 @@ async function getAvailableModules(req, res) {
   }
 }
 
-module.exports = { updateUser, listUsers, createUser, updatePermissions, getAvailableModules };
+async function updateDoctorLimits(req, res) {
+  try {
+    // Only admin can update doctor limits
+    if (req.user.role !== 'admin') {
+      return res.status(403).json({ error: 'Forbidden' });
+    }
+    
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    const { imageConversionLimit, canShowImprovementPlans } = req.body;
+    
+    if (imageConversionLimit !== undefined) {
+      if (typeof imageConversionLimit !== 'number' || imageConversionLimit < 0) {
+        return res.status(400).json({ error: 'imageConversionLimit must be a non-negative number' });
+      }
+      user.imageConversionLimit = imageConversionLimit;
+    }
+    
+    if (canShowImprovementPlans !== undefined) {
+      user.canShowImprovementPlans = Boolean(canShowImprovementPlans);
+    }
+    
+    await user.save();
+    
+    return res.json({ 
+      id: user._id, 
+      name: user.name, 
+      email: user.email, 
+      role: user.role,
+      imageConversionLimit: user.imageConversionLimit,
+      imageConversionsUsed: user.imageConversionsUsed,
+      canShowImprovementPlans: user.canShowImprovementPlans,
+      lastResetDate: user.lastResetDate
+    });
+  } catch (err) {
+    console.error('Update doctor limits error:', err);
+    return res.status(500).json({ error: 'Failed to update doctor limits' });
+  }
+}
+
+async function resetDoctorUsage(req, res) {
+  try {
+    // Only admin can reset usage
+    if (req.user.role !== 'admin') {
+      return res.status(403).json({ error: 'Forbidden' });
+    }
+    
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    user.imageConversionsUsed = 0;
+    user.lastResetDate = new Date();
+    await user.save();
+    
+    return res.json({ 
+      id: user._id, 
+      name: user.name,
+      imageConversionsUsed: user.imageConversionsUsed,
+      lastResetDate: user.lastResetDate,
+      message: 'Usage reset successfully'
+    });
+  } catch (err) {
+    console.error('Reset doctor usage error:', err);
+    return res.status(500).json({ error: 'Failed to reset usage' });
+  }
+}
+
+async function getDoctorUsageStats(req, res) {
+  try {
+    const userId = req.params.id || req.user.id;
+    
+    // Doctors can view their own stats, admins can view anyone's
+    if (req.user.role !== 'admin' && userId !== req.user.id) {
+      return res.status(403).json({ error: 'Forbidden' });
+    }
+    
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    return res.json({
+      imageConversionLimit: user.imageConversionLimit,
+      imageConversionsUsed: user.imageConversionsUsed,
+      remainingConversions: Math.max(0, user.imageConversionLimit - user.imageConversionsUsed),
+      canShowImprovementPlans: user.canShowImprovementPlans,
+      lastResetDate: user.lastResetDate
+    });
+  } catch (err) {
+    console.error('Get doctor usage stats error:', err);
+    return res.status(500).json({ error: 'Failed to get usage stats' });
+  }
+}
+
+module.exports = { 
+  updateUser, 
+  listUsers, 
+  createUser, 
+  updatePermissions, 
+  getAvailableModules,
+  updateDoctorLimits,
+  resetDoctorUsage,
+  getDoctorUsageStats
+};

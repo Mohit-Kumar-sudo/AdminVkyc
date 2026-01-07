@@ -1,6 +1,7 @@
 const express = require('express');
 const multer = require('multer');
 const { requireAuth } = require('../Helpers/auth');
+const { checkImageConversionLimit } = require('../Helpers/imageConversionLimits');
 const {
   listPatients,
   getPatient,
@@ -36,9 +37,12 @@ router.put('/:id', upload.array('images', 10), updatePatient);
 router.delete('/:id', deletePatient);
 router.post('/:id/images', upload.array('images', 10), addPatientImages);
 router.post('/:id/before-after', upload.array('images', 10), addBeforeAfterImages);
-router.post('/:id/generate-image', generateImage);
+
+// Routes with image conversion limits
+router.post('/:id/generate-image', checkImageConversionLimit, generateImage);
+router.post('/:id/generate-progress', checkImageConversionLimit, generateProgressImages);
+
 router.post('/:id/analyze-photo', analyzePhoto);
-router.post('/:id/generate-progress', generateProgressImages);
 router.delete('/:id/delete-image', deleteSavedImage);
 router.post('/:id/monthly-treatment', addMonthlyTreatment);
 router.put('/:id/monthly-treatment/:recordId', updateMonthlyTreatment);

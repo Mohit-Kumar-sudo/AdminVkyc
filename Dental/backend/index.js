@@ -7,6 +7,45 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Request Logger Middleware
+app.use((req, res, next) => {
+	const startTime = Date.now();
+	const timestamp = new Date().toISOString();
+	
+	// Log the incoming request
+	console.log(`[${timestamp}] ${req.method} ${req.url}`);
+	
+	// Capture the original res.json and res.send methods
+	const originalJson = res.json.bind(res);
+	const originalSend = res.send.bind(res);
+	
+	// Override res.json to log response
+	res.json = function(body) {
+		const duration = Date.now() - startTime;
+		console.log(`[${timestamp}] ${req.method} ${req.url} - Status: ${res.statusCode} - ${duration}ms`);
+		return originalJson(body);
+	};
+	
+	// Override res.send to log response
+	res.send = function(body) {
+		const duration = Date.now() - startTime;
+		console.log(`[${timestamp}] ${req.method} ${req.url} - Status: ${res.statusCode} - ${duration}ms`);
+		return originalSend(body);
+	};
+	
+	// Handle response finish event for cases where json/send aren't called
+	res.on('finish', () => {
+		if (!res.headersSent) return;
+		const duration = Date.now() - startTime;
+		// Only log if not already logged by json/send
+		if (res.statusCode !== 304) {
+			console.log(`[${timestamp}] ${req.method} ${req.url} - Status: ${res.statusCode} - ${duration}ms`);
+		}
+	});
+	
+	next();
+});
+
 app.use(express.static('public'));
 
 // Routes
