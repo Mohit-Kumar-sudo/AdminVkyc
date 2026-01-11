@@ -79,7 +79,6 @@ app.use('/uploads', express.static('public/uploads', {
 // Routes
 app.use('/api/auth', require('./Routes/auth'));
 app.use('/api/patients', require('./Routes/patient'));
-app.use('/api/clients', require('./Routes/client'));
 app.use('/api/users', require('./Routes/users'));
 app.use('/api/appointments', require('./Routes/appointment'));
 app.use('/api/dashboard', require('./Routes/dashboard'));

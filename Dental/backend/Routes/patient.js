@@ -15,7 +15,6 @@ const {
   addMonthlyTreatment,
   updateMonthlyTreatment,
   deleteMonthlyTreatment,
-  analyzePhoto,
   generateProgressImages,
   addTestimonial,
   updateTestimonial,
@@ -42,7 +41,6 @@ router.post('/:id/before-after', upload.array('images', 10), addBeforeAfterImage
 router.post('/:id/generate-image', checkImageConversionLimit, generateImage);
 router.post('/:id/generate-progress', checkImageConversionLimit, generateProgressImages);
 
-router.post('/:id/analyze-photo', analyzePhoto);
 router.delete('/:id/delete-image', deleteSavedImage);
 router.post('/:id/monthly-treatment', addMonthlyTreatment);
 router.put('/:id/monthly-treatment/:recordId', updateMonthlyTreatment);

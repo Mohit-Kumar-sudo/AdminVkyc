@@ -8,7 +8,7 @@ const userSchema = new Schema(
     name: { type: String, required: true, trim: true },
     email: { type: String, required: true, lowercase: true, unique: true, index: true },
     password: { type: String, required: true },
-    phone: { type: String, trim: true },
+    phone: { type: String, trim: true, unique: true, sparse: true, index: true },
     role: { type: String, enum: ROLES, default: 'doctor', index: true },
     client: { type: Types.ObjectId, ref: 'Client', index: true },
     permissions: {

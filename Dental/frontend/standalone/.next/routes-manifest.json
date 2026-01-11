@@ -64,18 +64,6 @@
       "namedRegex": "^/dashboard(?:/)?$"
     },
     {
-      "page": "/dashboard/admin/clients",
-      "regex": "^/dashboard/admin/clients(?:/)?$",
-      "routeKeys": {},
-      "namedRegex": "^/dashboard/admin/clients(?:/)?$"
-    },
-    {
-      "page": "/dashboard/admin/clients/new",
-      "regex": "^/dashboard/admin/clients/new(?:/)?$",
-      "routeKeys": {},
-      "namedRegex": "^/dashboard/admin/clients/new(?:/)?$"
-    },
-    {
       "page": "/dashboard/admin/users",
       "regex": "^/dashboard/admin/users(?:/)?$",
       "routeKeys": {},

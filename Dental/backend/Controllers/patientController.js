@@ -626,101 +626,6 @@ async function deleteMonthlyTreatment(req, res) {
   }
 }
 
-async function analyzePhoto(req, res) {
-  try {
-    const patient = await Patient.findById(req.params.id);
-    if (!patient) return res.status(404).json({ error: 'Patient not found' });
-    if (!canAccessPatient(req, patient)) return res.status(403).json({ error: 'Forbidden' });
-
-    const { imagePath } = req.body;
-    
-    if (!imagePath) {
-      return res.status(400).json({ error: 'Missing imagePath in request body' });
-    }
-
-    // The imagePath comes as 'uploads/patients/...' but files are stored in 'public/uploads/...'
-    // So we need to add 'public' prefix if it's not already there
-    let fullPath;
-    if (imagePath.startsWith('public/')) {
-      fullPath = path.join(__dirname, '..', imagePath);
-    } else {
-      fullPath = path.join(__dirname, '..', 'public', imagePath);
-    }
-    
-    if (!fs.existsSync(fullPath)) {
-      console.error('Image file not found at:', fullPath);
-      console.error('Original imagePath:', imagePath);
-      return res.status(404).json({ error: 'Image file not found', attemptedPath: fullPath });
-    }
-
-    // Read and encode the image
-    const imageBuffer = fs.readFileSync(fullPath);
-    const base64Image = imageBuffer.toString('base64');
-    
-    // Detect MIME type
-    let mimeType = 'image/jpeg';
-    if (imagePath.toLowerCase().endsWith('.png')) mimeType = 'image/png';
-    else if (imagePath.toLowerCase().endsWith('.webp')) mimeType = 'image/webp';
-
-    // Initialize Google AI
-    const { GoogleGenerativeAI } = require('@google/generative-ai');
-    const apiKey = process.env.GENAI_API_KEY || process.env.GEMINI_API_KEY;
-    if (!apiKey) {
-      return res.status(500).json({ error: 'GEMINI_API_KEY not configured' });
-    }
-    const ai = new GoogleGenerativeAI(apiKey);
-
-    // Create analysis prompt
-    const analysisPrompt = [
-      "You are an expert dental professional analyzing this specific dental photograph.",
-      "Analyze ONLY this image and provide a detailed assessment for THIS PHOTO:",
-      "",
-      "1. What I See in This Photo: Describe the exact dental condition visible in this specific image",
-      "   Use numbered lists (1, 2, 3, etc.) for each point, NOT asterisks or dashes:",
-      "   1) Tooth alignment and positioning",
-      "   2) Spacing issues or gaps",
-      "   3) Color and discoloration",
-      "   4) Gum health",
-      "   5) Any visible damage or concerns",
-      "",
-      "2. Issues Identified in This Photo: List specific problems visible in this image using numbered format (1, 2, 3, etc.)",
-      "",
-      "3. Recommended Treatment Plan: Based on what you see in this photo, suggest appropriate treatments using numbered format (1, 2, 3, etc.)",
-      "",
-      "4. Expected Results: Describe the improvements possible using numbered format (1, 2, 3, etc.)",
-      "",
-      "IMPORTANT: Use ONLY numbered lists (1, 2, 3...) throughout your response. Do NOT use asterisks (*) or dashes (-) for bullet points.",
-      "Be specific to THIS photo only. Do not make assumptions about progress over time or compare with other photos.",
-      "Format your response in clear sections. Be professional, specific, and encouraging."
-    ].join('\n');
-
-    const contents = [
-      { text: analysisPrompt },
-      {
-        inlineData: {
-          mimeType,
-          data: base64Image,
-        },
-      },
-    ];
-
-    // Call Gemini for analysis
-    const model = ai.getGenerativeModel({ model: 'gemini-2.0-flash-exp' });
-    const result = await model.generateContent(contents);
-    const response = result.response;
-    const analysis = response.text();
-
-    return res.json({ 
-      analysis,
-      imagePath,
-      analyzedAt: new Date()
-    });
-  } catch (err) {
-    console.error('Analyze photo error:', err);
-    return res.status(500).json({ error: 'Failed to analyze photo', details: err.message });
-  }
-}
-
 async function generateProgressImages(req, res) {
   try {
     const patient = await Patient.findById(req.params.id);
@@ -1054,7 +959,6 @@ module.exports = {
   addMonthlyTreatment,
   updateMonthlyTreatment,
   deleteMonthlyTreatment,
-  analyzePhoto,
   generateProgressImages,
   addTestimonial,
   updateTestimonial,

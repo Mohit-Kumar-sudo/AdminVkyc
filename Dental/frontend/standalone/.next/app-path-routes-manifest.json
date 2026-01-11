@@ -1,8 +1,6 @@
 {
   "/_global-error/page": "/_global-error",
   "/_not-found/page": "/_not-found",
-  "/dashboard/admin/clients/new/page": "/dashboard/admin/clients/new",
-  "/dashboard/admin/clients/page": "/dashboard/admin/clients",
   "/dashboard/admin/users/new/page": "/dashboard/admin/users/new",
   "/dashboard/admin/users/page": "/dashboard/admin/users",
   "/dashboard/appointments/[id]/page": "/dashboard/appointments/[id]",

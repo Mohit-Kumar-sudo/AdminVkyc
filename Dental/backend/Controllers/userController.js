@@ -42,7 +42,11 @@ async function listUsers(req, res) {
       email: u.email, 
       role: u.role, 
       client: u.client,
-      permissions: u.permissions || []
+      permissions: u.permissions || [],
+      imageConversionLimit: u.imageConversionLimit,
+      imageConversionsUsed: u.imageConversionsUsed,
+      canShowImprovementPlans: u.canShowImprovementPlans,
+      lastResetDate: u.lastResetDate
     })));
   } catch (err) {
     console.error('List users error:', err);

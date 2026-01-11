@@ -50,54 +50,6 @@
         "x-next-revalidate-tag-token"
       ]
     },
-    "/dashboard/admin/clients/new": {
-      "experimentalBypassFor": [
-        {
-          "type": "header",
-          "key": "next-action"
-        },
-        {
-          "type": "header",
-          "key": "content-type",
-          "value": "multipart/form-data;.*"
-        }
-      ],
-      "initialRevalidateSeconds": false,
-      "srcRoute": "/dashboard/admin/clients/new",
-      "dataRoute": "/dashboard/admin/clients/new.rsc",
-      "allowHeader": [
-        "host",
-        "x-matched-path",
-        "x-prerender-revalidate",
-        "x-prerender-revalidate-if-generated",
-        "x-next-revalidated-tags",
-        "x-next-revalidate-tag-token"
-      ]
-    },
-    "/dashboard/admin/clients": {
-      "experimentalBypassFor": [
-        {
-          "type": "header",
-          "key": "next-action"
-        },
-        {
-          "type": "header",
-          "key": "content-type",
-          "value": "multipart/form-data;.*"
-        }
-      ],
-      "initialRevalidateSeconds": false,
-      "srcRoute": "/dashboard/admin/clients",
-      "dataRoute": "/dashboard/admin/clients.rsc",
-      "allowHeader": [
-        "host",
-        "x-matched-path",
-        "x-prerender-revalidate",
-        "x-prerender-revalidate-if-generated",
-        "x-next-revalidated-tags",
-        "x-next-revalidate-tag-token"
-      ]
-    },
     "/dashboard/admin/users/new": {
       "experimentalBypassFor": [
         {
@@ -414,8 +366,8 @@
   "dynamicRoutes": {},
   "notFoundRoutes": [],
   "preview": {
-    "previewModeId": "bd80b58b14e8b5a7cb8658dc4c12cce9",
-    "previewModeSigningKey": "c4f508298b08251d7f3ab7e5edac186ab32ca91527dc1021e0cf1d436dde38c4",
-    "previewModeEncryptionKey": "985bfe69b175724a63319eec6dd5c2ea94352020f8df75229ff0bf8cfc2d35f3"
+    "previewModeId": "077e4ef3e56307c779e04ef026f39ac9",
+    "previewModeSigningKey": "340d1fbb23709f55c85dda197e50671c3ad8b40f2d5723212628334ed7c9d057",
+    "previewModeEncryptionKey": "7d78a80b8cf5a8268065e6e4c1fd7026d2c653910381f09613fd32e6a6c53bad"
   }
 }

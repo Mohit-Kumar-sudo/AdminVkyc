@@ -3,9 +3,23 @@ const { hashPassword, comparePassword, signToken } = require('../Helpers/auth');
 
 async function register(req, res) {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, phone } = req.body;
     if (!name || !email || !password) {
       return res.status(400).json({ error: 'name, email, and password are required' });
+    }
+
+    // Validate Indian phone number if provided
+    if (phone) {
+      const phoneRegex = /^[6-9]\d{9}$/;
+      if (!phoneRegex.test(phone)) {
+        return res.status(400).json({ error: 'Please provide a valid 10-digit Indian mobile number starting with 6-9' });
+      }
+      
+      // Check if phone number already exists
+      const existingPhone = await User.findOne({ phone });
+      if (existingPhone) {
+        return res.status(409).json({ error: 'This phone number is already registered' });
+      }
     }
 
     const existing = await User.findOne({ email });
@@ -14,11 +28,11 @@ async function register(req, res) {
     }
 
     const passwordHash = await hashPassword(password);
-    const user = await User.create({ name, email, password: passwordHash });
+    const user = await User.create({ name, email, password: passwordHash, phone });
 
     const token = signToken({ sub: user._id.toString(), email: user.email });
     return res.status(201).json({
-      user: { id: user._id, name: user.name, email: user.email, role: user.role, permissions: user.permissions || [] },
+      user: { id: user._id, name: user.name, email: user.email, role: user.role, permissions: user.permissions || [], phone: user.phone },
       token,
     });
   } catch (err) {
