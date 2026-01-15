@@ -1,0 +1,18 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/dashboard/layout,_N_T_/dashboard/admin/layout,_N_T_/dashboard/admin/users/layout,_N_T_/dashboard/admin/users/new/layout,_N_T_/dashboard/admin/users/new/page,_N_T_/dashboard/admin/users/new"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/dashboard/admin/users/new/__PAGE__",
+    "/dashboard/admin/users/new",
+    "/dashboard/admin/users",
+    "/dashboard/admin",
+    "/dashboard",
+    "/_index",
+    "/_head"
+  ]
+}
