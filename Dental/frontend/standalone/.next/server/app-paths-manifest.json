@@ -1,0 +1,23 @@
+{
+  "/_global-error/page": "app/_global-error/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/dashboard/admin/users/new/page": "app/dashboard/admin/users/new/page.js",
+  "/dashboard/admin/users/page": "app/dashboard/admin/users/page.js",
+  "/dashboard/appointments/[id]/page": "app/dashboard/appointments/[id]/page.js",
+  "/dashboard/appointments/new/page": "app/dashboard/appointments/new/page.js",
+  "/dashboard/appointments/page": "app/dashboard/appointments/page.js",
+  "/dashboard/page": "app/dashboard/page.js",
+  "/dashboard/patients/[id]/page": "app/dashboard/patients/[id]/page.js",
+  "/dashboard/patients/new/page": "app/dashboard/patients/new/page.js",
+  "/dashboard/patients/page": "app/dashboard/patients/page.js",
+  "/dashboard/settings/page": "app/dashboard/settings/page.js",
+  "/dashboard/super-admin/page": "app/dashboard/super-admin/page.js",
+  "/dashboard/super-admin/permissions/page": "app/dashboard/super-admin/permissions/page.js",
+  "/dashboard/super-admin/settings/page": "app/dashboard/super-admin/settings/page.js",
+  "/dashboard/testimonials/page": "app/dashboard/testimonials/page.js",
+  "/forgot-password/page": "app/forgot-password/page.js",
+  "/login/page": "app/login/page.js",
+  "/page": "app/page.js",
+  "/register/page": "app/register/page.js",
+  "/reset-password/page": "app/reset-password/page.js"
+}
