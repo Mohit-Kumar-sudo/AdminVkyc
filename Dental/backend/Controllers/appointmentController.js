@@ -37,7 +37,7 @@ async function listAppointments(req, res) {
       if (to) filter.startAt.$lte = new Date(to);
     }
 
-    const appts = await Appointment.find(filter).sort({ startAt: 1 });
+    const appts = await Appointment.find(filter).populate('patient', 'name contact email').sort({ startAt: 1 });
     return res.json(appts);
   } catch (err) {
     console.error('List appointments error:', err);
@@ -47,7 +47,7 @@ async function listAppointments(req, res) {
 
 async function getAppointment(req, res) {
   try {
-    const appt = await Appointment.findById(req.params.id);
+    const appt = await Appointment.findById(req.params.id).populate('patient', 'name contact email');
     if (!appt) return res.status(404).json({ error: 'Appointment not found' });
     if (!canAccessAppointment(req, appt)) return res.status(403).json({ error: 'Forbidden' });
     return res.json(appt);
