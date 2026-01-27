@@ -4,7 +4,7 @@
     "distDir": ".next",
     "cacheComponents": false,
     "htmlLimitedBots": "[\\w-]+-Google|Google-[\\w-]+|Chrome-Lighthouse|Slurp|DuckDuckBot|baiduspider|yandex|sogou|bitlybot|tumblr|vkShare|quora link preview|redditbot|ia_archiver|Bingbot|BingPreview|applebot|facebookexternalhit|facebookcatalog|Twitterbot|LinkedInBot|Slackbot|Discordbot|WhatsApp|SkypeUriPreview|Yeti|googleweblight",
-    "assetPrefix": "/dental",
+    "assetPrefix": "",
     "output": "standalone",
     "trailingSlash": false,
     "images": {
@@ -27,7 +27,7 @@
         256,
         384
       ],
-      "path": "/dental/_next/image",
+      "path": "/_next/image",
       "loader": "default",
       "loaderFile": "",
       "domains": [],
@@ -91,7 +91,7 @@
         "expire": 31536000
       }
     },
-    "basePath": "/dental",
+    "basePath": "",
     "expireTime": 31536000,
     "generateEtags": true,
     "poweredByHeader": true,
@@ -141,7 +141,7 @@
       "isExperimentalCompile": false
     }
   },
-  "appDir": "/Users/mohitkumar/Documents/Documents/AdminVkyc/dental-planet",
+  "appDir": "/Users/mohitkumar/Downloads/dental-planet",
   "relativeAppDir": "",
   "files": [
     ".next/routes-manifest.json",
