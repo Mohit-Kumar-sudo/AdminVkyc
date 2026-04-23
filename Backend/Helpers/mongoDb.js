@@ -3,20 +3,25 @@ const debug = require('debug')(process.env.DEBUG+'mongodb');
 
 mongoose.set('strictQuery', true);
 
-const fs = require('fs');
+if (!process.env.MONGODB_URI || !process.env.DB_NAME) {
+  console.error('FATAL: MONGODB_URI or DB_NAME env variable is missing');
+  process.exit(1);
+}
 
-mongoose
-  .connect(process.env.MONGODB_URI, {
-    dbName: process.env.DB_NAME,
-    useNewUrlParser: true,
+const connectDB = () => {
+  mongoose
+    .connect(process.env.MONGODB_URI, {
+      dbName: process.env.DB_NAME,
+      useNewUrlParser: true,
       useUnifiedTopology: true,
+      serverSelectionTimeoutMS: 30000,
+      heartbeatFrequencyMS: 10000,
+    })
+    .then(() => debug('mongodb connected.'))
+    .catch((err) => debug(err.message));
+};
 
-  })
-  .then(() => {
-    debug('mongodb connected.')
-  })
-  .catch((err) => console.log(err.message))
-console.log("Connecting to MongoDB URI:", process.env.MONGODB_URI); // or MONGO_URI
+connectDB();
 
 mongoose.connection.on('connected', () => {
     debug(`Mongoose connecting to ${process.env.DB_NAME}`)
@@ -27,7 +32,8 @@ mongoose.connection.on('error', (err) => {
 })
 
 mongoose.connection.on('disconnected', () => {
-    debug('Mongoose connection is disconnected.')
+    debug('Mongoose connection is disconnected. Reconnecting...');
+    setTimeout(connectDB, 5000);
 })
 
 process.on('SIGINT', async () => {

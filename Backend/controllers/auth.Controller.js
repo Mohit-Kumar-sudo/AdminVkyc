@@ -5,7 +5,7 @@ const { signAccessToken, signRefreshToken } = require("../Helpers/jwt_helper");
 const XLSX = require("xlsx");
 const generatePassword = require("../Helpers/generatePassword");
 const sendEmail = require("../Helpers/sendEmail");
-const fs = require("fs");
+const fs = require("fs").promises;
 const path = require("path");
 const mongoose = require("mongoose");
 const sendSMS = require("../Helpers/sendSms");
@@ -34,9 +34,6 @@ module.exports = {
       const accessToken = await signAccessToken(user._id);
       const refreshToken = await signRefreshToken(user._id);
 
-      console.log("Access Token:", accessToken);
-      console.log("Refresh Token:", refreshToken);
-
       res.status(200).json({
         success: true,
         msg: "Login Successful",
@@ -62,7 +59,8 @@ module.exports = {
       const { refreshToken } = req.body;
       if (!refreshToken) throw createError.BadRequest("Refresh token required");
 
-      const userId = "someUserId";
+      const { verifyRefreshToken } = require("../Helpers/jwt_helper");
+      const userId = await verifyRefreshToken(refreshToken);
 
       const accessToken = await signAccessToken(userId);
       const refToken = await signRefreshToken(userId);
@@ -179,14 +177,13 @@ module.exports = {
               mobileNumber = "+91" + mobileNumber;
             }
 
-            await sendSMS(
-  mobileNumber,
-  u.fullName || "User",
-  u.mobile,
-  u.password
-);
-
-            if (!smsResult.success) {
+            const smsResult = await sendSMS(
+              mobileNumber,
+              u.fullName || "User",
+              u.mobile,
+              u.password
+            );
+            if (smsResult && !smsResult.success) {
               console.log("SMS failed for", mobileNumber, smsResult.error);
             }
           }
@@ -382,15 +379,13 @@ module.exports = {
         return res.status(404).json({ error: "User not found" });
       }
 
-      const fs = require("fs");
-
       Object.keys(updateData).forEach((key) => {
         user[key] = updateData[key];
       });
 
       if (req.file) {
-        if (user.image && fs.existsSync(user.image)) {
-          fs.unlinkSync(user.image);
+        if (user.image) {
+          fs.unlink(user.image).catch(() => {});
         }
         user.image = req.file.path;
       }

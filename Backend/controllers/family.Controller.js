@@ -1,7 +1,7 @@
 const Model = require("../models/family.model");
 const createError = require("http-errors");
-var moment = require("moment");
 const XLSX = require("xlsx");
+const fs = require("fs").promises;
 
 module.exports = {
 createBulk: async (req, res) => {
@@ -111,9 +111,10 @@ create: async (req, res) => {
 getBySNo: async (req, res) => {
   try {
     const { sNo } = req.params;
+    const parsedSNo = Number(sNo);
 
-    if (!sNo) {
-      return res.status(400).json({ error: "sNo parameter is required" });
+    if (!sNo || isNaN(parsedSNo)) {
+      return res.status(400).json({ error: "sNo must be a valid number" });
     }
 
     // ✅ Only get record if is_inactive is NOT true
@@ -147,8 +148,6 @@ updateFamily: async (req, res) => {
 
     let updatedMember = null;
 
-    const fs = require("fs");
-
     if (memberId) {
       const member = family.members.id(memberId);
       if (!member) {
@@ -160,10 +159,10 @@ updateFamily: async (req, res) => {
       });
 
       if (req.file) {
-        if (member.image && fs.existsSync(member.image)) {
-          fs.unlinkSync(member.image); // delete old
+        if (member.image) {
+          fs.unlink(member.image).catch(() => {});
         }
-        member.image = req.file.path; // set new
+        member.image = req.file.path;
       }
 
       updatedMember = member;
@@ -174,10 +173,10 @@ updateFamily: async (req, res) => {
       });
 
       if (req.file) {
-        if (family.image && fs.existsSync(family.image)) {
-          fs.unlinkSync(family.image); // delete old
+        if (family.image) {
+          fs.unlink(family.image).catch(() => {});
         }
-        family.image = req.file.path; // set new
+        family.image = req.file.path;
       }
     }
 

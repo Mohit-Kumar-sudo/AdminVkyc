@@ -13,7 +13,6 @@ module.exports = {
         issuer: process.env.DOMAIN,
         audience: userId.toString(),
       };
-      console.log("Access token secret:", secret);
       JWT.sign(payload, secret, options, (err, token) => {
         if (err) {
           console.log(err);
@@ -29,11 +28,7 @@ module.exports = {
     const authHeader = req.headers.authorization;
     const bearerToken = authHeader.split(" ");
     const token = bearerToken[1];
-    console.log("Access Token:", token);
-    // const token = authHeader
-    if (!token) {
-      createError.Unauthorized("Unauthorized");
-    }
+    if (!token) return next(createError.Unauthorized('Unauthorized'));
     JWT.verify(token, process.env.ACCESS_TOKEN_SECRET, async (err, payload) => {
       if (err) {
         const message =
